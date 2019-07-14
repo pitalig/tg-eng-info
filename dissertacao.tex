@@ -103,20 +103,20 @@
 % Folha de rosto (o * indica que haverá a ficha bibliográfica)
 \imprimirfolhaderosto*
 
-% Imprimir Ficha Catalográfica
-\include{pretextual/catalografica}
+% % Imprimir Ficha Catalográfica
+% \include{pretextual/catalografica}
 
-% Inserir Folha de Aprovação
-\include{pretextual/assinaturas}
+% % Inserir Folha de Aprovação
+% \include{pretextual/assinaturas}
 
-% Dedicatória
-\include{pretextual/dedicatoria}
+% % Dedicatória
+% \include{pretextual/dedicatoria}
 
-% Agradecimentos
-\include{pretextual/agradecimentos}
+% % Agradecimentos
+% \include{pretextual/agradecimentos}
 
-% Epígrafe
-\include{pretextual/epigrafe}
+% % Epígrafe
+% \include{pretextual/epigrafe}
 
 % Resumo e Abstract
 \include{pretextual/resumos}
@@ -124,12 +124,12 @@
 % Lista de ilustrações
 \pdfbookmark[0]{\listfigurename}{lof}
 \listoffigures*
-\cleardoublepage
+% \cleardoublepage
 
 % Lista de tabelas
 \pdfbookmark[0]{\listtablename}{lot}
 \listoftables*
-\cleardoublepage
+% \cleardoublepage
 
 % Lista de abreviaturas e siglas
 \begin{siglas}
@@ -148,7 +148,7 @@
 % Inserir o SUMÁRIO
 \pdfbookmark[0]{\contentsname}{toc}
 \tableofcontents*
-\cleardoublepage
+% \cleardoublepage
 
 % ----------------------------------------------------------
 % ELEMENTOS TEXTUAIS (Capítulos)
@@ -162,20 +162,20 @@
 % Inclui cada capitulo da Dissertação
 \include{capitulos/introducao}
 
-% PARTE - Define a divisão do documento em partes (Não é obrigatório)
-\part{Preparação da pesquisa}
-\include{capitulos/referencias}
-\include{capitulos/estadodaarte}
-\include{capitulos/ferramentas}
+% % PARTE - Define a divisão do documento em partes (Não é obrigatório)
+% \part{Preparação da pesquisa}
+% \include{capitulos/referencias}
+% \include{capitulos/estadodaarte}
+% \include{capitulos/ferramentas}
 
-% PARTE
-\part{Proposta}
-\include{capitulos/proposta}
+% % PARTE
+% \part{Proposta}
+% \include{capitulos/proposta}
 
-% PARTE
-\part{Parte Final}
-\include{capitulos/resultados}
-\include{capitulos/conclusao}
+% % PARTE
+% \part{Parte Final}
+% \include{capitulos/resultados}
+% \include{capitulos/conclusao}
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS (Referências, Glossário, Apêndices)
@@ -188,11 +188,11 @@
 % Glossário (Consulte o manual)
 %\glossary
 
-% Apêndices
-\include{postextual/apendices}
+% % Apêndices
+% \include{postextual/apendices}
 
-% Anexos
-\include{postextual/anexos}
+% % Anexos
+% \include{postextual/anexos}
 
 % Índice remissivo (Consultar manual)
 %\phantompart
