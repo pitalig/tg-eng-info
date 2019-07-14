@@ -25,14 +25,18 @@
 	brazil					% o último idioma é o principal do documento
 	]{abntex2}
 
+% Silenciar warning memoir
+\usepackage{silence}
+\WarningFilter*{memoir}{You are using the caption package with the memoir class}
+
 % ---------------------
 % Pacotes OBRIGATÓRIOS
 % ---------------------
-\usepackage{lmodern}				% Usa a fonte Latin Modern			
-\usepackage[T1]{fontenc}			% Selecao de codigos de fonte.
-\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Seleção de códigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificação do documento (conversão automática dos acentos)
 \usepackage{lastpage}			% Usado pela Ficha catalográfica
-\usepackage{indentfirst}			% Indenta o primeiro parágrafo de cada seção.
+\usepackage{indentfirst}		% Identa o primeiro parágrafo de cada seção.
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx,graphicx}	% Inclusão de gráficos
 \usepackage{epsfig,subfig}		% Inclusão de figuras
@@ -55,8 +59,8 @@
 % Pacotes de CITAÇÕES
 % ---------------------
 \usepackage[brazilian,hyperpageref]{backref}	% Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}				% Citações padrão ABNT (alfa)
-%\usepackage[num]{abntex2cite}				% Citações padrão ABNT (numericas)
+\usepackage[alf]{abntex2cite}					% Citações padrão ABNT (alfa)
+%\usepackage[num]{abntex2cite}					% Citações padrão ABNT (numéricas)
 % ---------------------
 
 % Configurações de CITAÇÕES para abntex2
@@ -75,7 +79,7 @@
 \setlength{\parskip}{0.2cm}  % tente também \onelineskip
 
 % ---------------------
-% Compila o indice
+% Compila o índice
 % ---------------------
 \makeindex
 % ---------------------
@@ -99,7 +103,7 @@
 % Folha de rosto (o * indica que haverá a ficha bibliográfica)
 \imprimirfolhaderosto*
 
-% Imprimir Ficha Catalografica
+% Imprimir Ficha Catalográfica
 \include{pretextual/catalografica}
 
 % Inserir Folha de Aprovação
