@@ -266,3 +266,6 @@ TSWLatexianTemp*
 
 # vscode
 .vscode
+
+# ignore local_resources
+local_resources/*
