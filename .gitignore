@@ -269,3 +269,6 @@ TSWLatexianTemp*
 
 # ignore local_resources
 local_resources/*
+
+# Jupyter notebook
+.ipynb_checkpoints
