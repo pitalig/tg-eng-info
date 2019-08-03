@@ -93,7 +93,8 @@ print(time.time() - start_time)
 
 #%%
 # Filter list
-filter_age(img_list, 90, 100)
+filter_age(img_list, 18, 60)
+print(len(img_list))
 
 #%% 
 # Load all images from the list
@@ -113,9 +114,8 @@ print(time.time() - start_time)
 
 
 #%%
+
 for img in img_list:
-    if img["face_count"] != 1:
-        print_faces(img["image"], img["faces"])
-        print(img["face_count"])
+    print(img["face_count"])
 
 #%%
