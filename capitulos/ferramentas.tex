@@ -61,10 +61,10 @@ O \textit{AdaBoost}, que tem seu nome derivado de \textit{adaptative boosting} \
     \caption{Características retângulares mais eficientes para detecção facial.}
     \includegraphics[scale=.3]{figs/top-features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
-    \label{fig:features}
+    \label{fig:top-features}
  \end{figure}
 
- A figura acima retrata as melhores características registradas por \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones}), fica claro que as mesmas se destacam por evidenciar as regiões dos olhos e do nariz.
+ A figura \ref{fig:top-features} retrata as melhores características registradas por \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones}), fica claro que as mesmas se destacam por evidenciar as regiões dos olhos e do nariz.
 
 %-
 \subsection{Classificador em Cascata}
@@ -72,14 +72,14 @@ O \textit{AdaBoost}, que tem seu nome derivado de \textit{adaptative boosting} \
 
 Pensando que, na maioria dos casos, uma face não ocupa a maior parte de uma imagem a ser identificada, é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que tem maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as "não faces".
 
-Para tal problema, o classificador em cascata apresenta uma ótima solução, esta consiste na utilização de uma série de classificadores que são aplicados de forma sequencial, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
+Para tal problema, o classificador em cascata apresenta uma ótima solução, esta consiste na utilização de uma série de classificadores que são aplicados de forma sequencial, conforme ilustrado na imagem \ref{fig:cascade-classifier}, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
 
 \begin{figure}[htb]
     \centering
     \caption{Diagrama do funcionamento do classificador em cascata.}
     \includegraphics[scale=.3]{figs/cascade-classifier.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
-    \label{fig:features}
+    \label{fig:cascade-classifier}
  \end{figure}
 
  Um classificador comum, com um único estágio normalmente aceitaria muitos casos de falso negativo, para reduzir a taxa de falsos positivos e de descarte de imagens relevantes, mas no classificador em cascata, falsos positivos nos primeiros estágios não são um problema, pois serão analisados em outros diversos estágios e provavelmente eliminados.
