@@ -2,11 +2,11 @@
 
 Após entender o funcionamento do algoritmo de Viola Jones, foram executados testes com os conjuntos de imagens selecionados e os resultados obtidos são discutidos a seguir.
 
-Inicialmente, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da tabela \ref{grupos-images}. 
+Inicialmente, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da tabela \ref{tab:grupos-images}. 
 
 \begin{table}[htbp]
     \caption{Grupos observados}
-    \label{grupos-images}
+    \label{tab:grupos-images}
     \centering
     \begin{tabular}{ccc}\hline\hline
         \textbf{Grupo} & \textbf{Descrição} & \textbf{Quantidade} \\\hline
@@ -18,37 +18,65 @@ Inicialmente, foi necessário especificar com clareza como poderiam ser agrupada
     \end{tabular}
 \end{table}
 
-Definidos os grupos, pode-se utilizar uma tabela de contingência para facilitar o diagnóstico e discussão dos resultados obtidos.
+Definidos os grupos, pode-se utilizar a tabela de contingência \ref{tab:tabela_contingencia} para facilitar a análise da relação entre os grupos definidos anteriormente. Na tabela \ref{tab:tabela_contingencia} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imageens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na tabela de contingência são mutuamente excludentes. \cite{Dougherty:2012:PRC:2553126}
 
 \begin{table}[htbp]
     \caption{Tabela de contingência}
-    \label{grupos-images}
+    \label{tab:tabela_contingencia}
     \centering
     \begin{tabular}{ccc}\hline\hline
         & \textit{B} & $\overline{B}$ \\
-    \textit{A} & a (verdadeiro positivo) & b (falso negativo) \\
-    $\overline{A}$ & c (falso positivo) & d (verdadeiro negativo) \\
+    \textit{A} & \textit{a} (verdadeiro positivo) & \textit{b} (falso negativo) \\
+    $\overline{A}$ & \textit{c} (falso positivo) & \textit{d} (verdadeiro negativo) \\
     \hline\hline
     \end{tabular}
 \end{table}
 
-\begin{figure}[htb]
+Para melhor entender os agrupamentos da tabela de contingência, pode-se observar na imagem \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. 
+
+\begin{figure}[htbp]
     \centering
     \caption{Possível distribuição normal dos grupos observados na tabela de contingência.}
     \includegraphics[scale=.5]{figs/norm_dist.png}
     \label{fig:norm_dist}
  \end{figure}
 
+ Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido a sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir uma limite para decisão, que pode ser ajustado conforme a necessidade, mas que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
+
+ A tabela de contingência também pode ser escrita em termos probabilísticos (tabela \ref{tab:tabela_contingencia_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (figura \ref{fig:venn_diagram}).
+
 \begin{table}[htbp]
-    \caption{Resultados Teste 3.}
-    \label{resultados-teste-3}
-    \begin{center}
-    \begin{tabular}{rrr}\hline\hline
-        \text{Número de faces} & \text{Número de imagens} & \text{Porcentagem} \\\hline
-        0 & 263 & 1.5353\% \\
-        1 & 8439 & 49.2645\% \\
-        Mais de 1 & 8428 & 49.2002\% \\
+    \caption{Tabela de contingência com probabilidades marginais}
+    \label{tab:tabela_contingencia_probab}
+    \centering
+    \begin{tabular}{cccc}\hline\hline
+        & \textit{B} & $\overline{B}$ & Soma\\
+    \textit{A} & $P(A \cap B)$ & $P(A \cap \overline{B})$ & $P(A)$ \\
+    $\overline{A}$ & $P(\overline{A} \cap B)$ & $P(\overline{A} \cap \overline{B})$ & $P(\overline{A})$ \\
+    Soma & $P(B)$ & $P(\overline{B})$ & 1 \\
     \hline\hline
     \end{tabular}
-    \end{center}
 \end{table}
+
+ \begin{figure}[htbp]
+     \centering
+     \caption{Diagrama de Venn para as imagens analisadas.}
+     \includegraphics[scale=.4]{figs/venn-diagram.png}
+     \label{fig:venn_diagram}
+  \end{figure}
+
+\section{Teste 1}
+
+% \begin{table}[htbp]
+%     \caption{Resultados Teste 3.}
+%     \label{resultados-teste-3}
+%     \begin{center}
+%     \begin{tabular}{rrr}\hline\hline
+%         \text{Número de faces} & \text{Número de imagens} & \text{Porcentagem} \\\hline
+%         0 & 263 & 1.5353\% \\
+%         1 & 8439 & 49.2645\% \\
+%         Mais de 1 & 8428 & 49.2002\% \\
+%     \hline\hline
+%     \end{tabular}
+%     \end{center}
+% \end{table}
