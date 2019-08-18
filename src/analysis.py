@@ -90,10 +90,14 @@ assert sum([P_B_given_A, P_xB_given_A]) == 1, "Uma nao face pode so ser prevista
 print([P_B_given_xA, P_xB_given_xA, sum([P_B_given_xA, P_xB_given_xA])])
 assert sum([P_B_given_xA, P_xB_given_xA]) == 1, "Uma face pode so ser prevista como face ou nao"
 
-result_print = [[P_B_given_A, P_xB_given_A, P_A],
-          [P_B_given_xA, P_xB_given_xA, P_xA],
-          [P_B, P_xB, 1]]
-pd.DataFrame(result_print, columns=["(B) Não Face (previsto)", "(xB) Face (previsto)", ""], index=["(A) Não Face (real)", "(xA) Face (real)", ""])
+print("sensitividade")
+print(P_B_given_A)
+print("especificidade")
+print(P_xB_given_xA)
 
+result_print = [[P_A_n_B*100, P_A_n_xB*100, P_A*100],
+                [P_xA_n_B*100, P_xA_n_xB*100, P_xA*100],
+                [P_B*100, P_xB*100, 100]]
+pd.DataFrame(result_print, columns=["(B) Não Face (previsto)", "(xB) Face (previsto)", ""], index=["(A) Não Face (real)", "(xA) Face (real)", ""])
 
 #%%

@@ -65,18 +65,42 @@ Para melhor entender os agrupamentos da tabela de contingência, pode-se observa
      \label{fig:venn_diagram}
   \end{figure}
 
-\section{Teste 1}
+Por fim, podem ser calculadas as medidas tradicionais de sensitividade (a probabilidade condicional do algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional do algoritmo não identificar nenhuma face em uma imagem que realmente não contém nenhuma face) conforme as equações \ref{eq:sensitividade} e \ref{eq:especificidade}.
 
-% \begin{table}[htbp]
-%     \caption{Resultados Teste 3.}
-%     \label{resultados-teste-3}
-%     \begin{center}
-%     \begin{tabular}{rrr}\hline\hline
-%         \text{Número de faces} & \text{Número de imagens} & \text{Porcentagem} \\\hline
-%         0 & 263 & 1.5353\% \\
-%         1 & 8439 & 49.2645\% \\
-%         Mais de 1 & 8428 & 49.2002\% \\
-%     \hline\hline
-%     \end{tabular}
-%     \end{center}
-% \end{table}
+\begin{equation} \label{eq:sensitividade}
+    \text{sensitividade, } P(B|A) = P(A \cap B) / (P(A \cap B) + P(A \cap \overline{B})) = a/(a + b)
+\end{equation}
+
+\begin{equation} \label{eq:especificidade}
+    \text{especificidade, } P(\overline{B} | \overline{A}) = P(\overline{A} \cap \overline{B}) / (P(\overline{A} \cap \overline{B}) + P(\overline{A} \cap B)) = d/(d + c)
+\end{equation}
+
+A biblioteca OpenCV permite ainda ajuste de alguns parâmetros para a execução do algoritmo de Viola Jones, no primeiro teste executado sobre o conjunto de imagens, foram configurados os parâmetros de fator de escala para 1.3 e número mínimo de vizinhos para 5, após analisar todas imagens foi possível preencher a tabela de contingência \ref{tab:tabela_contingencia_teste1} e calcular a respectiva sensitividade $P(B|A) = 98.5872\%$ e especificidade $P(\overline{B} | \overline{A}) = 86.6024\%$.
+
+\begin{table}[htbp]
+    \caption{Tabela de contingência com os resultados do primeiro teste}
+    \label{tab:tabela_contingencia_teste1}
+    \centering
+    \begin{tabular}{cccc}\hline\hline
+        & \textit{B} & $\overline{B}$ & Soma\\
+    \textit{A} & 49.2936\% & 00.7064\% & 50\% \\
+    $\overline{A}$ & 06.6988\% & 43.3012\% & 50\% \\
+    Soma & 55.9924\% & 44.0076\% & 100\% \\
+    \hline\hline
+    \end{tabular}
+\end{table}
+
+Ajustando o fator de escala para 1.05 e o número mínimo de vizinhos para 3, foram obtidos os resultados apresentados na tabela \ref{tab:tabela_contingencia_teste2} e a respectiva sensitividade $P(B|A) = 66.3923\%$ e especificidade $P(\overline{B} | \overline{A}) = 98.3479\%$.
+
+\begin{table}[htbp]
+    \caption{Tabela de contingência com os resultados do segundo teste}
+    \label{tab:tabela_contingencia_teste2}
+    \centering
+    \begin{tabular}{cccc}\hline\hline
+        & \textit{B} & $\overline{B}$ & Soma\\
+    \textit{A}& 33.1962\% & 16.8038\% & 50\% \\
+    $\overline{A}$& 00.8260\% & 49.1740\% & 50\% \\
+    Soma& 34.0222\% & 65.9778\% & 100\% \\
+    \hline\hline
+    \end{tabular}
+\end{table}
