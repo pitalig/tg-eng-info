@@ -81,16 +81,19 @@ P_xA_n_xB = result_faces["count_1+"] / results_total
 print([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB, sum([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB])])
 assert sum([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB]) == test_check, "Todas intersecoes somam 1"
 
-P_B_A = P_A_n_B / P_A
-P_xB_A = P_A_n_xB / P_A
-P_B_xA = P_xA_n_B / P_xA
-P_xB_xA = P_xA_n_xB / P_xA
-print([P_B_A, P_xB_A, sum([P_B_A, P_xB_A])])
-assert sum([P_B_A, P_xB_A]) == 1, "Uma nao face pode so ser prevista como face ou nao"
-print([P_B_xA, P_xB_xA, sum([P_B_xA, P_xB_xA])])
-assert sum([P_B_xA, P_xB_xA]) == 1, "Uma face pode so ser prevista como face ou nao"
+P_B_given_A = P_A_n_B / P_A
+P_xB_given_A = P_A_n_xB / P_A
+P_B_given_xA = P_xA_n_B / P_xA
+P_xB_given_xA = P_xA_n_xB / P_xA
+print([P_B_given_A, P_xB_given_A, sum([P_B_given_A, P_xB_given_A])])
+assert sum([P_B_given_A, P_xB_given_A]) == 1, "Uma nao face pode so ser prevista como face ou nao"
+print([P_B_given_xA, P_xB_given_xA, sum([P_B_given_xA, P_xB_given_xA])])
+assert sum([P_B_given_xA, P_xB_given_xA]) == 1, "Uma face pode so ser prevista como face ou nao"
 
-result_print = [[P_B_A, P_xB_A, P_A],
-          [P_B_xA, P_xB_xA, P_xA],
+result_print = [[P_B_given_A, P_xB_given_A, P_A],
+          [P_B_given_xA, P_xB_given_xA, P_xA],
           [P_B, P_xB, 1]]
 pd.DataFrame(result_print, columns=["(B) Não Face (previsto)", "(xB) Face (previsto)", ""], index=["(A) Não Face (real)", "(xA) Face (real)", ""])
+
+
+#%%
