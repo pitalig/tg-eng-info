@@ -4,11 +4,13 @@ Com o objetivo de obter melhor entendimento sobre possíveis ferramenta de visã
 
 \section{OpenCV}
 
-A ferramenta OpenCV, que pode ser encontrada no endereço \citeonline{itseez2015opencv}, é uma biblioteca de código aberto focada na solução de problemas utilizando visão computacional em tempo real, desenvolvida pela intel e posteriormente pela Itseez, com suporte a múltiplas plataformas e uso gratuito sobre a licença de código aberto BSD. A ferramenta apresenta suporte a frameworks de aprendizado profundo, como TensorFlow, Pytorch e Caffe e contempla tanto funções básicas, para aplicações como processamento de imagem, alteração de cor ou resolução, até aplicações avançadas, como detecção facial, identificação de características e biometria. \cite{wiki:OpenCV}
+A ferramenta OpenCV, que pode ser encontrada no endereço \citeonline{itseez2015opencv}, é uma biblioteca de código aberto focada na solução de problemas utilizando visão computacional em tempo real, desenvolvida pela Intel e posteriormente pela Itseez, com suporte a múltiplas plataformas e uso gratuito sobre a licença de código aberto BSD. A ferramenta apresenta suporte a frameworks de aprendizado profundo, como TensorFlow, Pytorch e Caffe e contempla tanto funções básicas, para aplicações como processamento de imagem, alteração de cor ou resolução, até aplicações avançadas, como detecção facial, identificação de características e biometria. \cite{wiki:OpenCV}
 
 Neste trabalho, será utilizada a função de detecção de faces da ferramenta OpenCV, que utiliza um classificador em cascata baseado características, este é um método eficiente para reconhecimento de faces em imagens proposto por Paul Viola and Michael Jones, amplamente conhecido como método Viola-Jones, onde uma função é treinada com muitos exemplos positivos (imagens que contém o objeto a ser detectado) e negativos (imagens que não contém o objeto a ser detectado) e então utilizada para detectar as mesmas características em outras imagens. \cite{itseez2014theopencv}
 
 A detecção de faces utilizando OpenCV consiste em duas etapas principais, o treinamento do modelo, onde são apresentadas diversas imagens já identificadas para que o modelo identifique padrões positivos e negativos. Após o treinamento, o modelo obtido pode ser utilizado para identificar, em novas imagens, características semelhantes as vistas nas imagens do treinamento. Neste projeto, será utilizado um modelo fornecido em conjunto com a ferramenta OpenCV, já treinado com diversos exemplos de faces frontais.
+
+O procedimento utilizado permite ainda ajuste de parâmetros para a execução do algoritmo de Viola-Jones, neste teste, serão utilizados: o fator de escala, que é o fator pelo qual as dimensões da imagem serão multiplicadas na tentativa de encontrar faces de diferentes tamanhos (quanto menor, maior a chance de encontrar faces) e o número mínimo de vizinhos, que é número mínimo de detecções, após varias iterações, para uma parte da imagem ser considerada uma face (quanto menor, maior a chance de encontrar faces).
 
 \section{Algoritmo Viola-Jones}
 
@@ -107,3 +109,78 @@ O segundo dataset, nomeado \textit{UTKFace}, disponível em \citeonline{utkface}
  \end{figure}
 
  Para os testes, foram selecionadas aleatoriamente 17130 do dataset \textit{Hotels-50k} e selecionadas outras 17130 imagens do dataset \textit{UTKFace}, mas sendo essas apenas imagens de pessoas entre 18 e 60 anos de idade. Assim, foi totalizado um conjunto de 34260, onde metade delas eram positivas (não possuíam faces) e a outra metade negativas (possuíam ao menos uma face).
+
+%-
+\section{Metodologia de Análise}
+%-
+
+Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da tabela \ref{tab:grupos-images}. 
+
+\begin{table}[htbp]
+    \caption{Grupos observados}
+    \label{tab:grupos-images}
+    \centering
+    \begin{tabular}{ccc}\hline\hline
+        \textbf{Grupo} & \textbf{Descrição} & \textbf{Quantidade} \\\hline
+        \textit{A} & Imagens que não contêm nenhuma face & 17130 \\
+        $\overline{A}$ & Imagens que contêm uma face & 17130 \\
+        \textit{B} & Imagens onde o algoritmo não identificou nenhuma face & Variável \\
+        $\overline{B}$ & Imagens onde o algoritmo identificou uma ou mais faces & Variável \\
+    \hline\hline
+    \end{tabular}
+\end{table}
+\
+Definidos os grupos, pode-se utilizar a tabela de contingência \ref{tab:tabela_contingencia} para facilitar a análise da relação entre os grupos definidos anteriormente. Na tabela \ref{tab:tabela_contingencia} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imageens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na tabela de contingência são mutuamente excludentes. \cite{Dougherty:2012:PRC:2553126}
+
+\begin{table}[htbp]
+    \caption{Tabela de contingência}
+    \label{tab:tabela_contingencia}
+    \centering
+    \begin{tabular}{ccc}\hline\hline
+        & \textit{B} & $\overline{B}$ \\
+    \textit{A} & \textit{a} (verdadeiro positivo) & \textit{b} (falso negativo) \\
+    $\overline{A}$ & \textit{c} (falso positivo) & \textit{d} (verdadeiro negativo) \\
+    \hline\hline
+    \end{tabular}
+\end{table}
+
+Para melhor entender os agrupamentos da tabela de contingência, pode-se observar na imagem \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. 
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Possível distribuição normal dos grupos observados na tabela de contingência.}
+    \includegraphics[scale=.5]{figs/norm_dist.png}
+    \label{fig:norm_dist}
+ \end{figure}
+
+ Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido a sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir uma limite para decisão, que pode ser ajustado conforme a necessidade, mas que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
+
+ A tabela de contingência também pode ser escrita em termos probabilísticos (tabela \ref{tab:tabela_contingencia_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (figura \ref{fig:venn_diagram}).
+
+\begin{table}[htbp]
+    \caption{Tabela de contingência com probabilidades marginais}
+    \label{tab:tabela_contingencia_probab}
+    \centering
+    \begin{tabular}{cccc}\hline\hline
+        & \textit{B} & $\overline{B}$ & Soma\\
+    \textit{A} & $P(A \cap B)$ & $P(A \cap \overline{B})$ & $P(A)$ \\
+    $\overline{A}$ & $P(\overline{A} \cap B)$ & $P(\overline{A} \cap \overline{B})$ & $P(\overline{A})$ \\
+    Soma & $P(B)$ & $P(\overline{B})$ & 1 \\
+    \hline\hline
+    \end{tabular}
+\end{table}
+
+ \begin{figure}[htbp]
+     \centering
+     \caption{Diagrama de Venn para as imagens analisadas.}
+     \includegraphics[scale=.4]{figs/venn-diagram.png}
+     \label{fig:venn_diagram}
+  \end{figure}
+
+Por fim, podem ser calculadas as medidas tradicionais de sensitividade (a probabilidade condicional do algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional do algoritmo não identificar nenhuma face em uma imagem que realmente não contém nenhuma face) conforme as equações \ref{eq:sensitividade} e \ref{eq:especificidade}.
+
+\begin{align} \label{eq:sensitividade}
+    \text{sensitividade, } P(B|A) = P(A \cap B) / (P(A \cap B) + P(A \cap \overline{B})) = a/(a + b) \\
+    \label{eq:especificidade}
+    \text{especificidade, } P(\overline{B} | \overline{A}) = P(\overline{A} \cap \overline{B}) / (P(\overline{A} \cap \overline{B}) + P(\overline{A} \cap B)) = d/(d + c)
+\end{align}
