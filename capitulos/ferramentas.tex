@@ -108,7 +108,7 @@ O segundo dataset, nomeado \textit{UTKFace}, disponível em \citeonline{utkface}
     \label{fig:exemplos-utk}
  \end{figure}
 
- Para os testes, foram selecionadas aleatoriamente 17130 do dataset \textit{Hotels-50k} e selecionadas outras 17130 imagens do dataset \textit{UTKFace}, mas sendo essas apenas imagens de pessoas entre 18 e 60 anos de idade. Assim, foi totalizado um conjunto de 34260, onde metade delas eram positivas (não possuíam faces) e a outra metade negativas (possuíam ao menos uma face).
+ Para os testes, foram selecionadas aleatoriamente 17130 imagens do dataset \textit{Hotels-50k} e selecionadas outras 17130 imagens do dataset \textit{UTKFace}, mas sendo essas apenas imagens de pessoas entre 18 e 60 anos de idade. Assim, foi totalizado um conjunto de 34260, onde metade delas eram positivas (não possuíam faces) e a outra metade negativas (possuíam ao menos uma face).
 
 %-
 \section{Metodologia de Análise}
@@ -130,7 +130,7 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \end{tabular}
 \end{table}
 \
-Definidos os grupos, pode-se utilizar a tabela de contingência \ref{tab:tabela_contingencia} para facilitar a análise da relação entre os grupos definidos anteriormente. Na tabela \ref{tab:tabela_contingencia} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imageens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na tabela de contingência são mutuamente excludentes. \cite{Dougherty:2012:PRC:2553126}
+Definidos os grupos, pode-se utilizar a tabela de contingência \ref{tab:tabela_contingencia} para facilitar a análise da relação entre os grupos definidos anteriormente. Na tabela \ref{tab:tabela_contingencia} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na tabela de contingência são mutuamente excludentes. \cite{Dougherty:2012:PRC:2553126}
 
 \begin{table}[htbp]
     \caption{Tabela de contingência}
