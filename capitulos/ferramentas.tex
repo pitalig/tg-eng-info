@@ -94,11 +94,11 @@ Para tal problema, o classificador em cascata apresenta uma ótima solução, es
 
  \section{Conjuntos de imagens para teste}
 
- Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones} na biblioteca \textit{OpenCV}, assim como o seu modelo previamente treinado, foram utilizados dois conjuntos de imagens. Tendo em mente o objetivo deste projeto, de identificar rapidamente imagens que não possuem uma face, são tratadas como imagens \textbf{positivas} as imagens que \textbf{não possuem faces} e como \textbf{negativas} as imagens que \textbf{possuem ao menos uma face}.
+ Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones} na biblioteca \textit{OpenCV}, assim como o seu modelo previamente treinado, foram utilizados dois conjuntos de imagens. Tendo em mente o objetivo deste projeto, de identificar rapidamente imagens que não possuem uma face, são tratadas como imagens positivas as imagens que não possuem faces e como negativas as imagens que possuem ao menos uma face.
 
-O primeiro dataset, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, será utilizado para representar imagens \textbf{positivas}, portanto consiste em um conjunto de mais de 50 mil imagens de diversos quartos de hotel vazios, pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
+O primeiro dataset, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, será utilizado para representar imagens positivas, portanto consiste em um conjunto de mais de 50 mil imagens de diversos quartos de hotel vazios, pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
 
-O segundo dataset, nomeado \textit{UTKFace}, disponível em \citeonline{utkface}, será utilizado para representar imagens \textbf{negativas}, portanto consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo, alguns exemplos das imagens contidas no dataset podem ser vistos na figura \ref{fig:exemplos-utk}.
+O segundo dataset, nomeado \textit{UTKFace}, disponível em \citeonline{utkface}, será utilizado para representar imagens negativas, portanto consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo, alguns exemplos das imagens contidas no dataset podem ser vistos na figura \ref{fig:exemplos-utk}.
 
 \begin{figure}[htb]
     \centering
