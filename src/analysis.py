@@ -58,7 +58,7 @@ add_counts(result_no_faces)
 # | (xA) Não Face (real) | B_xA                | xB_xA                    | P_xA |
 # |                      | P_B                 | P_xB                     | 1    |
 
-#%%
+#%% Calculate percentage of images in each group
 
 results_total = result_faces["count_imgs"] + result_no_faces["count_imgs"] # Universo
 P_A = result_faces["count_imgs"] / results_total
@@ -70,7 +70,7 @@ assert sum([P_A, P_xA]) == 1, "Todas imagens devem ter ou nao faces"
 print([P_B, P_xB, sum([P_B, P_xB])])
 assert sum([P_B, P_xB]) == 1, "Todas previsoes devem ter ou nao faces"
 
-#%%
+#%% Calculate intersection between groups
 
 P_A_n_B = result_faces["count_1+"] / results_total
 P_xA_n_B = result_no_faces["count_1+"] / results_total
@@ -79,7 +79,7 @@ P_xA_n_xB = result_no_faces["count_0"] / results_total
 print([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB, sum([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB])])
 assert sum([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB]) == test_check, "Todas intersecoes somam 1"
 
-#%%
+#%% Generate confusion matrix and calculate sensitivity and specificity
 
 P_B_given_A = P_A_n_B / P_A
 P_xB_given_A = P_A_n_xB / P_A
@@ -100,4 +100,20 @@ result_print = [[P_A_n_B*100, P_A_n_xB*100, P_A*100],
                 [P_B*100, P_xB*100, 100]]
 pd.DataFrame(result_print, columns=["(B) Face (previsto)", "(xB) Não Face (previsto)", ""], index=["(A) Face (real)", "(xA) Não Face (real)", ""])
 
-#%%
+#%% Confusion matrix with sklearn
+from sklearn.metrics import confusion_matrix
+
+y_true = (["face"] * result_faces["count_imgs"]) + (["nao_face"] * result_no_faces["count_imgs"])
+y_pred = (["face"] * result_faces["count_1+"]) + (["nao_face"] * result_faces["count_0"]) + (["face"] * result_no_faces["count_1+"]) + (["nao_face"] * result_no_faces["count_0"])
+
+assert len(y_true) == len(y_predict), "Mesmo número de items existentes e previstos"
+
+matrix = confusion_matrix(y_true, y_pred, labels=["face", "nao_face"])
+print(matrix)
+print([[i*100/len(y_true) for i in row] for row in matrix])
+
+tp, fn, fp, tn = matrix.ravel()
+print("sensitividade")
+print(tp / (tp + fn))
+print("especificidade")
+print(tn / (tn + fp))
