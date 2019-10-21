@@ -5,7 +5,7 @@ import json
 if 1 == 1:
   faces_path = 'src/result_faces_scaleFactor_13_minNeighbors_5_minSize_30_30.json'
   no_faces_path = 'src/result_no_faces_scaleFactor_13_minNeighbors_5_minSize_30_30.json'
-  test_check = 0.9999999999999999
+  test_check = 1
 else:
   faces_path = 'src/result_faces_scaleFactor_105_minNeighbors_3_minSize_30_30.json'
   no_faces_path = 'src/result_no_faces_scaleFactor_105_minNeighbors_3_minSize_30_30.json'
@@ -44,42 +44,42 @@ def add_counts(result_data):
   print(str(result_data["count_1+"]) + " images with 1 or more faces (" + str(result_data["count_1+"]*100/result_data["count_imgs"]) + "%)")
   print(str(result_data["count_2"]) + " images with 2 or more faces (" + str(result_data["count_2"]*100/result_data["count_imgs"]) + "%)")
 
-print("=== Faces ===")
+print("=== Faces Dataset ===")
 add_counts(result_faces)
 
-print("=== No Faces ===")
+print("=== No Faces Dataset ===")
 add_counts(result_no_faces)
 
 #%% [markdown]
 
-# +---------------------+-------------------------+----------------------+------+
-# |                     | (B) Não Face (previsto) | (xB) Face (previsto) |      |
-# +---------------------+-------------------------+----------------------+------+
-# | (A) Não Face (real) |           B_A           |         xB_A         |  P_A |
-# +---------------------+-------------------------+----------------------+------+
-# |   (xA) Face (real)  |           B_xA          |         xB_xA        | P_xA |
-# +---------------------+-------------------------+----------------------+------+
-# |                     |           P_B           |         P_xB         |   1  |
-# +---------------------+-------------------------+----------------------+------+
+# |                      | (B) Face (previsto) | (xB) Não Face (previsto) |      |
+# |----------------------|---------------------|--------------------------|------|
+# | (A) Face (real)      | B_A                 | xB_A                     | P_A  |
+# | (xA) Não Face (real) | B_xA                | xB_xA                    | P_xA |
+# |                      | P_B                 | P_xB                     | 1    |
 
 #%%
 
 results_total = result_faces["count_imgs"] + result_no_faces["count_imgs"] # Universo
-P_A = result_no_faces["count_imgs"] / results_total
-P_xA = result_faces["count_imgs"] / results_total
-P_B = (result_no_faces["count_0"] + result_faces["count_0"]) / results_total
-P_xB = (result_no_faces["count_1+"] + result_faces["count_1+"]) / results_total
+P_A = result_faces["count_imgs"] / results_total
+P_xA = result_no_faces["count_imgs"] / results_total
+P_B = (result_no_faces["count_1+"] + result_faces["count_1+"]) / results_total
+P_xB = (result_no_faces["count_0"] + result_faces["count_0"]) / results_total
 print([P_A, P_xA, sum([P_A, P_xA])])
 assert sum([P_A, P_xA]) == 1, "Todas imagens devem ter ou nao faces"
 print([P_B, P_xB, sum([P_B, P_xB])])
 assert sum([P_B, P_xB]) == 1, "Todas previsoes devem ter ou nao faces"
 
-P_A_n_B = result_no_faces["count_0"] / results_total
-P_xA_n_B = result_faces["count_0"] / results_total
-P_A_n_xB = result_no_faces["count_1+"] / results_total
-P_xA_n_xB = result_faces["count_1+"] / results_total
+#%%
+
+P_A_n_B = result_faces["count_1+"] / results_total
+P_xA_n_B = result_no_faces["count_1+"] / results_total
+P_A_n_xB = result_faces["count_0"] / results_total
+P_xA_n_xB = result_no_faces["count_0"] / results_total
 print([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB, sum([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB])])
 assert sum([P_A_n_B, P_xA_n_B, P_A_n_xB, P_xA_n_xB]) == test_check, "Todas intersecoes somam 1"
+
+#%%
 
 P_B_given_A = P_A_n_B / P_A
 P_xB_given_A = P_A_n_xB / P_A
@@ -98,6 +98,6 @@ print(P_xB_given_xA)
 result_print = [[P_A_n_B*100, P_A_n_xB*100, P_A*100],
                 [P_xA_n_B*100, P_xA_n_xB*100, P_xA*100],
                 [P_B*100, P_xB*100, 100]]
-pd.DataFrame(result_print, columns=["(B) Não Face (previsto)", "(xB) Face (previsto)", ""], index=["(A) Não Face (real)", "(xA) Face (real)", ""])
+pd.DataFrame(result_print, columns=["(B) Face (previsto)", "(xB) Não Face (previsto)", ""], index=["(A) Face (real)", "(xA) Não Face (real)", ""])
 
 #%%
