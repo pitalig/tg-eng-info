@@ -117,3 +117,18 @@ print("sensitividade")
 print(tp / (tp + fn))
 print("especificidade")
 print(tn / (tn + fp))
+
+#%% Calculate model profit
+
+a_cost = 1 # Manual analysis cost for each picture
+c_value = 300 # Approved customer value
+
+# Profit before using this model
+profit0 = (result_faces["count_imgs"] * c_value) - ((result_faces["count_imgs"] + result_no_faces["count_imgs"]) * a_cost)
+print(profit0)
+
+# Profit after using this model
+profit1 = (result_faces["count_1+"] * c_value) - ((result_faces["count_1+"] + result_no_faces["count_1+"]) * a_cost) + (result_faces["count_0"] * c_value * 0.7)
+print(profit1)
+
+print(profit1-profit0)
