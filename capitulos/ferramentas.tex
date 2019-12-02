@@ -108,7 +108,7 @@ O segundo dataset, nomeado \textit{UTKFace}, disponível em \citeonline{utkface}
     \label{fig:exemplos-utk}
  \end{figure}
 
- Para os testes, foram selecionadas aleatoriamente 17130 imagens do dataset \textit{Hotels-50k} e selecionadas outras 17130 imagens do dataset \textit{UTKFace}, mas sendo essas apenas imagens de pessoas entre 18 e 60 anos de idade. Assim, foi totalizado um conjunto de 34260, onde metade delas eram positivas (não possuíam faces) e a outra metade negativas (possuíam ao menos uma face).
+Para os testes, foram filtradas apenas imagens de pessoas entre 18 e 60 anos de idade do dataset \textit{UTKFace}, obtendo 17100 imagens e então selecionadas aleatoriamente 4275 imagens do dataset \textit{Hotels-50k}. Assim, foi totalizado um conjunto de 21375, onde 80\% delas eram positivas (possuíam ao menos uma face) e 20\% negativas (não possuíam faces), tal proporção representa a hipótese de que cerca de 20\% de imagens enviadas para cadastros na verdade não possuem uma face.
 
 %-
 \section{Metodologia de Análise}
@@ -122,19 +122,19 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \centering
     \begin{tabular}{ccc}\hline\hline
         \textbf{Grupo} & \textbf{Descrição} & \textbf{Quantidade} \\\hline
-        \textit{A} & Imagens que não contêm nenhuma face & 17130 \\
-        $\overline{A}$ & Imagens que contêm uma face & 17130 \\
-        \textit{B} & Imagens onde o algoritmo não identificou nenhuma face & Variável \\
-        $\overline{B}$ & Imagens onde o algoritmo identificou uma ou mais faces & Variável \\
+        \textit{A} & Imagens que contêm uma face & 17130 \\
+        $\overline{A}$ & Imagens que não contêm nenhuma face & 4275 \\
+        \textit{B} & Imagens onde o algoritmo identificou uma ou mais faces & Variável \\
+        $\overline{B}$ & Imagens onde o algoritmo não identificou nenhuma face & Variável \\
     \hline\hline
     \end{tabular}
 \end{table}
 \
-Definidos os grupos, pode-se utilizar a tabela de contingência \ref{tab:tabela_contingencia} para facilitar a análise da relação entre os grupos definidos anteriormente. Na tabela \ref{tab:tabela_contingencia} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na tabela de contingência são mutuamente excludentes. \cite{Dougherty:2012:PRC:2553126}
+Definidos os grupos, pode-se utilizar a matriz de confusão \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes. \cite{Dougherty:2012:PRC:2553126}
 
 \begin{table}[htbp]
-    \caption{Tabela de contingência}
-    \label{tab:tabela_contingencia}
+    \caption{Matriz de confusão}
+    \label{tab:matriz_de_confusao}
     \centering
     \begin{tabular}{ccc}\hline\hline
         & \textit{B} & $\overline{B}$ \\
@@ -144,22 +144,22 @@ Definidos os grupos, pode-se utilizar a tabela de contingência \ref{tab:tabela_
     \end{tabular}
 \end{table}
 
-Para melhor entender os agrupamentos da tabela de contingência, pode-se observar na imagem \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. 
+Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na imagem \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. 
 
 \begin{figure}[htbp]
     \centering
-    \caption{Possível distribuição normal dos grupos observados na tabela de contingência.}
-    \includegraphics[scale=.5]{figs/norm_dist.png}
+    \caption{Possível distribuição normal dos grupos observados na matriz de confusão.}
+    \includegraphics[scale=.4]{figs/norm_dist.png}
     \label{fig:norm_dist}
  \end{figure}
 
  Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido a sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir uma limite para decisão, que pode ser ajustado conforme a necessidade, mas que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
 
- A tabela de contingência também pode ser escrita em termos probabilísticos (tabela \ref{tab:tabela_contingencia_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (figura \ref{fig:venn_diagram}).
+ A matriz de confusão também pode ser escrita em termos probabilísticos (tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (figura \ref{fig:venn_diagram}).
 
 \begin{table}[htbp]
-    \caption{Tabela de contingência com probabilidades marginais}
-    \label{tab:tabela_contingencia_probab}
+    \caption{Matriz de confusão com probabilidades marginais}
+    \label{tab:matriz_de_confusao_probab}
     \centering
     \begin{tabular}{cccc}\hline\hline
         & \textit{B} & $\overline{B}$ & Soma\\
@@ -170,17 +170,57 @@ Para melhor entender os agrupamentos da tabela de contingência, pode-se observa
     \end{tabular}
 \end{table}
 
- \begin{figure}[htbp]
-     \centering
-     \caption{Diagrama de Venn para as imagens analisadas.}
-     \includegraphics[scale=.4]{figs/venn-diagram.png}
-     \label{fig:venn_diagram}
-  \end{figure}
+\begin{figure}[htbp]
+    \centering
+    \caption{Diagrama de Venn para as imagens analisadas.}
+    \includegraphics[scale=.4]{figs/venn-diagram.png}
+    \label{fig:venn_diagram}
+\end{figure}
 
-Por fim, podem ser calculadas as medidas tradicionais de sensitividade (a probabilidade condicional do algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional do algoritmo não identificar nenhuma face em uma imagem que realmente não contém nenhuma face) conforme as equações \ref{eq:sensitividade} e \ref{eq:especificidade}.
+Podem também ser calculadas as medidas tradicionais de sensitividade (a probabilidade condicional do algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional do algoritmo não identificar nenhuma face em uma imagem que realmente não contém nenhuma face) conforme as equações \ref{eq:sensitividade} e \ref{eq:especificidade}.
 
 \begin{align} \label{eq:sensitividade}
     \text{sensitividade, } P(B|A) = P(A \cap B) / (P(A \cap B) + P(A \cap \overline{B})) = a/(a + b) \\
     \label{eq:especificidade}
     \text{especificidade, } P(\overline{B} | \overline{A}) = P(\overline{A} \cap \overline{B}) / (P(\overline{A} \cap \overline{B}) + P(\overline{A} \cap B)) = d/(d + c)
 \end{align}
+
+Por fim, a partir da sensitividade e especificidade é possível exibir o resultado do classificador no espaço ROC (\textit{Receiver operating characteristic}, traduzido literalmente como Característica operacional do receptor), que consiste em um plano onde o eixo horizontal mede a taxa de falsos positivos (1 - especificidade) e o eixo vertical mede a taxa de verdadeiros positivos (sensitividade), isso permite comparar facilmente diferentes classificadores, pois quanto mais próximo do canto esquerdo superior, melhor a classificação.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Espaço ROC.}
+    \includegraphics[scale=.4]{figs/curva_roc.png}
+    \label{fig:venn_diagram}
+\end{figure}
+
+\section{Análise de Custo}
+
+Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como A o valor presente líquido para cada novo cliente, ou seja, o lucro que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular o lucro da empresa antes e depois da aplicação de um modelo de detecção facial.
+
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam o lucro A para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se definir a seguinte equação:
+
+\begin{align} \label{eq:g_0}
+    g_0 = (VP+FN) \times A - (VP+FP+FN+VN) \times H
+\end{align}
+
+Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo lucro A para a empresa, com isso, pode-se definir uma segunda equação:
+\begin{align} \label{eq:g_1}
+    g_1 = VP \times A - (VP+FP) \times H
+\end{align}
+
+Para avaliar o lucro que o modelo traz para a empresa, pode-se calcular a diferença entre o lucro antes e depois do modelo:
+\begin{align} \label{eq:profit}
+    g_1 - g_0 = (1 - \frac{A}{H}) \times FN + VN
+\end{align}
+
+Considerando que para o modelo trazer valor para a empresa, é necessário que o lucro após sua aplicação seja maior que o lucro antes da sua aplicação, chega-se a seguinte relação:
+\begin{align} \label{eq:profit2}
+    g_1 - g_0 > 0 \\
+    (1 - \frac{A}{H}) \times FN + VN > 0 \\
+\end{align}
+
+A equação obtida ainda pode ser reescrita em função da taxa de verdadeiros positivos e a taxa de falsos positivos, de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de lucro.
+
+Assim, é possível avaliar em função da matriz de confusão do modelo, do custo de análise manual de um documento e do valor presente líquido de um cliente, se a aplicação deste modelo é viável ou não.
+

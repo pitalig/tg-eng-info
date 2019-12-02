@@ -1,10 +1,10 @@
 \chapter{Resultados e Discussão}\label{cap:resultados}
 
-Após entender o funcionamento do algoritmo de Viola-Jones e definir a metodologia para análise, foram executadas duas iterações de detecção sobre o conjunto de imagens, com diferentes parâmetros, na primeira foram ajustados os parâmetros de fator de escala para 1.3 e número mínimo de vizinhos para 5, após analisar todas imagens foi possível preencher a tabela de contingência \ref{tab:tabela_contingencia_teste1} e calcular a respectiva sensitividade $P(B|A) = 98.5872\%$ e especificidade $P(\overline{B} | \overline{A}) = 86.6024\%$.
+Após entender o funcionamento do algoritmo de Viola-Jones e definir a metodologia para análise, foram executadas duas iterações de detecção sobre o conjunto de imagens, com diferentes parâmetros, na primeira foram ajustados os parâmetros de fator de escala para 1.3 e número mínimo de vizinhos para 5, após analisar todas imagens foi possível preencher a matriz de confusão \ref{tab:matriz_de_confusao_teste1} e calcular a respectiva sensitividade $P(B|A) = 98.5872\%$ e especificidade $P(\overline{B} | \overline{A}) = 86.6024\%$.
 
 \begin{table}[htbp]
-    \caption{Tabela de contingência com os resultados do primeiro teste}
-    \label{tab:tabela_contingencia_teste1}
+    \caption{Matriz de confusão com os resultados do primeiro teste}
+    \label{tab:matriz_de_confusao_teste1}
     \centering
     \begin{tabular}{cccc}\hline\hline
         & \textit{B} & $\overline{B}$ & Soma\\
@@ -15,11 +15,11 @@ Após entender o funcionamento do algoritmo de Viola-Jones e definir a metodolog
     \end{tabular}
 \end{table}
 
-Na segunda iteração, ajustando o fator de escala para 1.05 e o número mínimo de vizinhos para 3, foram obtidos os resultados apresentados na tabela \ref{tab:tabela_contingencia_teste2} e a respectiva sensitividade $P(B|A) = 66.3923\%$ e especificidade $P(\overline{B} | \overline{A}) = 98.3479\%$.
+Na segunda iteração, ajustando o fator de escala para 1.05 e o número mínimo de vizinhos para 3, foram obtidos os resultados apresentados na tabela \ref{tab:matriz_de_confusao_teste2} e a respectiva sensitividade $P(B|A) = 66.3923\%$ e especificidade $P(\overline{B} | \overline{A}) = 98.3479\%$.
 
 \begin{table}[htbp]
-    \caption{Tabela de contingência com os resultados do segundo teste}
-    \label{tab:tabela_contingencia_teste2}
+    \caption{Matriz de confusão com os resultados do segundo teste}
+    \label{tab:matriz_de_confusao_teste2}
     \centering
     \begin{tabular}{cccc}\hline\hline
         & \textit{B} & $\overline{B}$ & Soma\\
@@ -39,32 +39,3 @@ Já analisando a especificidade, o valor teve uma redução na segunda iteraçã
 Vale enfatizar que ambas análises sensitividade e especificidade estão de acordo com os resultados esperados devido aos parâmetros utilizados que fazem com que a segunda iteração detecte uma quantidade maior de faces.
 
 Outro ponto a ser destacado é a porcentagem de imagens classificadas corretamente, ou seja, a soma das porcentagens de verdadeiros positivos e verdadeiros negativos, que na primeira iteração foi igual a 92.5948\% e na segunda iteração foi igual a 82.3702\%, esses valores demonstram que a ajuste de parâmetros não influencia apenas no limite de decisão observado na figura \ref{fig:norm_dist}, mas também nas distribuições.
-
-\section{Análise de Custo}
-
-Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como A o valor presente líquido para cada novo cliente, ou seja, o lucro que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular o lucro da empresa antes e depois da aplicação de um modelo de detecção facial.
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam o lucro A para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se definir a seguinte equação:
-
-\begin{align} \label{eq:g_0}
-    g_0 = (VP+FN)*A - (VP+FP+FN+VN)*H
-\end{align}
-
-Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo lucro A para a empresa, com isso, pode-se definir uma segunda equação:
-\begin{align} \label{eq:g_1}
-    g_1 = VP*A - (VP+FP)*H \\
-    g_1 = VP*A - (VP+FP)*H + \sum\nolimits_{i = 1}^{10} 0.8^i * FN * (VP*A - (VP+FP)*H)
-\end{align}
-
-Para avaliar o lucro que o modelo traz para a empresa, pode-se calcular a diferença entre o lucro antes e depois do modelo:
-\begin{align} \label{eq:profit}
-    g_1 - g_0 = H*(FN+VN) - FN*A
-\end{align}
-
-Considerando que para o modelo trazer valor para a empresa, é necessário que o lucro após sua aplicação seja maior que o lucro antes da sua aplicação, chega-se a seguinte relação:
-\begin{align} \label{eq:profit2}
-    g_1 - g_0 > 0 \\
-    H*(FN+VN) - FN*A > 0 \\
-    \frac{(FN + VN)}{FN} > \frac{A}{H}
-\end{align}
-
-Assim, é possível avaliar em função da matriz de confusão do modelo, do custo de análise manual de um documento e do valor presente líquido de um cliente, se a aplicação deste modelo é viável ou não.
