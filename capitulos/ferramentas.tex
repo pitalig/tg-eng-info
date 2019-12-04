@@ -198,7 +198,7 @@ Por fim, a partir da sensitividade e especificidade é possível exibir o result
 
 Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como A o valor presente líquido para cada novo cliente, ou seja, o lucro que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular o lucro da empresa antes e depois da aplicação de um modelo de detecção facial.
 
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam o lucro A para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se definir a seguinte equação:
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam o lucro A para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se definir a seguinte equação: \ref{eq:g_0}
 
 \begin{align} \label{eq:g_0}
     g_0 = (VP+FN) \times A - (VP+FP+FN+VN) \times H
@@ -211,16 +211,31 @@ Após a aplicação do modelo, apenas as fotos que foram classificadas pelo mode
 
 Para avaliar o lucro que o modelo traz para a empresa, pode-se calcular a diferença entre o lucro antes e depois do modelo:
 \begin{align} \label{eq:profit}
-    g_1 - g_0 = (1 - \frac{A}{H}) \times FN + VN
+    g_1 - g_0 = VN - (\frac{A}{H} - 1) \times FN
 \end{align}
 
 Considerando que para o modelo trazer valor para a empresa, é necessário que o lucro após sua aplicação seja maior que o lucro antes da sua aplicação, chega-se a seguinte relação:
 \begin{align} \label{eq:profit2}
     g_1 - g_0 > 0 \\
-    (1 - \frac{A}{H}) \times FN + VN > 0 \\
+    VN - (\frac{A}{H} - 1) \times FN > 0
 \end{align}
 
-A equação obtida ainda pode ser reescrita em função da taxa de verdadeiros positivos e a taxa de falsos positivos, de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de lucro.
+A equação obtida ainda pode ser reescrita em função da taxa de verdadeiros positivos (TVP) e da taxa de falsos positivos (TFP) de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de lucro. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:fn_tvp} e \ref{eq:vn_tfp}, obtendo por fim a equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
 
-Assim, é possível avaliar em função da matriz de confusão do modelo, do custo de análise manual de um documento e do valor presente líquido de um cliente, se a aplicação deste modelo é viável ou não.
+\begin{align} 
+    \label{eq:fn_tvp}
+    FN &= P \times (1-TVP) \\
+    \label{eq:vn_tfp}
+    VN &= N \times (1-TFP) \\
+    \label{eq:profit_roc}
+    TVP &= 1 + \left( \frac{N}{P \times \left( \frac{A}{H}-1 \right) } \times (TFP - 1) \right)
+\end{align}
 
+\begin{figure}[htbp]
+    \centering
+    \caption{Limiar de lucro exibido no espaço ROC.}
+    \includegraphics[scale=1]{figs/curva_roc_lucro.png}
+    \label{fig:profit_roc}
+\end{figure}
+
+Assim, é possível avaliar em função da matriz de confusão do modelo, do custo de análise manual de um documento, do valor presente líquido de um cliente e da proporção média de imagens positivas e negativas, se a aplicação deste modelo é viável ou não.
