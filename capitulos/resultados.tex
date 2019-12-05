@@ -10,7 +10,7 @@ Após entender o funcionamento do algoritmo de Viola-Jones e definir a metodolog
  \end{figure}
 
  \begin{table}[htbp]
-     \caption{Matriz de confusão com os resultados do primeiro teste.}
+     \caption{Identificação dos resultados da figura \ref{fig:results_roc}.}
      \label{tab:results_identify}
      \centering
      \begin{tabular}{clrr}
@@ -30,7 +30,7 @@ Após entender o funcionamento do algoritmo de Viola-Jones e definir a metodolog
 Em nenhuma das tentativas de classificação foi obtido um resultado lucrativo. Aprofundando a análise, pode-se observar os resultados de sensitividade, especificidade e acurácia de cada um dos classificadores na tabela \ref{tab:results_data} e a matriz de confusão do resultado que mais se aproximou do cenário lucrativo na tabela ref{}, também foi observado que apenas duas imagens de faces não foram reconhecidas, entre as 17100 testadas.
 
 \begin{table}[htbp]
-     \caption{Matriz de confusão com os resultados do primeiro teste.}
+     \caption{Valores de sensitividade, especificidade e acurácia de cada um dos classificadores.}
      \label{tab:results_data}
      \centering
      \begin{tabular}{crrr}
@@ -45,6 +45,19 @@ Em nenhuma das tentativas de classificação foi obtido um resultado lucrativo. 
            G & 0.972690 & 0.792281 & 0.936608 \\
            H & 0.936023 & 0.988538 & 0.946526 \\
       \end{tabular}
+ \end{table}
+
+ \begin{table}[htbp]
+     \caption{Matriz de confusão com os resultados do classificador que mais se aproximou do cenário lucrativo, utilizando os parâmetros fator de escala = 1.05 e número mínimo de vizinhos = 0.}
+     \label{tab:matriz_de_confusao_best_result}
+     \centering
+     \begin{tabular}{cccc}\hline\hline
+         & \textit{B} & $\overline{B}$ & Soma\\
+     \textit{A} & 79.8784\% & 0.1216\% & 80\% \\
+     $\overline{A}$ & 17.4175\% & 2.5825\% & 20\% \\
+     Soma & 97.2959\% & 2.7041\% & 100\% \\
+     \hline\hline
+     \end{tabular}
  \end{table}
 
 Comparando tal resultado com a análise da equação que define o limiar lucrativo da classificação, é possível perceber que cada imagem positiva que é classificada como negativa gera um prejuízo muito elevado, que precisa ser compensado com a classificação correta de uma grande quantidade de imagens negativas. Para o classificador estudado, se torna extremamente difícil atingir tal resultado, mesmo com grande aumento da sensibilidade, classificando quase todas imagens como positivas.
