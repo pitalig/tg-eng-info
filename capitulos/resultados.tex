@@ -1,6 +1,6 @@
 \chapter{Resultados e Discussão}\label{cap:resultados}
 
-Após entender o funcionamento do algoritmo de Viola-Jones e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala para e número mínimo de vizinhos e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a figura \ref{fig:results_roc}, para que todos sejam facilmente comparados e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado. Além das classificações utilizando o classificador de Viola-Jones, foi feita uma classificação utilizando o framework Keras (fonte ref{}) para referência. 
+Após entender o funcionamento do algoritmo de Viola-Jones e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala para e número mínimo de vizinhos, explicados anteriormente, e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a figura \ref{fig:results_roc}, para que todos sejam facilmente comparados e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado. Além das classificações utilizando o classificador de Viola-Jones, foi feita uma classificação utilizando o framework Keras \cite{keras_brownlee_2019} para referência. 
 
 \begin{figure}[htbp]
      \centering
@@ -62,7 +62,7 @@ Em nenhuma das tentativas de classificação foi obtido um resultado lucrativo. 
 
 Comparando tal resultado com a análise da equação que define o limiar lucrativo da classificação, é possível perceber que cada imagem positiva que é classificada como negativa gera um prejuízo muito elevado, que precisa ser compensado com a classificação correta de uma grande quantidade de imagens negativas. Para o classificador estudado, se torna extremamente difícil atingir tal resultado, mesmo com grande aumento da sensibilidade, classificando quase todas imagens como positivas.
 
-Como uma tentativa extra e com objetivo de comparação, foi utilizado um detector de pele, que se baseia nas cores da imagem, de forma que fosse calculada a quantidade de pele existente em cada imagem, os resultados foram ordenados e então foi traçada a curva ROC na figura \ref{fig:skin_roc} que representa os possíveis limiares da quantidade de pele existente em uma imagem que faria a mesma ser considera como face.
+Como uma tentativa extra e com objetivo de comparação, foi utilizado um detector de pele \cite{skin_rosebrock_2018}, que se baseia nas cores da imagem, de forma que fosse calculada a quantidade de pele existente em cada imagem, os resultados foram ordenados e então foi traçada a curva ROC na figura \ref{fig:skin_roc} que representa os possíveis limiares da quantidade de pele existente em uma imagem que faria a mesma ser considera como face.
 
 \begin{figure}[htbp]
      \centering
