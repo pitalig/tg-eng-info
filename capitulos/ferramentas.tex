@@ -16,7 +16,7 @@ O procedimento utilizado permite ainda ajuste de parâmetros para a execução d
 
 O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" ~\cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
 
-\subsection{Imagem Integral}
+\subsection{Imagem Integral} 
 
 A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada pixel como a soma de todos os pixels que estão acima ou a esquerda do mesmo, como ilustrado na figura~\ref{fig:integral}.
 
@@ -129,7 +129,7 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \hline\hline
     \end{tabular}
 \end{table}
-\
+
 Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
 
 \begin{table}[htbp]
@@ -191,36 +191,36 @@ Por fim, a partir da sensitividade e especificidade é possível exibir o result
     \centering
     \caption{Espaço ROC.}
     \includegraphics[scale=.4]{figs/curva_roc.png}
-    \label{fig:venn_diagram}
+    \label{fig:roc_space}
 \end{figure}
 
 \section{Análise de Custo}
 
-Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como A o valor presente líquido para cada novo cliente, ou seja, o lucro que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular o lucro da empresa antes e depois da aplicação de um modelo de detecção facial.
+Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como R o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial.
 
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam o lucro A para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se definir a seguinte equação: \ref{eq:g_0}
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, onde VP é a taxa de verdadeiros positivos, FP a taxa de falsos positivos, VN a taxa de verdadeiros negativos e FN a taxa de falsos negativos, pode-se obter a equação \ref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (VP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
 
 \begin{align} \label{eq:g_0}
-    g_0 = (VP+FN) \times A - (VP+FP+FN+VN) \times H
+    g_0 = (VP+FN) \times R - (VP+FP+FN+VN) \times H
 \end{align}
 
-Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo lucro A para a empresa, com isso, pode-se definir uma segunda equação:
+Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita R para a empresa, com isso, pode-se obter a equação \ref{eq:g_1}.
 \begin{align} \label{eq:g_1}
-    g_1 = VP \times A - (VP+FP) \times H
+    g_1 = VP \times R - (VP+FP) \times H
 \end{align}
 
-Para avaliar o lucro que o modelo traz para a empresa, pode-se calcular a diferença entre o lucro antes e depois do modelo:
+Para avaliar a receita que o modelo traz para a empresa, pode-se calcular a diferença entre a receita antes e depois do modelo, obtendo a equação \ref{eq:profit}.
 \begin{align} \label{eq:profit}
-    g_1 - g_0 = VN - (\frac{A}{H} - 1) \times FN
+    g_1 - g_0 = VN - (\frac{R}{H} - 1) \times FN
 \end{align}
 
-Considerando que para o modelo trazer valor para a empresa, é necessário que o lucro após sua aplicação seja maior que o lucro antes da sua aplicação, chega-se a seguinte relação:
+Considerando que para o modelo trazer valor para a empresa, é necessário que a receita após sua aplicação seja maior que a receita antes da sua aplicação, obtendo a equação \ref{eq:profit2}.
 \begin{align} \label{eq:profit2}
     g_1 - g_0 > 0 \\
-    VN - (\frac{A}{H} - 1) \times FN > 0
+    VN - (\frac{R}{H} - 1) \times FN > 0
 \end{align}
 
-A equação obtida ainda pode ser reescrita em função da taxa de verdadeiros positivos (TVP) e da taxa de falsos positivos (TFP) de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de lucro. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:fn_tvp} e \ref{eq:vn_tfp}, obtendo por fim a equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
+A equação obtida ainda pode ser reescrita em função da taxa de verdadeiros positivos (TVP) e da taxa de falsos positivos (TFP) de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:fn_tvp} e \ref{eq:vn_tfp}, obtendo por fim a equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
 
 \begin{align} 
     \label{eq:fn_tvp}
@@ -228,12 +228,12 @@ A equação obtida ainda pode ser reescrita em função da taxa de verdadeiros p
     \label{eq:vn_tfp}
     VN &= N \times (1-TFP) \\
     \label{eq:profit_roc}
-    TVP &= 1 + \left( \frac{N}{P \times \left( \frac{A}{H}-1 \right) } \times (TFP - 1) \right)
+    TVP &= 1 + \left( \frac{N}{P \times \left( \frac{R}{H}-1 \right) } \times (TFP - 1) \right)
 \end{align}
 
 \begin{figure}[htbp]
     \centering
-    \caption{Limiar de lucro exibido no espaço ROC.}
+    \caption{Limiar lucrativo exibido no espaço ROC.}
     \includegraphics[scale=1]{figs/curva_roc_lucro.png}
     \label{fig:profit_roc}
 \end{figure}
