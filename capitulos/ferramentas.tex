@@ -4,9 +4,9 @@ Para obter melhor entendimento sobre possíveis ferramentas de visão computacio
 
 \section{OpenCV}
 
-A ferramenta OpenCV, que pode ser encontrada no endereço \citeonline{itseez2015opencv}, é uma biblioteca de código aberto focada na solução de problemas utilizando visão computacional em tempo real, desenvolvida pela Intel e posteriormente pela Itseez, com suporte a múltiplas plataformas e uso gratuito sobre a licença de código aberto BSD. A ferramenta apresenta suporte a frameworks de aprendizado profundo, como TensorFlow, Pytorch e Caffe e contempla tanto funções básicas, para aplicações como processamento de imagem, alteração de cor ou resolução, até aplicações avançadas, como detecção facial, identificação de características e biometria. \cite{wiki:OpenCV}
+A ferramenta OpenCV, que pode ser encontrada no website Github \cite{itseez2015opencv}, é uma biblioteca de código aberto focada na solução de problemas utilizando visão computacional em tempo real, desenvolvida pela Intel e posteriormente pela Itseez, com suporte a múltiplas plataformas e uso gratuito sobre a licença de código aberto BSD. A ferramenta apresenta suporte a frameworks de aprendizado profundo, como TensorFlow, Pytorch e Caffe e contempla tanto funções básicas, para aplicações como processamento de imagem, alteração de cor ou resolução, até aplicações avançadas, como detecção facial, identificação de características e biometria \cite{wiki:OpenCV}.
 
-Neste trabalho, será utilizada a função de detecção de faces da ferramenta OpenCV, que utiliza um classificador em cascata baseado características. Esse é um método eficiente para reconhecimento de faces em imagens proposto por Paul Viola and Michael Jones, amplamente conhecido como método Viola-Jones, onde uma função é treinada com muitos exemplos positivos (imagens que contém o objeto a ser detectado) e negativos (imagens que não contém o objeto a ser detectado) e então utilizada para detectar as mesmas características em outras imagens. \cite{itseez2014theopencv}
+Uma das ferramentas que será utilizada neste trabalho é a função de detecção de faces da ferramenta OpenCV, que utiliza um classificador em cascata baseado características. Esse é um método eficiente para reconhecimento de faces em imagens proposto por Paul Viola and Michael Jones, amplamente conhecido como método Viola-Jones, onde uma função é treinada com muitos exemplos positivos (imagens que contém o objeto a ser detectado) e negativos (imagens que não contém o objeto a ser detectado) e então utilizada para detectar as mesmas características em outras imagens \cite{itseez2014theopencv}.
 
 A detecção de faces utilizando OpenCV consiste em duas etapas principais, a primeira consiste no treinamento do modelo, onde são apresentadas diversas imagens já identificadas para que o modelo encontre padrões positivos e negativos. Após o treinamento, a segunda etapa consiste em utilizar o modelo obtido para identificar, em novas imagens, características semelhantes as vistas nas imagens do treinamento. Neste projeto, será utilizado um modelo fornecido em conjunto com a ferramenta OpenCV, já treinado com diversos exemplos de faces frontais.
 
@@ -14,7 +14,7 @@ O procedimento utilizado permite ainda ajuste de parâmetros para a execução d
 
 \section{Algoritmo Viola-Jones}
 
-O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" ~\cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo de impulsão \textit{AdaBoost} e o classificador em cascata.
+O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" ~\cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
 
 \subsection{Imagem Integral}
 
@@ -55,12 +55,12 @@ Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo ar
  O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
 
 %-
-\subsection{Algoritmo de Impulsão AdaBoost}
+\subsection{Algoritmo de AdaBoost}
 %-
 
-As características demonstradas anteriormente, são definidas basicamente como duas ou mais áreas retângulares de qualquer tamanho, tal simplicidade implica na possibilidade da criação de uma enorme variação das mesmas que precisariam ser calculadas diversas vezes, para cada parte de imagem e com diferentes tamanhos, isso implica em um alto custo de processamento, para evitar tal problema, durante a etapa de treinamento do modelo, é utilizado o algoritmo de impulsão \textit{AdaBoost}, que identifica quais são as características com maior probabilidade de acerto.
+As características demonstradas anteriormente, são definidas basicamente como duas ou mais áreas retângulares de qualquer tamanho, tal simplicidade implica na possibilidade da criação de uma enorme variação das mesmas que precisariam ser calculadas diversas vezes, para cada parte de imagem e com diferentes tamanhos, isso implica em um alto custo de processamento, para evitar tal problema, durante a etapa de treinamento do modelo, é utilizado o algoritmo de \textit{AdaBoost} \cite{adaboost-Freund}, que identifica quais são as características com maior probabilidade de acerto.
 
-O \textit{AdaBoost}, que tem seu nome derivado de \textit{adaptative boosting} (traduzido como impulsão adaptativa), é um método de aprendizado de máquina que utiliza a combinação de vários classificadores fracos para obter uma classificação forte, no caso da detecção facial, o algoritmo é utilizado tanto para selecionar um conjunto de características mais eficientes como para treinar o classificador. \cite{fabio-luciana-2015}
+O \textit{AdaBoost}, que tem seu nome derivado de \textit{adaptative boosting}, é um método de aprendizado de máquina que utiliza a combinação de vários classificadores fracos para obter uma classificação forte, no caso da detecção facial, o algoritmo é utilizado tanto para selecionar um conjunto de características mais eficientes como para treinar o classificador \cite{fabio-luciana-2015}.
 
 \begin{figure}[htb]
     \centering
@@ -78,7 +78,7 @@ O \textit{AdaBoost}, que tem seu nome derivado de \textit{adaptative boosting} (
 
 Pensando que, na maioria dos casos, uma face não ocupa a maior parte de uma imagem a ser identificada, é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que tem maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as "não faces".
 
-Para tal problema, o classificador em cascata apresenta uma ótima solução, esta consiste na utilização de uma série de classificadores que são aplicados de forma sequencial, conforme ilustrado na imagem \ref{fig:cascade-classifier}, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
+Para tal problema, o classificador em cascata apresenta uma ótima solução, esta consiste na utilização de uma série de classificadores que são aplicados de forma sequencial, conforme ilustrado na Figura \ref{fig:cascade-classifier}, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
 
 \begin{figure}[htb]
     \centering
@@ -96,9 +96,9 @@ Para tal problema, o classificador em cascata apresenta uma ótima solução, es
 
  Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones} na biblioteca \textit{OpenCV}, assim como o seu modelo previamente treinado, foram utilizados dois conjuntos de imagens. Tendo em mente o objetivo deste projeto, de identificar rapidamente imagens que não possuem uma face, são tratadas como imagens positivas as imagens que não possuem faces e como negativas as imagens que possuem ao menos uma face.
 
-O primeiro dataset, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, será utilizado para representar imagens positivas, portanto consiste em um conjunto de mais de 50 mil imagens de diversos quartos de hotel vazios, pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
+O primeiro dataset, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, será utilizado para representar imagens da classe negativa que consiste em um conjunto de mais de 50 mil imagens de diversos quartos de hotel vazios, pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
 
-O segundo dataset, nomeado \textit{UTKFace}, disponível em \citeonline{utkface}, será utilizado para representar imagens negativas, portanto consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo, alguns exemplos das imagens contidas no dataset podem ser vistos na figura \ref{fig:exemplos-utk}.
+O segundo dataset, nomeado \textit{UTKFace}, disponível em \cite{utkface}, será utilizado para representar imagens da classe positiva que consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo. Alguns exemplos das imagens contidas no dataset podem ser vistos na figura \ref{fig:exemplos-utk}.
 
 \begin{figure}[htb]
     \centering
@@ -108,13 +108,13 @@ O segundo dataset, nomeado \textit{UTKFace}, disponível em \citeonline{utkface}
     \label{fig:exemplos-utk}
  \end{figure}
 
-Para os testes, foram filtradas apenas imagens de pessoas entre 18 e 60 anos de idade do dataset \textit{UTKFace}, obtendo 17100 imagens e então selecionadas aleatoriamente 4275 imagens do dataset \textit{Hotels-50k}. Assim, foi totalizado um conjunto de 21375, onde 80\% delas eram positivas (possuíam ao menos uma face) e 20\% negativas (não possuíam faces), tal proporção representa a hipótese de que cerca de 20\% de imagens enviadas para cadastros na verdade não possuem uma face.
+Para os testes, foram filtradas apenas imagens de pessoas entre 18 e 60 anos de idade do dataset \textit{UTKFace}, obtendo 17100 imagens e então selecionadas aleatoriamente 4275 imagens do dataset \textit{Hotels-50k}. Assim, foi totalizado um conjunto de 21375 imagens, onde 80\% delas eram positivas (possuíam ao menos uma face) e 20\% negativas (não possuíam faces). Tal proporção representa a hipótese de que cerca de 20\% de imagens enviadas para cadastros na verdade não possuem uma face.
 
 %-
 \section{Metodologia de Análise}
 %-
 
-Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da tabela \ref{tab:grupos-images}. 
+Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da Tabela \ref{tab:grupos-images}. 
 
 \begin{table}[htbp]
     \caption{Grupos observados}
@@ -130,7 +130,7 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \end{tabular}
 \end{table}
 \
-Definidos os grupos, pode-se utilizar a matriz de confusão \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes. \cite{Dougherty:2012:PRC:2553126}
+Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
 
 \begin{table}[htbp]
     \caption{Matriz de confusão}
@@ -144,18 +144,18 @@ Definidos os grupos, pode-se utilizar a matriz de confusão \ref{tab:matriz_de_c
     \end{tabular}
 \end{table}
 
-Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na imagem \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. 
+Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. 
 
 \begin{figure}[htbp]
     \centering
-    \caption{Possível distribuição normal dos grupos observados na matriz de confusão.}
+    \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão.}
     \includegraphics[scale=.4]{figs/norm_dist.png}
     \label{fig:norm_dist}
  \end{figure}
 
  Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido a sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir uma limite para decisão, que pode ser ajustado conforme a necessidade, mas que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
 
- A matriz de confusão também pode ser escrita em termos probabilísticos (tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (figura \ref{fig:venn_diagram}).
+ A matriz de confusão também pode ser escrita em termos probabilísticos (Tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (Figura \ref{fig:venn_diagram}).
 
 \begin{table}[htbp]
     \caption{Matriz de confusão com probabilidades marginais}
@@ -185,7 +185,7 @@ Podem também ser calculadas as medidas tradicionais de sensitividade (a probabi
     \text{especificidade, } P(\overline{B} | \overline{A}) = P(\overline{A} \cap \overline{B}) / (P(\overline{A} \cap \overline{B}) + P(\overline{A} \cap B)) = d/(d + c)
 \end{align}
 
-Por fim, a partir da sensitividade e especificidade é possível exibir o resultado do classificador no espaço ROC (\textit{Receiver operating characteristic}, traduzido literalmente como Característica operacional do receptor), que consiste em um plano onde o eixo horizontal mede a taxa de falsos positivos (1 - especificidade) e o eixo vertical mede a taxa de verdadeiros positivos (sensitividade), isso permite comparar facilmente diferentes classificadores, pois quanto mais próximo do canto esquerdo superior, melhor a classificação.
+Por fim, a partir da sensitividade e especificidade é possível exibir o resultado do classificador no espaço ROC (\textit{Receiver Operating Characteristic}, traduzido literalmente como Característica operacional do receptor), que consiste em um plano onde o eixo horizontal mede a taxa de falsos positivos (1 - especificidade) e o eixo vertical mede a taxa de verdadeiros positivos (sensitividade), isso permite comparar facilmente diferentes classificadores, pois quanto mais próximo do canto esquerdo superior, melhor a classificação.
 
 \begin{figure}[htbp]
     \centering
