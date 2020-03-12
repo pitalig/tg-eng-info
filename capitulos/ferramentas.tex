@@ -3,17 +3,13 @@
 Para obter melhor entendimento sobre ferramentas de visão computacional, em específico para detecção facial, este capítulo descreve a execução de testes feitos utilizando as ferramentas OpenCV e Keras, ambas aplicadas utilizando a linguagem de programação Python.
 As ferramentas foram utilizadas para análise de um conjunto específico de imagens e os resultados foram validados utilizando as métricas já conhecidas para aprendizado de máquina e também uma metodologia de análise de custo baseada em métricas do mercado.
 
-\section{OpenCV}
+\section{OpenCV e Viola-Jones}
 
 A ferramenta OpenCV, que pode ser encontrada no website Github \cite{itseez2015opencv}, é uma biblioteca de código aberto focada na solução de problemas utilizando visão computacional em tempo real, desenvolvida pela Intel e posteriormente pela Itseez, com suporte a múltiplas plataformas e uso gratuito sobre a licença de código aberto BSD. A ferramenta apresenta suporte a frameworks de aprendizado profundo, como TensorFlow, Pytorch e Caffe e contempla tanto funções básicas, para aplicações como processamento de imagem, alteração de cor ou resolução, até aplicações avançadas, como detecção facial, identificação de características e biometria \cite{wiki:OpenCV}.
 
 Uma das ferramentas que será utilizada neste trabalho é a função de detecção de faces da ferramenta OpenCV, que utiliza um classificador em cascata baseado características. Esse é um método eficiente para reconhecimento de faces em imagens proposto por Paul Viola and Michael Jones, amplamente conhecido como método Viola-Jones, onde uma função é treinada com muitos exemplos positivos (imagens que contém o objeto a ser detectado) e negativos (imagens que não contém o objeto a ser detectado) e então utilizada para detectar as mesmas características em outras imagens \cite{itseez2014theopencv}.
 
 A detecção de faces utilizando OpenCV consiste em duas etapas principais, a primeira consiste no treinamento do modelo, onde são apresentadas diversas imagens já identificadas para que o modelo encontre padrões positivos e negativos. Após o treinamento, a segunda etapa consiste em utilizar o modelo obtido para identificar, em novas imagens, características semelhantes as vistas nas imagens do treinamento. Neste projeto, será utilizado um modelo fornecido em conjunto com a ferramenta OpenCV, já treinado com diversos exemplos de faces frontais.
-
-O procedimento utilizado permite ainda ajuste de parâmetros para a execução do algoritmo de Viola-Jones, neste teste, serão utilizados: o fator de escala, que é o fator pelo qual as dimensões da imagem serão multiplicadas na tentativa de encontrar faces de diferentes tamanhos (quanto menor, maior a chance de encontrar faces) e o número mínimo de vizinhos, que é número mínimo de detecções, após varias iterações, para uma parte da imagem ser considerada uma face (quanto menor, maior a chance de encontrar faces).
-
-\section{Algoritmo Viola-Jones}
 
 O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" ~\cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
 
@@ -92,6 +88,16 @@ Para tal problema, o classificador em cascata apresenta uma ótima solução, es
  Um classificador comum, com um único estágio normalmente aceitaria muitos casos de falso negativo, para reduzir a taxa de falsos positivos e de descarte de imagens relevantes, mas no classificador em cascata, falsos positivos nos primeiros estágios não são um problema, pois serão analisados em outros diversos estágios e provavelmente eliminados.
 
  A utilização desse modelo combinada com o algoritmo \textit{AdaBoost}, possibilita a análise das característica mais eficientes logo no início e consequentemente o descarte muito mais rápido dos casos negativos nos primeiros estágios.
+
+ %-
+ \subsection{Parametrização do Algoritmo}
+ %-
+
+ O procedimento de detecção facial utilizando o OpenCV permite ainda ajuste de parâmetros para a execução do algoritmo de Viola-Jones.
+
+ O primeiro deles é chamado fator de escala que é o fator pelo qual as dimensões da imagem serão multiplicadas na tentativa de encontrar faces de diferentes tamanhos, pois o modelo é preparado para reconhecer faces de um tamanho específico, então durante a detecção a imagem é redimensionada e reanalisada diversas vezes para que faces de diferentes tamanhos possam ser detectadas. Para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de 1 o seu valor, maior a chance de encontrar faces mas a execução do detector também se torna mais custosa em termos de processamento. 
+
+ O segundo parâmetro é o número mínimo de vizinhos, que especifica quantos vizinhos cada retângulo candidato deve ter para retê-lo. Em mais detalhes, o detector analisa imagens utilizando um método de janelas retângulares que selecionam a partes da imagem, cada parte tem seus padrões comparados com os padrões de uma face e então é definido se esta janela contém ou não uma face, mas devido as várias iterações do detector sobre a mesma imagem durante a análise, uma mesma face pode ser detectada em mais de uma janela, tais janelas são consideradas janelas vizinhas, portanto para melhorar a precisão do detector e também filtrar detecções duplicadas, o parâmetro de número mínimo de vizinhos define quantas janelas vizinhas devem existir para considerar aquela parte da imagem como uma face. Enfim, para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de zero o seu valor, maior a chance de detectar faces, mas consequentemente maior a chance de falsos positivos.
 
  \section{Conjuntos de imagens para teste}
 
