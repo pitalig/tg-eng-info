@@ -15,17 +15,19 @@ O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection 
 
 \subsection{Imagem Integral} 
 
-A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada pixel como a soma de todos os pixels que estão acima ou a esquerda do mesmo, como ilustrado na figura~\ref{fig:integral}.
+A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada ponto como a soma de todos os pontos que estão acima ou a esquerda do mesmo, como ilustrado na figura~\ref{fig:integral}.
 
 \begin{figure}[htpb]
     \centering
     \caption{Imagem original (esquerda) e imagem integral (direita).}
-    \includegraphics[scale=.4]{figs/imagem-integral.png}
-    \legend{Fonte: \citeauthoronline{jensen2008implementingviolajones} (\citeyear{jensen2008implementingviolajones})}
+    \includegraphics[scale=.3]{figs/imagem-integral.png}
+    \legend{Fonte: PENDENTE \citeauthoronline{jensen2008implementingviolajones} (\citeyear{jensen2008implementingviolajones})}
     \label{fig:integral}
  \end{figure}
 
-A utilização desta técnica permite calcular facilmente o tamanho de qualquer retângulo formado entre quatro pixels da imagem, conhecendo apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem. Tal calculo é feito definindo o retângulo a ser análisado e então aplicando a equação \ref{eq:img-integral}.
+A utilização desta técnica permite calcular facilmente a soma dos valores internos de qualquer retângulo formado entre quatro pontos da imagem, utilizando apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem.
+
+O calculo é feito definindo o retângulo a ser análisado e então aplicando a equação \ref{eq:img-integral}. Tal equação é utilizada em \ref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
 
 \begin{figure}[htb]
     \centering
@@ -33,11 +35,13 @@ A utilização desta técnica permite calcular facilmente o tamanho de qualquer 
     \includegraphics[scale=.4]{figs/imagem-integral-calculo.png}
     \legend{Fonte: \citeauthoronline{jensen2008implementingviolajones} (\citeyear{jensen2008implementingviolajones})}
     \label{fig:integral-calculo}
- \end{figure}
+\end{figure}
 
- \begin{equation}\label{eq:img-integral}
-    \text{ Soma do retângulo cinza } = D - (B + C) + A
-\end{equation}
+\begin{align}\label{eq:img-integral}
+    \text{ Soma dos valores retângulo } &= D - (B + C) + A \\
+    \label{eq:img-integral-exemplo}
+    15 + 16 + 14 + 28 + 27 + 11 &= 101 - (254 + 186) + 450 = 111
+\end{align}
 
 Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retângulares predefinidas, como os exemplos ilustrado na figura \ref{fig:features}. 
 
