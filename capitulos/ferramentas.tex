@@ -21,21 +21,12 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
     \centering
     \caption{Imagem original (esquerda) e imagem integral (direita).}
     \includegraphics[scale=.3]{figs/imagem-integral.png}
-    \legend{Fonte: PENDENTE \citeauthoronline{jensen2008implementingviolajones} (\citeyear{jensen2008implementingviolajones})}
     \label{fig:integral}
  \end{figure}
 
 A utilização desta técnica permite calcular facilmente a soma dos valores internos de qualquer retângulo formado entre quatro pontos da imagem, utilizando apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem.
 
 O calculo é feito definindo o retângulo a ser análisado e então aplicando a equação \ref{eq:img-integral}. Tal equação é utilizada em \ref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
-
-\begin{figure}[htb]
-    \centering
-    \caption{Representação da área da imagem a ser analisada.}
-    \includegraphics[scale=.4]{figs/imagem-integral-calculo.png}
-    \legend{Fonte: \citeauthoronline{jensen2008implementingviolajones} (\citeyear{jensen2008implementingviolajones})}
-    \label{fig:integral-calculo}
-\end{figure}
 
 \begin{align}\label{eq:img-integral}
     \text{ Soma dos valores retângulo } &= D - (B + C) + A \\
