@@ -4,13 +4,14 @@ Após entender o funcionamento dos algoritmos e definir a metodologia para anál
 
 \begin{figure}[htbp]
      \centering
-     \caption{Resultados das classificações sobre o espaço ROC. Os 4 resultados mais lucratívos são identificados por quadrados e o restante por círculos. Os parâmetros utilizados em cada resultado são listados na Tabela \ref{tab:results_identify}.}
+     \caption{Resultados das classificações sobre o espaço ROC.}
      \includegraphics[scale=1]{figs/curva_roc_results.png}
+     \legend{Os 4 resultados mais lucratívos são identificados por quadrados e o restante por círculos. Os parâmetros utilizados em cada resultado são listados na Tabela \ref{tab:results_identify}.}
      \label{fig:results_roc}
  \end{figure}
 
  \begin{table}[htbp]
-     \caption{Identificação dos resultados da figura \ref{fig:results_roc}.}
+     \caption{Resultados obtidos com os classificadores.}
      \label{tab:results_identify}
      \centering
      \begin{tabular}{clrrrrrr}
@@ -65,7 +66,7 @@ Após entender o funcionamento dos algoritmos e definir a metodologia para anál
 Analisando os resultados de sensitividade, especificidade e acurácia de cada um dos classificadores na Tabela \ref{tab:results_identify} e a matriz de confusão do resultado que mais lucrativo na Tabela \ref{tab:matriz_de_confusao_best_result}, é possível obter algumas conclusões interessantes.
 
  \begin{table}[htbp]
-     \caption{Matriz de confusão com os resultados do classificador mais lucrativo, utilizando método keras.}
+     \caption{Matriz de confusão com os resultados do classificador mais lucrativo.}
      \label{tab:matriz_de_confusao_best_result}
      \centering
      \begin{tabular}{cccc}\hline\hline

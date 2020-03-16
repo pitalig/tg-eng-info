@@ -19,8 +19,9 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
 
 \begin{figure}[htpb]
     \centering
-    \caption{Imagem original (esquerda) e imagem integral (direita).}
+    \caption{Representação da imagem integral.}
     \includegraphics[scale=.3]{figs/imagem-integral.png}
+    \legend{Imagem original (esquerda) e imagem integral (direita).}
     \label{fig:integral}
  \end{figure}
 
@@ -38,7 +39,7 @@ Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo ar
 
 \begin{figure}[htb]
     \centering
-    \caption{Alguns exemplos de características retângulares analisadas.}
+    \caption{Exemplos de características retângulares analisadas.}
     \includegraphics[scale=.5]{figs/features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:features}
@@ -90,8 +91,9 @@ Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste 
 
  \begin{figure}[htb]
     \centering
-    \caption{Resultados da detecção utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
+    \caption{Resultados da detecção com variação de parâmetros.}
     \includegraphics[scale=.2]{figs/min_neighbors_messi.png}
+    \legend{Utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
     \label{fig:min-neighbors-messi}
  \end{figure}
 
