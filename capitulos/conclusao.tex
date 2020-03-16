@@ -2,9 +2,9 @@
 
 \section{Conclusões}
 
-Relembrando o objetivo do projeto, que consiste em negar rapidamente imagens que certamente não possuem nenhuma face, e observando os resultados obtidos e análisados, pode-se concluir que o algoritmo de Viola-Jones implementado na biblioteca OpenCV poderia ser utilizado de forma satisfatória para solucionar tal problema. 
+Relembrando o objetivo do projeto, que consiste em negar rapidamente imagens que certamente não possuem nenhuma face, e observando os resultados obtidos e análisados, pode-se concluir que tanto o algoritmo de Viola-Jones implementado na biblioteca OpenCV quando o Keras poderiam ser utilizado de forma satisfatória para solucionar tal problema se parametrizados da forma correta.
 
-Além disso, a utilização dos parâmetros ajustados na primeira iteração se mostra mais adequada, devido a maior quantidade de imagens classificadas corretamente, que torna possível negar de forma correta e automática 98.5872\% das imagens que não possuem faces, mas é importante lembrar que 13.3976\% das imagens que possuem uma face seriam também automáticamente negadas erroneamente. Para os casos onde negar uma imagem correta poderia causar maiores problemas, é recomendável utilizar os mesmos parâmetros da segunda iteração, que tornaria possível negar de forma correta e automática 66.3923\% das imagens que não possuem faces, mantendo em apenas 1.6521\% o volume de imagens que possuem uma face seriam  automáticamente negadas erroneamente.
+...
 
 \section{Trabalhos Futuros}
 
