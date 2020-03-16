@@ -95,23 +95,68 @@ Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste 
     \label{fig:min-neighbors-messi}
  \end{figure}
 
- \section{Conjuntos de imagens para teste}
+\section{KERAS PENDENTE}
 
- Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones} na biblioteca \textit{OpenCV}, assim como o seu modelo previamente treinado, foram utilizados dois conjuntos de imagens. Tendo em mente o objetivo deste projeto, de identificar rapidamente imagens que não possuem uma face, são tratadas como imagens positivas as imagens que não possuem faces e como negativas as imagens que possuem ao menos uma face.
+Descrição MTCNN e Keras.
 
-O primeiro dataset, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, será utilizado para representar imagens da classe negativa que consiste em um conjunto de mais de 50 mil imagens de diversos quartos de hotel vazios, pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
+\section{Conjuntos de imagens para teste}
 
-O segundo dataset, nomeado \textit{UTKFace}, disponível em \cite{utkface}, será utilizado para representar imagens da classe positiva que consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo. Alguns exemplos das imagens contidas no dataset podem ser vistos na figura \ref{fig:exemplos-utk}.
+Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones} na biblioteca \textit{OpenCV}, assim como o seu modelo previamente treinado, foram selecionadas manualmente 500 imagens retiradas de dois conjuntos de imagens disponíveis na internet. 
+ 
+\subsection{Conjuntos de imagens originais}
+
+O primeiro conjunto de imagens, nomeado \textit{UTKFace}, disponível em \cite{utkface}, consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo. Alguns exemplos das imagens contidas no dataset podem ser vistos na figura \ref{fig:exemplos-utk}.
 
 \begin{figure}[htb]
     \centering
     \caption{Exemplos de imagens do dataset \textit{UTKFace}.}
     \includegraphics[scale=.3]{figs/exemplos-utk.png}
-    \legend{Fonte: \textit{UTKFace dataset} \cite{utkface})}
+    \legend{Fonte: \textit{UTKFace dataset} \cite{utkface}}
     \label{fig:exemplos-utk}
  \end{figure}
 
-Para os testes, foram filtradas apenas imagens de pessoas entre 18 e 60 anos de idade do dataset \textit{UTKFace}, obtendo 17100 imagens e então selecionadas aleatoriamente 4275 imagens do dataset \textit{Hotels-50k}. Assim, foi totalizado um conjunto de 21375 imagens, onde 80\% delas eram positivas (possuíam ao menos uma face) e 20\% negativas (não possuíam faces). Tal proporção representa a hipótese de que cerca de 20\% de imagens enviadas para cadastros na verdade não possuem uma face.
+ O segundo conjunto de imagens, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, consistia originalmente em mais de 50 mil fotografias de diversos quartos de hotel vazios, este foi utilizado pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
+
+\subsection{Conjunto de imagens selecionadas}
+
+Para os testes, foi selecionado manualmente um conjunto com 400 positivas (possuíam uma face válida) e 100 imagens negativas (não possuíam uma face válida). Tal proporção representa a hipótese de que cerca de 20\% de imagens enviadas para cadastros na verdade não possuem uma face.
+
+Por considerar que as imagens avaliadas pelo detector facial estudado neste trabalho serão utilizadas para cadastros pessoais e portanto é necessário que demonstrem que houve o consentimento de quem estava sendo fotografado e que seja possível identificar com clareza a pessoa da foto, as 400 imagens positivas (exemplos na figura \ref{fig:valid-faces}) foram selecionadas de forma que cumprissem os critérios abaixo.
+
+\begin{itemize}
+    \item A imagem deve conter uma única face frontal;
+    \item Olhos, nariz e boca devem estar visíveis;
+    \item A pessoa fotografada deve ter entre 18 e 60 anos;
+    \item A pessoa fotografada deve estar olhando para a camera;
+    \item A imagem deve ter boa definição e foco;
+    \item A face deve estar centralizada e próxima da camera.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Exemplos de imagens com face válida.}
+    \includegraphics[scale=.25]{figs/valid_faces.jpg}
+    \legend{Fonte: \textit{UTKFace dataset} \cite{utkface}}
+    \label{fig:valid-faces}
+ \end{figure}
+
+É preciso considerar também que existem imagens que contém faces mas que não são válidas pois não cumprem os critérios definidos, portanto essas devem ser consideradas negativas. Para maior realidade nos testes feitos, o grupo de imagens negativas foi composto por 30 imagens que apresentavam faces inválidas (exemplos na figura \ref{fig:invalid-faces}) e outras 70 imagens selecionadas aleatoriamente do conjunto \textit{Hotels-50k} (exemplos na figura \ref{fig:hotel-examples}).
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Exemplos de imagens com face inválida.}
+    \includegraphics[scale=.25]{figs/invalid_faces.jpg}
+    \legend{Fonte: \textit{UTKFace dataset} \cite{utkface}}
+    \label{fig:invalid-faces}
+ \end{figure}
+
+ \begin{figure}[htbp]
+     \centering
+     \caption{Exemplos de imagens sem nenhuma face.}
+     \includegraphics[scale=.25]{figs/hotels.jpg}
+     \legend{Fonte: \textit{Hotels-50k dataset} \cite{hotels50k-article}}
+     \label{fig:hotel-examples}
+  \end{figure}
 
 %-
 \section{Metodologia de Análise}
@@ -125,8 +170,8 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \centering
     \begin{tabular}{ccc}\hline\hline
         \textbf{Grupo} & \textbf{Descrição} & \textbf{Quantidade} \\\hline
-        \textit{A} & Imagens que contêm uma face & 17130 \\
-        $\overline{A}$ & Imagens que não contêm nenhuma face & 4275 \\
+        \textit{A} & Imagens que contêm uma face válida & 400 \\
+        $\overline{A}$ & Imagens que não contêm uma face válida & 4275 \\
         \textit{B} & Imagens onde o algoritmo identificou uma ou mais faces & Variável \\
         $\overline{B}$ & Imagens onde o algoritmo não identificou nenhuma face & Variável \\
     \hline\hline
