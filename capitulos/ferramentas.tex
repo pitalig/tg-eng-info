@@ -171,14 +171,14 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \begin{tabular}{ccc}\hline\hline
         \textbf{Grupo} & \textbf{Descrição} & \textbf{Quantidade} \\\hline
         \textit{A} & Imagens que contêm uma face válida & 400 \\
-        $\overline{A}$ & Imagens que não contêm uma face válida & 4275 \\
+        $\overline{A}$ & Imagens que não contêm uma face válida & 100 \\
         \textit{B} & Imagens onde o algoritmo identificou uma ou mais faces & Variável \\
         $\overline{B}$ & Imagens onde o algoritmo não identificou nenhuma face & Variável \\
     \hline\hline
     \end{tabular}
 \end{table}
 
-Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a} (verdadeiro positivo) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b} (falso negativo) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c} (falso positivo) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d} (verdadeiro negativo) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
+Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b - falso negativo} (FN, \textit{false negative}) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
 
 \begin{table}[htbp]
     \caption{Matriz de confusão}
@@ -246,37 +246,37 @@ Por fim, a partir da sensitividade e especificidade é possível exibir o result
 
 Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como R o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial.
 
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, onde VP é a taxa de verdadeiros positivos, FP a taxa de falsos positivos, VN a taxa de verdadeiros negativos e FN a taxa de falsos negativos, pode-se obter a equação \ref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (VP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter a equação \ref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
 
 \begin{align} \label{eq:g_0}
-    g_0 = (VP+FN) \times R - (VP+FP+FN+VN) \times H
+    g_0 = (TP+FN) \times R - (TP+FP+FN+TN) \times H
 \end{align}
 
 Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita R para a empresa, com isso, pode-se obter a equação \ref{eq:g_1}.
 \begin{align} \label{eq:g_1}
-    g_1 = VP \times R - (VP+FP) \times H
+    g_1 = TP \times R - (TP+FP) \times H
 \end{align}
 
 Para avaliar a receita que o modelo traz para a empresa, pode-se calcular a diferença entre a receita antes e depois do modelo, obtendo a equação \ref{eq:profit}.
 \begin{align} \label{eq:profit}
-    g_1 - g_0 = (FN + VN) \times H - FN \times R
+    g_1 - g_0 = (FN + TN) \times H - FN \times R
 \end{align}
 
 Considerando que para o modelo trazer valor para a empresa, é necessário que a receita após sua aplicação seja maior que a receita antes da sua aplicação, obtendo a equação \ref{eq:profit2}.
 \begin{align} \label{eq:profit2}
     g_1 - g_0 > 0 \\
-    (FN + VN) \times H - FN \times R > 0
+    (FN + TN) \times H - FN \times R > 0
 \end{align}
 
-A equação obtida ainda pode ser reescrita em função da taxa de verdadeiros positivos (TVP) e da taxa de falsos positivos (TFP) de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:fn_tvp} e \ref{eq:vn_tfp}, obtendo por fim a equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
+A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}) e da taxa de falsos positivos (FPR, \textit{false positive rate}) de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:FN_TPR} e \ref{eq:TN_FPR}, obtendo por fim a equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
 
 \begin{align} 
-    \label{eq:fn_tvp}
-    FN &= P \times (1-TVP) \\
-    \label{eq:vn_tfp}
-    VN &= N \times (1-TFP) \\
+    \label{eq:FN_TPR}
+    FN &= P \times (1-TPR) \\
+    \label{eq:TN_FPR}
+    TN &= N \times (1-FPR) \\
     \label{eq:profit_roc}
-    TVP &= 1 + \left( \frac{N}{P \times \left( \frac{R}{H}-1 \right) } \times (TFP - 1) \right)
+    TPR &= 1 + \left( \frac{N}{P \times \left( \frac{R}{H}-1 \right) } \times (FPR - 1) \right)
 \end{align}
 
 \begin{figure}[htbp]
