@@ -11,11 +11,11 @@ Uma das ferramentas que será utilizada neste trabalho é a função de detecç�
 
 A detecção de faces utilizando OpenCV consiste em duas etapas principais, a primeira consiste no treinamento do modelo, onde são apresentadas diversas imagens já identificadas para que o modelo encontre padrões positivos e negativos. Após o treinamento, a segunda etapa consiste em utilizar o modelo obtido para identificar, em novas imagens, características semelhantes as vistas nas imagens do treinamento. Neste projeto, será utilizado um modelo fornecido em conjunto com a ferramenta OpenCV, já treinado com diversos exemplos de faces frontais.
 
-O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" ~\cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
+O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" \cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
 
 \subsection{Imagem Integral} 
 
-A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada ponto como a soma de todos os pontos que estão acima ou a esquerda do mesmo, como ilustrado na figura~\ref{fig:integral}.
+A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada ponto como a soma de todos os pontos que estão acima ou a esquerda do mesmo, como ilustrado na figura \ref{fig:integral}.
 
 \begin{figure}[htpb]
     \centering
@@ -27,7 +27,7 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
 
 A utilização desta técnica permite calcular facilmente a soma dos valores internos de qualquer retângulo formado entre quatro pontos da imagem, utilizando apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem.
 
-O calculo é feito definindo o retângulo a ser análisado e então aplicando a equação \ref{eq:img-integral}. Tal equação é utilizada em \ref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
+O cálculo é feito definindo o retângulo a ser analisado e então aplicando a equação \ref{eq:img-integral}. Tal equação é utilizada em \ref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
 
 \begin{align}\label{eq:img-integral}
     \text{ Soma dos valores retângulo } &= D - (B + C) + A \\
@@ -35,35 +35,35 @@ O calculo é feito definindo o retângulo a ser análisado e então aplicando a 
     15 + 16 + 14 + 28 + 27 + 11 &= 101 - (254 + 186) + 450 = 111
 \end{align}
 
-Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retângulares predefinidas, como os exemplos ilustrado na figura \ref{fig:features}. 
+Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retangulares predefinidas, como os exemplos ilustrado na figura \ref{fig:features}. 
 
 \begin{figure}[htb]
     \centering
-    \caption{Exemplos de características retângulares analisadas.}
+    \caption{Exemplos de características retangulares analisadas.}
     \includegraphics[scale=.5]{figs/features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:features}
  \end{figure}
 
- O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
+O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
 
 %-
 \subsection{Algoritmo de AdaBoost e Classificador em Cascata}
 %-
 
-As características demonstradas anteriormente, são definidas basicamente como duas ou mais áreas retângulares de qualquer tamanho, tal simplicidade implica na possibilidade da criação de uma enorme variação das mesmas que precisariam ser calculadas diversas vezes, para cada parte de imagem e com diferentes tamanhos, isso implica em um alto custo de processamento, para evitar tal problema é utilizado o algoritmo de \textit{AdaBoost} \cite{adaboost-Freund}, que possibilita grande otimização na demanda de processamento do detector facial e consequente redução do tempo de execução.
+As características demonstradas anteriormente, são definidas basicamente como duas ou mais áreas retangulares de qualquer tamanho, tal simplicidade implica na possibilidade da criação de uma enorme variação das mesmas que precisam ser calculadas diversas vezes, para cada parte de imagem e com diferentes tamanhos, isso implica em um alto custo de processamento, para evitar tal problema é utilizado o algoritmo de \textit{AdaBoost} \cite{adaboost-Freund}, que possibilita grande otimização na demanda de processamento do detector facial e consequente redução do tempo de execução.
 
 No caso do algoritmo de detecção facial Viola-Jones, o algoritmo AdaBoost é utilizado em dois momentos principais, o primeiro deles ocorre na seleção do conjunto de características mais eficientes durante o treino para criação do arranjo ponderado de vários classificadores fracos que combinados adequadamente se tornam um classificador forte \cite{fabio-luciana-2015}. A figura \ref{fig:top-features} retrata as melhores características registradas por \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones}), fica claro que as mesmas se destacam por evidenciar as regiões dos olhos e do nariz.
 
 \begin{figure}[htb]
     \centering
-    \caption{Características retângulares mais eficientes para detecção facial.}
+    \caption{Características retangulares mais eficientes para detecção facial.}
     \includegraphics[scale=.4]{figs/top-features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:top-features}
  \end{figure}
 
-É importante salientar que geralmente uma face não ocupa a maior parte de uma imagem a ser identificada, portanto é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que tem maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as "não faces".  
+É importante salientar que geralmente uma face não ocupa a maior parte de uma imagem a ser identificada, portanto é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que têm maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as "não faces".  
 
 Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste na utilização do arranjo de classificadores já ponderados anteriormente, aplicados de forma sequencial, iniciando do mais fraco para o mais forte, criando o que é chamado de classificador em cascata, conforme ilustrado na Figura \ref{fig:cascade-classifier}, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
 
@@ -87,7 +87,7 @@ Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste 
 
  O primeiro deles é chamado fator de escala que é o fator pelo qual as dimensões da imagem serão multiplicadas na tentativa de encontrar faces de diferentes tamanhos, pois o modelo é preparado para reconhecer faces de um tamanho específico, então durante a detecção a imagem é redimensionada e reanalisada diversas vezes para que faces de diferentes tamanhos possam ser detectadas. Para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de 1 o seu valor, maior a chance de encontrar faces mas a execução do detector também se torna mais custosa em termos de processamento. 
 
- O segundo parâmetro é o número mínimo de vizinhos, que especifica quantos vizinhos cada retângulo candidato deve ter para retê-lo. Em mais detalhes, o detector analisa imagens utilizando um método de janelas retângulares que selecionam a partes da imagem, cada parte tem seus padrões comparados com os padrões de uma face e então é definido se esta janela contém ou não uma face, mas devido as várias iterações do detector sobre a mesma imagem durante a análise, uma mesma face pode ser detectada em mais de uma janela, tais janelas são consideradas janelas vizinhas, portanto para melhorar a precisão do detector e também filtrar detecções duplicadas, o parâmetro de número mínimo de vizinhos define quantas janelas vizinhas devem existir para considerar aquela parte da imagem como uma face. Enfim, para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de zero o seu valor, maior a chance de detectar faces, mas consequentemente maior a chance de falsos positivos.
+ O segundo parâmetro é o número mínimo de vizinhos, que especifica quantos vizinhos cada retângulo candidato deve ter para retê-lo. Em mais detalhes, o detector analisa imagens utilizando um método de janelas retangulares que selecionam a partes da imagem, cada parte tem seus padrões comparados com os padrões de uma face e então é definido se esta janela contém ou não uma face, mas devido as várias iterações do detector sobre a mesma imagem durante a análise, uma mesma face pode ser detectada em mais de uma janela, tais janelas são consideradas janelas vizinhas, portanto para melhorar a precisão do detector e também filtrar detecções duplicadas, o parâmetro de número mínimo de vizinhos define quantas janelas vizinhas devem existir para considerar aquela parte da imagem como uma face. Enfim, para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de zero o seu valor, maior a chance de detectar faces, mas consequentemente maior a chance de falsos positivos.
 
  \begin{figure}[htb]
     \centering
@@ -117,7 +117,7 @@ O primeiro conjunto de imagens, nomeado \textit{UTKFace}, disponível em \cite{u
     \label{fig:exemplos-utk}
  \end{figure}
 
- O segundo conjunto de imagens, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, consistia originalmente em mais de 50 mil fotografias de diversos quartos de hotel vazios, este foi utilizado pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
+O segundo conjunto de imagens, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, consistia originalmente em mais de 50 mil fotografias de diversos quartos de hotel vazios, este foi utilizado pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
 
 \subsection{Conjunto de imagens selecionadas}
 
@@ -129,9 +129,9 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
     \item A imagem deve conter uma única face frontal;
     \item Olhos, nariz e boca devem estar visíveis;
     \item A pessoa fotografada deve ter entre 18 e 60 anos;
-    \item A pessoa fotografada deve estar olhando para a camera;
+    \item A pessoa fotografada deve estar olhando para a câmera;
     \item A imagem deve ter boa definição e foco;
-    \item A face deve estar centralizada e próxima da camera.
+    \item A face deve estar centralizada e próxima da câmera.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -180,7 +180,7 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \end{tabular}
 \end{table}
 
-Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contêm uma face, \textit{b - falso negativo} (FN, \textit{false negative}) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
+Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contém uma face, \textit{b - falso negativo} (FN, \textit{false negative}) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
 
 \begin{table}[htbp]
     \caption{Matriz de confusão}
