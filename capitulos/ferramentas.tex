@@ -97,9 +97,33 @@ Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste 
     \label{fig:min-neighbors-messi}
  \end{figure}
 
-\section{KERAS PENDENTE}
+\section{Aplicações de Redes Neurais Convolucionais}
 
-Descrição MTCNN e Keras.
+Uma das ferramentas que tem ganhado maior destaque na área de visão computacional recentemente são as redes neurais, principalmente os algoritmos de redes neurais convolucionais, devido a sua poderosa capacidade de detectar padrões mais complexos. \cite{gu2018recent} Uma rede neural convolucional funciona aplicando filtros com variados pesos as imagens de entrada, possibilitando assim a detecção de padrões específicos. A principal diferença para a abordagem do método de Viola-Jones é que aqui os filtros e seus pesos são inicialmente aleatórios e então automaticamente aprimorados durante o treinamento da rede.
+
+Os filtros aplicados através da operação de convolução, permitem detectar desde padrões simples, como linhas e curvas, mas com o treinamento e a combinação de uma grande quantidade de filtros, é possível detectar características de maior complexidade, como objetos, animais ou faces. Além disso, a operação de convolução ainda pode ser aplicada de forma que o tamanho da imagem resultante seja menor que o tamanho da imagem de entrada, mas mantendo as características mais importantes, isso faz com que a necessidade de poder computacional para o restante da análise seja reduzida \cite{cnn_face_detection}.
+
+Além da etapa de convolução com filtros, outras duas etapas igualmente importante são aplicadas nas imagens na rede neural. A primeira delas é a aplicação de uma função de ativação, que costuma ser não linear como a ReLu, que transforma todos valores resultantes negativos em zero sem alterar os valores positivos \cite{relu_ide2017improvement}. A segunda etapa aplicada sobre a imagem é a de agrupamento, que tem a função de reduzir o tamanho a imagem, com o objetivo de agilizar o treinamento, tal redução é feita agrupando pixels próximos utilizando funções como o valor máximo ou médio entre os pixel da entrada \cite{vargas2016estudo}.
+
+\subsection{TensorFlow e Keras}
+
+Para este trabalho foram utilizadas três ferramentas que facilitam a aplicação da rede neural convolucional. A primeira delas é chamada TensorFlow, uma plataforma de código aberto que disponibiliza ferramentas de aprendizado de máquina. A segunda ferramenta, Keras, disponibiliza uma interface em python para utilização de plataformas como TensorFlow, facilitando bastante a utilização da mesma para o usuário final.
+
+Adentrando a área de detecção facial especificamente, um método popular é o de \textit{Rede Neural Convolucional Multi Tarefa em Cascata} (MTCNN, \textit{Multi-Task Cascaded Convolutional Neural Network}), pois consegue atingir resultados surpreendentes não apenas para detecção de faces, mas também de partes da face, como olhos e boca.
+
+\subsection{MTCNN}
+
+No método MTCNN, a estrutura em cascata consiste em três redes, na pré-processamento a imagem é redimensionada para uma variedade de tamanhos diferentes (chamada de pirâmide de imagens), depois a primeira rede (Rede de propostas) propõe regiões candidatas a conterem faces, então a segunda rede (Rede de aperfeiçoamento) filtra as regiões específicas que delimitam as posições das faces detectadas, por fim, a terceira rede (Rede de saída) propõe pontos de referência faciais como olhos e boca. Este método se assemelha bastante ao classificador em cascata do método de Viola-Jones, onde são utilizadas ferramentas mais simples para um filtragem inicial e então a complexidade das análises aumenta nas regiões onde possivelmente pode ser encontrada uma face \cite{mtcnn}. Os resultados de cada uma das etapas podem ser visualizados na figura \ref{fig:mtcnn}.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Resultados de cada etapa do método MTCNN.}
+    \includegraphics[scale=.8]{figs/mtcnn.png}
+    \legend{Fonte: \citeauthoronline{mtcnn}}
+    \label{fig:mtcnn}
+ \end{figure}
+
+Neste trabalho, foi utilizada uma implementação do método MTCNN que utiliza Python, TensorFlow e Keras e está disponível no github \cite{mtcnn_github}, esta implementação possui um modelo já treinado que a partir de uma imagem de entrada, fornece a posição das faces detectadas, assim como a confiança de que a mesma é realmente uma face e a posição dos pontos de referência (olhos, nariz e boca) da mesma. Para análise, todas as faces detectadas foram consideradas, independente da confiança na detecção, pois assim os resultados melhor satisfazem a necessidade deste projeto.
 
 \section{Conjuntos de imagens para teste}
 
