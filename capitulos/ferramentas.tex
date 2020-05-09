@@ -13,7 +13,7 @@ A detecção de faces utilizando OpenCV consiste em duas etapas principais, a pr
 
 O algoritmo Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" \cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
 
-\subsection{Imagem Integral} 
+\subsection{Imagem Integral}
 
 A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada ponto como a soma de todos os pontos que estão acima ou a esquerda do mesmo, como ilustrado na figura \ref{fig:integral}.
 
@@ -21,21 +21,21 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
     \centering
     \caption{Representação da imagem integral.}
     \includegraphics[scale=.3]{figs/imagem-integral.png}
-    \legend{Imagem original (esquerda) e imagem integral (direita).}
+    \legend{Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \ref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
     \label{fig:integral}
- \end{figure}
+\end{figure}
 
 A utilização desta técnica permite calcular facilmente a soma dos valores internos de qualquer retângulo formado entre quatro pontos da imagem, utilizando apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem.
 
 O cálculo é feito definindo o retângulo a ser analisado e então aplicando a equação \ref{eq:img-integral}. Tal equação é utilizada em \ref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
 
 \begin{align}\label{eq:img-integral}
-    \text{ Soma dos valores retângulo } &= D - (B + C) + A \\
+    \text{ Soma dos valores do retângulo } & = D - (B + C) + A               \\
     \label{eq:img-integral-exemplo}
-    15 + 16 + 14 + 28 + 27 + 11 &= 101 - (254 + 186) + 450 = 111
+    15 + 16 + 14 + 28 + 27 + 11            & = 101 - (254 + 186) + 450 = 111
 \end{align}
 
-Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retangulares predefinidas, como os exemplos ilustrado na figura \ref{fig:features}. 
+Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retangulares predefinidas, como os exemplos ilustrado na figura \ref{fig:features}.
 
 \begin{figure}[htb]
     \centering
@@ -43,7 +43,7 @@ Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo ar
     \includegraphics[scale=.5]{figs/features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:features}
- \end{figure}
+\end{figure}
 
 O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
 
@@ -61,9 +61,9 @@ No caso do algoritmo de detecção facial Viola-Jones, o algoritmo AdaBoost é u
     \includegraphics[scale=.4]{figs/top-features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:top-features}
- \end{figure}
+\end{figure}
 
-É importante salientar que geralmente uma face não ocupa a maior parte de uma imagem a ser identificada, portanto é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que têm maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as "não faces".  
+É importante salientar que geralmente uma face não ocupa a maior parte de uma imagem a ser identificada, portanto é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que têm maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as "não faces".
 
 Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste na utilização do arranjo de classificadores já ponderados anteriormente, aplicados de forma sequencial, iniciando do mais fraco para o mais forte, criando o que é chamado de classificador em cascata, conforme ilustrado na Figura \ref{fig:cascade-classifier}, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
 
@@ -73,29 +73,29 @@ Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste 
     \includegraphics[scale=.2]{figs/cascade-classifier.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:cascade-classifier}
- \end{figure}
+\end{figure}
 
- Um classificador comum, com um único estágio normalmente aceitaria muitos casos de falso negativo, para reduzir a taxa de falsos positivos e de descarte de imagens relevantes, mas no classificador em cascata, falsos positivos nos primeiros estágios não são um problema, pois serão analisados em outros diversos estágios e provavelmente eliminados.
+Um classificador comum, com um único estágio normalmente aceitaria muitos casos de falso negativo, para reduzir a taxa de falsos positivos e de descarte de imagens relevantes, mas no classificador em cascata, falsos positivos nos primeiros estágios não são um problema, pois serão analisados em outros diversos estágios e provavelmente eliminados.
 
- A utilização desse modelo combinada com o algoritmo \textit{AdaBoost}, possibilita a análise das característica mais eficientes logo no início e consequentemente o descarte muito mais rápido dos casos negativos nos primeiros estágios.
+A utilização desse modelo combinada com o algoritmo \textit{AdaBoost}, possibilita a análise das característica mais eficientes logo no início e consequentemente o descarte muito mais rápido dos casos negativos nos primeiros estágios.
 
- %-
- \subsection{Parametrização do Algoritmo}
- %-
+%-
+\subsection{Parametrização do Algoritmo}
+%-
 
- O procedimento de detecção facial utilizando o OpenCV permite ainda ajuste de parâmetros para a execução do algoritmo de Viola-Jones.
+O procedimento de detecção facial utilizando o OpenCV permite ainda ajuste de parâmetros para a execução do algoritmo de Viola-Jones.
 
- O primeiro deles é chamado fator de escala que é o fator pelo qual as dimensões da imagem serão multiplicadas na tentativa de encontrar faces de diferentes tamanhos, pois o modelo é preparado para reconhecer faces de um tamanho específico, então durante a detecção a imagem é redimensionada e reanalisada diversas vezes para que faces de diferentes tamanhos possam ser detectadas. Para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de 1 o seu valor, maior a chance de encontrar faces mas a execução do detector também se torna mais custosa em termos de processamento. 
+O primeiro deles é chamado fator de escala que é o fator pelo qual as dimensões da imagem serão multiplicadas na tentativa de encontrar faces de diferentes tamanhos, pois o modelo é preparado para reconhecer faces de um tamanho específico, então durante a detecção a imagem é redimensionada e reanalisada diversas vezes para que faces de diferentes tamanhos possam ser detectadas. Para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de 1 o seu valor, maior a chance de encontrar faces mas a execução do detector também se torna mais custosa em termos de processamento.
 
- O segundo parâmetro é o número mínimo de vizinhos, que especifica quantos vizinhos cada retângulo candidato deve ter para retê-lo. Em mais detalhes, o detector analisa imagens utilizando um método de janelas retangulares que selecionam a partes da imagem, cada parte tem seus padrões comparados com os padrões de uma face e então é definido se esta janela contém ou não uma face, mas devido as várias iterações do detector sobre a mesma imagem durante a análise, uma mesma face pode ser detectada em mais de uma janela, tais janelas são consideradas janelas vizinhas, portanto para melhorar a precisão do detector e também filtrar detecções duplicadas, o parâmetro de número mínimo de vizinhos define quantas janelas vizinhas devem existir para considerar aquela parte da imagem como uma face. Enfim, para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de zero o seu valor, maior a chance de detectar faces, mas consequentemente maior a chance de falsos positivos.
+O segundo parâmetro é o número mínimo de vizinhos, que especifica quantos vizinhos cada retângulo candidato deve ter para retê-lo. Em mais detalhes, o detector analisa imagens utilizando um método de janelas retangulares que selecionam a partes da imagem, cada parte tem seus padrões comparados com os padrões de uma face e então é definido se esta janela contém ou não uma face, mas devido as várias iterações do detector sobre a mesma imagem durante a análise, uma mesma face pode ser detectada em mais de uma janela, tais janelas são consideradas janelas vizinhas, portanto para melhorar a precisão do detector e também filtrar detecções duplicadas, o parâmetro de número mínimo de vizinhos define quantas janelas vizinhas devem existir para considerar aquela parte da imagem como uma face. Enfim, para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de zero o seu valor, maior a chance de detectar faces, mas consequentemente maior a chance de falsos positivos.
 
- \begin{figure}[htb]
+\begin{figure}[htb]
     \centering
     \caption{Resultados da detecção com variação de parâmetros.}
     \includegraphics[scale=.2]{figs/min_neighbors_messi.png}
     \legend{Utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
     \label{fig:min-neighbors-messi}
- \end{figure}
+\end{figure}
 
 \section{Aplicações de Redes Neurais Convolucionais}
 
@@ -121,14 +121,14 @@ No método MTCNN, a estrutura em cascata consiste em três redes, na pré-proces
     \includegraphics[scale=.8]{figs/mtcnn.png}
     \legend{Fonte: \citeauthoronline{mtcnn}}
     \label{fig:mtcnn}
- \end{figure}
+\end{figure}
 
 Neste trabalho, foi utilizada uma implementação do método MTCNN que utiliza Python, TensorFlow e Keras e está disponível no github \cite{mtcnn_github}, esta implementação possui um modelo já treinado que a partir de uma imagem de entrada, fornece a posição das faces detectadas, assim como a confiança de que a mesma é realmente uma face e a posição dos pontos de referência (olhos, nariz e boca) da mesma. Para análise, todas as faces detectadas foram consideradas, independente da confiança na detecção, pois assim os resultados melhor satisfazem a necessidade deste projeto.
 
 \section{Conjuntos de imagens para teste}
 
-Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones} na biblioteca \textit{OpenCV}, assim como o seu modelo previamente treinado, foram selecionadas manualmente 500 imagens retiradas de dois conjuntos de imagens disponíveis na internet. 
- 
+Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones} na biblioteca \textit{OpenCV}, assim como o seu modelo previamente treinado, foram selecionadas manualmente 500 imagens retiradas de dois conjuntos de imagens disponíveis na internet.
+
 \subsection{Conjuntos de imagens originais}
 
 O primeiro conjunto de imagens, nomeado \textit{UTKFace}, disponível em \cite{utkface}, consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo. Alguns exemplos das imagens contidas no dataset podem ser vistos na figura \ref{fig:exemplos-utk}.
@@ -139,7 +139,7 @@ O primeiro conjunto de imagens, nomeado \textit{UTKFace}, disponível em \cite{u
     \includegraphics[scale=.3]{figs/exemplos-utk.png}
     \legend{Fonte: \textit{UTKFace dataset} \cite{utkface}}
     \label{fig:exemplos-utk}
- \end{figure}
+\end{figure}
 
 O segundo conjunto de imagens, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, consistia originalmente em mais de 50 mil fotografias de diversos quartos de hotel vazios, este foi utilizado pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
 
@@ -164,7 +164,7 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
     \includegraphics[scale=.25]{figs/valid_faces.jpg}
     \legend{Fonte: \textit{UTKFace dataset} \cite{utkface}}
     \label{fig:valid-faces}
- \end{figure}
+\end{figure}
 
 É preciso considerar também que existem imagens que contém faces mas que não são válidas pois não cumprem os critérios definidos, portanto essas devem ser consideradas negativas. Para maior realidade nos testes feitos, o grupo de imagens negativas foi composto por 30 imagens que apresentavam faces inválidas (exemplos na figura \ref{fig:invalid-faces}) e outras 70 imagens selecionadas aleatoriamente do conjunto \textit{Hotels-50k} (exemplos na figura \ref{fig:hotel-examples}).
 
@@ -174,33 +174,33 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
     \includegraphics[scale=.25]{figs/invalid_faces.jpg}
     \legend{Fonte: \textit{UTKFace dataset} \cite{utkface}}
     \label{fig:invalid-faces}
- \end{figure}
+\end{figure}
 
- \begin{figure}[htbp]
-     \centering
-     \caption{Exemplos de imagens sem nenhuma face.}
-     \includegraphics[scale=.25]{figs/hotels.jpg}
-     \legend{Fonte: \textit{Hotels-50k dataset} \cite{hotels50k-article}}
-     \label{fig:hotel-examples}
-  \end{figure}
+\begin{figure}[htbp]
+    \centering
+    \caption{Exemplos de imagens sem nenhuma face.}
+    \includegraphics[scale=.25]{figs/hotels.jpg}
+    \legend{Fonte: \textit{Hotels-50k dataset} \cite{hotels50k-article}}
+    \label{fig:hotel-examples}
+\end{figure}
 
 %-
 \section{Metodologia de Análise}
 %-
 
-Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da Tabela \ref{tab:grupos-images}. 
+Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da Tabela \ref{tab:grupos-images}.
 
 \begin{table}[htbp]
     \caption{Grupos observados}
     \label{tab:grupos-images}
     \centering
     \begin{tabular}{ccc}\hline\hline
-        \textbf{Grupo} & \textbf{Descrição} & \textbf{Quantidade} \\\hline
-        \textit{A} & Imagens que contêm uma face válida & 400 \\
-        $\overline{A}$ & Imagens que não contêm uma face válida & 100 \\
-        \textit{B} & Imagens onde o algoritmo identificou uma ou mais faces & Variável \\
-        $\overline{B}$ & Imagens onde o algoritmo não identificou nenhuma face & Variável \\
-    \hline\hline
+        \textbf{Grupo} & \textbf{Descrição}                                     & \textbf{Quantidade} \\\hline
+        \textit{A}     & Imagens que contêm uma face válida                     & 400                 \\
+        $\overline{A}$ & Imagens que não contêm uma face válida                 & 100                 \\
+        \textit{B}     & Imagens onde o algoritmo identificou uma ou mais faces & Variável            \\
+        $\overline{B}$ & Imagens onde o algoritmo não identificou nenhuma face  & Variável            \\
+        \hline\hline
     \end{tabular}
 \end{table}
 
@@ -211,36 +211,36 @@ Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:m
     \label{tab:matriz_de_confusao}
     \centering
     \begin{tabular}{ccc}\hline\hline
-        & \textit{B} & $\overline{B}$ \\
-    \textit{A} & \textit{a} (verdadeiro positivo) & \textit{b} (falso negativo) \\
-    $\overline{A}$ & \textit{c} (falso positivo) & \textit{d} (verdadeiro negativo) \\
-    \hline\hline
+                       & \textit{B}                       & $\overline{B}$                   \\
+        \textit{A}     & \textit{a} (verdadeiro positivo) & \textit{b} (falso negativo)      \\
+        $\overline{A}$ & \textit{c} (falso positivo)      & \textit{d} (verdadeiro negativo) \\
+        \hline\hline
     \end{tabular}
 \end{table}
 
-Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. 
+Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face.
 
 \begin{figure}[htbp]
     \centering
     \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão.}
     \includegraphics[scale=.4]{figs/norm_dist.png}
     \label{fig:norm_dist}
- \end{figure}
+\end{figure}
 
- Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido a sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir uma limite para decisão, que pode ser ajustado conforme a necessidade, mas que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
+Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido a sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir uma limite para decisão, que pode ser ajustado conforme a necessidade, mas que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
 
- A matriz de confusão também pode ser escrita em termos probabilísticos (Tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (Figura \ref{fig:venn_diagram}).
+A matriz de confusão também pode ser escrita em termos probabilísticos (Tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (Figura \ref{fig:venn_diagram}).
 
 \begin{table}[htbp]
     \caption{Matriz de confusão com probabilidades marginais}
     \label{tab:matriz_de_confusao_probab}
     \centering
     \begin{tabular}{cccc}\hline\hline
-        & \textit{B} & $\overline{B}$ & Soma\\
-    \textit{A} & $P(A \cap B)$ & $P(A \cap \overline{B})$ & $P(A)$ \\
-    $\overline{A}$ & $P(\overline{A} \cap B)$ & $P(\overline{A} \cap \overline{B})$ & $P(\overline{A})$ \\
-    Soma & $P(B)$ & $P(\overline{B})$ & 1 \\
-    \hline\hline
+                       & \textit{B}               & $\overline{B}$                      & Soma              \\
+        \textit{A}     & $P(A \cap B)$            & $P(A \cap \overline{B})$            & $P(A)$            \\
+        $\overline{A}$ & $P(\overline{A} \cap B)$ & $P(\overline{A} \cap \overline{B})$ & $P(\overline{A})$ \\
+        Soma           & $P(B)$                   & $P(\overline{B})$                   & 1                 \\
+        \hline\hline
     \end{tabular}
 \end{table}
 
@@ -296,13 +296,13 @@ Considerando que para o modelo trazer valor para a empresa, é necessário que a
 
 A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}) e da taxa de falsos positivos (FPR, \textit{false positive rate}) de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:FN_TPR} e \ref{eq:TN_FPR}, obtendo por fim a equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
 
-\begin{align} 
+\begin{align}
     \label{eq:FN_TPR}
-    FN &= P \times (1-TPR) \\
+    FN  & = P \times (1-TPR)                                                                     \\
     \label{eq:TN_FPR}
-    TN &= N \times (1-FPR) \\
+    TN  & = N \times (1-FPR)                                                                     \\
     \label{eq:profit_roc}
-    TPR &= 1 + \left( \frac{N}{P \times \left( \frac{R}{H}-1 \right) } \times (FPR - 1) \right)
+    TPR & = 1 + \left( \frac{N}{P \times \left( \frac{R}{H}-1 \right) } \times (FPR - 1) \right)
 \end{align}
 
 \begin{figure}[htbp]
