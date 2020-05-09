@@ -35,17 +35,15 @@ O cálculo é feito definindo o retângulo a ser analisado e então aplicando a 
     15 + 16 + 14 + 28 + 27 + 11            & = 101 - (254 + 186) + 450 = 111
 \end{align}
 
-Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retangulares predefinidas, como os exemplos ilustrado na Figura \ref{fig:features}.
+Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retangulares predefinidas, como os exemplos ilustrado na Figura \ref{fig:features}. O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
 
 \begin{figure}[htb]
     \centering
-    \caption{Exemplos de características retangulares analisadas.}
+    \caption{Exemplos de características retangulares analisadas.\\ As áreas demarcadas em cinza e branco compõe uma característica.}
     \includegraphics[scale=.5]{figs/features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:features}
 \end{figure}
-
-O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
 
 %-
 \subsection{Algoritmo de AdaBoost e Classificador em Cascata}
@@ -65,7 +63,7 @@ No caso do algoritmo de detecção facial Viola-Jones, o algoritmo AdaBoost é u
 
 É importante salientar que geralmente uma face não ocupa a maior parte de uma imagem a ser identificada, portanto é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que têm maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as "não faces".
 
-Neste segundo momento, o AdaBoost apresenta uma ótima solução, esta consiste na utilização do arranjo de classificadores já ponderados anteriormente, aplicados de forma sequencial, iniciando do mais fraco para o mais forte, criando o que é chamado de classificador em cascata, conforme ilustrado na Figura \ref{fig:cascade-classifier}, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
+Neste segundo momento, o AdaBoost apresenta uma boa solução, esta consiste na utilização do arranjo de classificadores já ponderados anteriormente, aplicados de forma sequencial, iniciando do mais fraco para o mais forte, criando o que é chamado de classificador em cascata, conforme ilustrado na Figura \ref{fig:cascade-classifier}, permitindo que imagens que certamente não possuem faces sejam rapidamente descartadas logo nas primeiras iterações, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
 
 \begin{figure}[htb]
     \centering
@@ -87,39 +85,41 @@ O procedimento de detecção facial utilizando o OpenCV permite ainda ajuste de 
 
 O primeiro deles é chamado fator de escala que é o fator pelo qual as dimensões da imagem serão multiplicadas na tentativa de encontrar faces de diferentes tamanhos, pois o modelo é preparado para reconhecer faces de um tamanho específico, então durante a detecção a imagem é redimensionada e reanalisada diversas vezes para que faces de diferentes tamanhos possam ser detectadas. Para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de 1 o seu valor, maior a chance de encontrar faces mas a execução do detector também se torna mais custosa em termos de processamento.
 
-O segundo parâmetro é o número mínimo de vizinhos, que especifica quantos vizinhos cada retângulo candidato deve ter para retê-lo. Em mais detalhes, o detector analisa imagens utilizando um método de janelas retangulares que selecionam a partes da imagem, cada parte tem seus padrões comparados com os padrões de uma face e então é definido se esta janela contém ou não uma face, mas devido as várias iterações do detector sobre a mesma imagem durante a análise, uma mesma face pode ser detectada em mais de uma janela, tais janelas são consideradas janelas vizinhas, portanto para melhorar a precisão do detector e também filtrar detecções duplicadas, o parâmetro de número mínimo de vizinhos define quantas janelas vizinhas devem existir para considerar aquela parte da imagem como uma face. Enfim, para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de zero o seu valor, maior a chance de detectar faces, mas consequentemente maior a chance de falsos positivos.
+O segundo parâmetro é o número mínimo de vizinhos, que especifica quantos vizinhos cada retângulo candidato deve ter para retê-lo. Em mais detalhes, o detector analisa imagens utilizando um método de janelas retangulares que selecionam a partes da imagem, cada parte tem seus padrões comparados com os padrões de uma face e então é definido se esta janela contém ou não uma face, mas devido as várias iterações do detector sobre a mesma imagem durante a análise, uma mesma face pode ser detectada em mais de uma janela, tais janelas são consideradas janelas vizinhas, pois foram duas detecções que ocorreram em diferentes varreduras mas estão sobre uma mesma área da imagem. Portanto para melhorar a precisão do detector e também filtrar detecções duplicadas, o parâmetro de número mínimo de vizinhos define quantas janelas vizinhas devem existir para considerar aquela parte da imagem como uma face. Enfim, para ajuste deste parâmetro, deve-se considerar que quanto mais próximo de zero o seu valor, maior a chance de detectar faces, mas consequentemente maior a chance de falsos positivos.
+
+Por exemplo, caso o parâmetro de número mínimo de vizinhos seja igual a zero, qualquer janela que detectar uma face, em qualquer uma das varreduras, será considerada como uma face no resultado final. Já com o parâmetro igual a 4, é necessário que a mesma região da imagem seja considerada face por 4 janelas de varreduras diferentes para ser considerada como uma única face no resultado final. Esse comportamento pode ser observado nos resultados apresentados na Figura \ref{fig:min-neighbors-messi}.
 
 \begin{figure}[htb]
     \centering
-    \caption{Resultados da detecção com variação de parâmetros.}
+    \caption{Resultados da detecção com variação de parâmetros.\\Utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
     \includegraphics[scale=.2]{figs/min_neighbors_messi.png}
-    \legend{Utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
+    \legend{}
     \label{fig:min-neighbors-messi}
 \end{figure}
 
 \section{Aplicações de Redes Neurais Convolucionais}
 
-Uma das ferramentas que tem ganhado maior destaque na área de visão computacional recentemente são as redes neurais, principalmente os algoritmos de redes neurais convolucionais, devido a sua poderosa capacidade de detectar padrões mais complexos. \cite{gu2018recent} Uma rede neural convolucional funciona aplicando filtros com variados pesos as imagens de entrada, possibilitando assim a detecção de padrões específicos. A principal diferença para a abordagem do método de Viola-Jones é que aqui os filtros e seus pesos são inicialmente aleatórios e então automaticamente aprimorados durante o treinamento da rede.
+Uma das ferramentas que tem ganhado maior destaque na área de visão computacional recentemente são as redes neurais profundas, principalmente os algoritmos de redes neurais convolucionais, devido a sua poderosa capacidade de detectar padrões mais complexos. \cite{gu2018recent} Uma rede neural convolucional funciona aplicando filtros com variados pesos as imagens de entrada, possibilitando assim a detecção de padrões específicos. A principal diferença para a abordagem do método de Viola-Jones é que aqui os filtros e seus pesos são inicialmente aleatórios e então automaticamente aprimorados durante o treinamento da rede.
 
 Os filtros aplicados através da operação de convolução, permitem detectar desde padrões simples, como linhas e curvas, mas com o treinamento e a combinação de uma grande quantidade de filtros, é possível detectar características de maior complexidade, como objetos, animais ou faces. Além disso, a operação de convolução ainda pode ser aplicada de forma que o tamanho da imagem resultante seja menor que o tamanho da imagem de entrada, mas mantendo as características mais importantes, isso faz com que a necessidade de poder computacional para o restante da análise seja reduzida \cite{cnn_face_detection}.
 
-Além da etapa de convolução com filtros, outras duas etapas igualmente importante são aplicadas nas imagens na rede neural. A primeira delas é a aplicação de uma função de ativação, que costuma ser não linear como a ReLu, que transforma todos valores resultantes negativos em zero sem alterar os valores positivos \cite{relu_ide2017improvement}. A segunda etapa aplicada sobre a imagem é a de agrupamento, que tem a função de reduzir o tamanho a imagem, com o objetivo de agilizar o treinamento, tal redução é feita agrupando pixels próximos utilizando funções como o valor máximo ou médio entre os pixel da entrada \cite{vargas2016estudo}.
+Além da etapa de convolução com filtros, outras duas etapas igualmente importante são aplicadas nas imagens na rede neural. A primeira delas é a aplicação de uma função de ativação, que costuma ser não linear como a ReLU, que transforma todos valores resultantes negativos em zero sem alterar os valores positivos \cite{relu_ide2017improvement}. A segunda etapa aplicada sobre a imagem é a de agrupamento, que tem a função de reduzir o tamanho a imagem, com o objetivo de agilizar o treinamento e obter invariância ao deslocamento das features, tal redução é feita agrupando pixels próximos utilizando funções como o valor máximo ou médio entre os pixel da entrada \cite{vargas2016estudo}.
 
 \subsection{TensorFlow e Keras}
 
 Para este trabalho foram utilizadas três ferramentas que facilitam a aplicação da rede neural convolucional. A primeira delas é chamada TensorFlow, uma plataforma de código aberto que disponibiliza ferramentas de aprendizado de máquina. A segunda ferramenta, Keras, disponibiliza uma interface em python para utilização de plataformas como TensorFlow, facilitando bastante a utilização da mesma para o usuário final.
 
-Adentrando a área de detecção facial especificamente, um método popular é o de \textit{Rede Neural Convolucional Multi Tarefa em Cascata} (MTCNN, \textit{Multi-Task Cascaded Convolutional Neural Network}), pois consegue atingir resultados surpreendentes não apenas para detecção de faces, mas também de partes da face, como olhos e boca.
+Adentrando a área de detecção facial especificamente, um método popular é o de \textit{Rede Neural Convolucional Multi Tarefa em Cascata} (MTCNN, \textit{Multi-Task Cascaded Convolutional Neural Network}), pois consegue atingir resultados bons não apenas para detecção de faces, mas também de partes da face, como olhos e boca. \cite{mtcnn}
 
 \subsection{MTCNN}
 
-No método MTCNN, a estrutura em cascata consiste em três redes, na pré-processamento a imagem é redimensionada para uma variedade de tamanhos diferentes (chamada de pirâmide de imagens), depois a primeira rede (Rede de propostas) propõe regiões candidatas a conterem faces, então a segunda rede (Rede de aperfeiçoamento) filtra as regiões específicas que delimitam as posições das faces detectadas, por fim, a terceira rede (Rede de saída) propõe pontos de referência faciais como olhos e boca. Este método se assemelha bastante ao classificador em cascata do método de Viola-Jones, onde são utilizadas ferramentas mais simples para um filtragem inicial e então a complexidade das análises aumenta nas regiões onde possivelmente pode ser encontrada uma face \cite{mtcnn}. Os resultados de cada uma das etapas podem ser visualizados na Figura \ref{fig:mtcnn}.
+No método MTCNN, a estrutura em cascata consiste em três redes, no pré-processamento a imagem é redimensionada para uma variedade de tamanhos diferentes (chamada de pirâmide de imagens), depois a primeira rede (Rede de propostas) propõe regiões candidatas a conterem faces, então a segunda rede (Rede de aperfeiçoamento) filtra as regiões específicas que delimitam as posições das faces detectadas, por fim, a terceira rede (Rede de saída) propõe pontos de referência faciais como olhos e boca. Este método se assemelha bastante ao classificador em cascata do método de Viola-Jones, onde são utilizadas ferramentas mais simples para um filtragem inicial e então a complexidade das análises aumenta nas regiões onde possivelmente pode ser encontrada uma face \cite{mtcnn}. Os resultados de cada uma das etapas podem ser visualizados na Figura \ref{fig:mtcnn}.
 
 \begin{figure}[htbp]
     \centering
     \caption{Resultados de cada etapa do método MTCNN.}
     \includegraphics[scale=.8]{figs/mtcnn.png}
-    \legend{Fonte: \citeauthoronline{mtcnn}}
+    \legend{Fonte: \citeauthoronline{mtcnn} \citeyear{mtcnn}}
     \label{fig:mtcnn}
 \end{figure}
 
@@ -222,7 +222,7 @@ Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na
 
 \begin{figure}[htbp]
     \centering
-    \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão.}
+    \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão. Aqui deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.}
     \includegraphics[scale=.4]{figs/norm_dist.png}
     \label{fig:norm_dist}
 \end{figure}
@@ -272,13 +272,13 @@ Por fim, a partir da sensitividade e especificidade é possível exibir o result
 
 Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como R o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial. Para as análises feitas neste trabalho, foi utilizado o valor presente líquido de R\$250,00 e o custo de análise de R\$ 1,00 \cite{hussain2007valuationnpv}.
 
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter a Equação \ref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter o \textit{ganho inicial} ($g_0$) na Equação \ref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
 
 \begin{align} \label{eq:g_0}
     g_0 = (TP+FN) \times R - (TP+FP+FN+TN) \times H
 \end{align}
 
-Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita R para a empresa, com isso, pode-se obter a Equação \ref{eq:g_1}.
+Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita R para a empresa, com isso, pode-se obter o \textit{ganho final} ($g_1$) na Equação \ref{eq:g_1}.
 \begin{align} \label{eq:g_1}
     g_1 = TP \times R - (TP+FP) \times H
 \end{align}
@@ -294,7 +294,7 @@ Considerando que para o modelo trazer valor para a empresa, é necessário que a
     (FN + TN) \times H - FN \times R > 0
 \end{align}
 
-A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}) e da taxa de falsos positivos (FPR, \textit{false positive rate}) de forma que seja possível traça-la sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:FN_TPR} e \ref{eq:TN_FPR}, obtendo por fim a Equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
+A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}), que define quantos resultados verdadeiros positivos ocorrem entre todas as amostras positivas disponíveis, e da taxa de falsos positivos (FPR, \textit{false positive rate}), que define quantos resultados falsos positivos ocorrem entre todas as amostras negativas disponíveis durante o teste. Com esses valores é possível traçar a equação sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:FN_TPR} e \ref{eq:TN_FPR}, obtendo por fim a Equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
 
 \begin{align}
     \label{eq:FN_TPR}
