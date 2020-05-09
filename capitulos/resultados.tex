@@ -1,6 +1,6 @@
 \chapter{Resultados e Discussão}\label{cap:resultados}
 
-Após entender o funcionamento dos algoritmos e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala (FE) para e número mínimo de vizinhos (MV), explicados anteriormente, e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a Figura \ref{fig:results_roc}, para que todos sejam facilmente comparados e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado.
+Após entender o funcionamento dos algoritmos e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala (\textit{FE}) para e número mínimo de vizinhos (\textit{MV}), explicados anteriormente, e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a Figura \ref{fig:results_roc}, para que todos sejam facilmente comparados e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado.
 
 \begin{figure}[htbp]
     \centering
@@ -11,11 +11,11 @@ Após entender o funcionamento dos algoritmos e definir a metodologia para anál
 \end{figure}
 
 \begin{table}[htbp]
-    \caption{Resultados obtidos com os classificadores.}
+    \caption{Resultados obtidos com os classificadores.\\$^1$Lucro refere-se ao lucro obtido por imagem analisada.}
     \label{tab:results_identify}
     \centering
     \begin{tabular}{clrrrrrr}
-        Letra & Método & FE   & MV & Sensitividade & Especificidade & Acurácia & Lucro      \\
+        Letra & Método & FE   & MV & Sensitividade & Especificidade & Acurácia & Lucro$^1$  \\
         \midrule
         A     & Keras  & -    & -  & 100,00\%      & 71,00\%        & 94,20\%  & R\$ 0,142  \\
         B     & OpenCV & 1,10 & 4  & 100,00\%      & 68,00\%        & 93,60\%  & R\$ 0,136  \\
