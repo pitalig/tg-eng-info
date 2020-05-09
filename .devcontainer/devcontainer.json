@@ -1,0 +1,7 @@
+{
+    "name": "latex-env",
+    "extensions": [
+        "james-yu.latex-workshop"
+    ],
+    "image": "aergus/latex"
+}
