@@ -1,82 +1,82 @@
 \chapter{Resultados e Discussão}\label{cap:resultados}
 
-Após entender o funcionamento dos algoritmos e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala (FE) para e número mínimo de vizinhos (MV), explicados anteriormente, e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a figura \ref{fig:results_roc}, para que todos sejam facilmente comparados e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado.
+Após entender o funcionamento dos algoritmos e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala (FE) para e número mínimo de vizinhos (MV), explicados anteriormente, e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a Figura \ref{fig:results_roc}, para que todos sejam facilmente comparados e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado.
 
 \begin{figure}[htbp]
-     \centering
-     \caption{Resultados das classificações sobre o espaço ROC.}
-     \includegraphics[scale=1]{figs/curva_roc_results.png}
-     \legend{Os 4 resultados mais lucratívos são identificados por quadrados e o restante por círculos. Os parâmetros utilizados em cada resultado são listados na Tabela \ref{tab:results_identify}.}
-     \label{fig:results_roc}
- \end{figure}
+    \centering
+    \caption{Resultados das classificações sobre o espaço ROC.}
+    \includegraphics[scale=1]{figs/curva_roc_results.png}
+    \legend{Os 4 resultados mais lucratívos são identificados por quadrados e o restante por círculos. Os parâmetros utilizados em cada resultado são listados na Tabela \ref{tab:results_identify}.}
+    \label{fig:results_roc}
+\end{figure}
 
- \begin{table}[htbp]
-     \caption{Resultados obtidos com os classificadores.}
-     \label{tab:results_identify}
-     \centering
-     \begin{tabular}{clrrrrrr}
-     Letra & Método & FE & MV & Sensitividade & Especificidade & Acurácia & Lucro \\
-      \midrule
-      A & Keras  & - & - & 100,00\% & 71,00\% & 94,20\% & R\$ 0,142 \\
-      B & OpenCV & 1,10 & 4 & 100,00\% & 68,00\% & 93,60\% & R\$ 0,136 \\
-      C & OpenCV & 1,30 & 1 & 100,00\% & 66,00\% & 93,20\% & R\$ 0,132 \\
-      D & OpenCV & 1,10 & 3 & 100,00\% & 61,00\% & 92,20\% & R\$ 0,122 \\
-      E & OpenCV & 1,25 & 1 & 100,00\% & 59,00\% & 91,80\% & R\$ 0,118 \\
-      - & OpenCV & 1,05 & 5 & 100,00\% & 59,00\% & 91,80\% & R\$ 0,118 \\
-      - & OpenCV & 1,05 & 4 & 100,00\% & 55,00\% & 91,00\% & R\$ 0,110 \\
-      - & OpenCV & 1,10 & 2 & 100,00\% & 52,00\% & 90,40\% & R\$ 0,104 \\
-      - & OpenCV & 1,15 & 1 & 100,00\% & 49,00\% & 89,80\% & R\$ 0,098 \\
-      - & OpenCV & 1,05 & 3 & 100,00\% & 47,00\% & 89,40\% & R\$ 0,094 \\
-      - & OpenCV & 1,10 & 1 & 100,00\% & 42,00\% & 88,40\% & R\$ 0,084 \\
-      - & OpenCV & 1,05 & 2 & 100,00\% & 39,00\% & 87,80\% & R\$ 0,078 \\
-      - & OpenCV & 1,30 & 0 & 100,00\% & 36,00\% & 87,20\% & R\$ 0,072 \\
-      - & OpenCV & 1,25 & 0 & 100,00\% & 36,00\% & 87,20\% & R\$ 0,072 \\
-      - & OpenCV & 1,20 & 0 & 100,00\% & 35,00\% & 87,00\% & R\$ 0,070 \\
-      - & OpenCV & 1,05 & 1 & 100,00\% & 30,00\% & 86,00\% & R\$ 0,060 \\
-      - & OpenCV & 1,15 & 0 & 100,00\% & 24,00\% & 84,80\% & R\$ 0,048 \\
-      - & OpenCV & 1,10 & 0 & 100,00\% & 23,00\% & 84,60\% & R\$ 0,046 \\
-      - & OpenCV & 1,05 & 0 & 100,00\% & 14,00\% & 82,80\% & R\$ 0,028 \\
-      - & OpenCV & 1,10 & 5 & 99,75\% & 71,00\% & 94,00\% & -R\$ 0,356 \\
-      - & OpenCV & 1,15 & 2 & 99,75\% & 58,00\% & 91,40\% & -R\$ 0,382 \\
-      - & OpenCV & 1,20 & 1 & 99,75\% & 54,00\% & 90,60\% & -R\$ 0,390 \\
-      - & OpenCV & 1,10 & 6 & 99,50\% & 74,00\% & 94,40\% & -R\$ 0,848 \\
-      - & OpenCV & 1,20 & 2 & 99,50\% & 69,00\% & 93,40\% & -R\$ 0,858 \\
-      - & OpenCV & 1,15 & 3 & 99,50\% & 63,00\% & 92,20\% & -R\$ 0,870 \\
-      - & OpenCV & 1,05 & 6 & 99,50\% & 61,00\% & 91,80\% & -R\$ 0,874 \\
-      - & OpenCV & 1,30 & 2 & 99,25\% & 75,00\% & 94,40\% & -R\$ 1,344 \\
-      - & OpenCV & 1,15 & 5 & 99,25\% & 73,00\% & 94,00\% & -R\$ 1,348 \\
-      - & OpenCV & 1,15 & 4 & 99,25\% & 70,00\% & 93,40\% & -R\$ 1,354 \\
-      - & OpenCV & 1,25 & 2 & 99,25\% & 69,00\% & 93,20\% & -R\$ 1,356 \\
-      - & OpenCV & 1,15 & 6 & 99,00\% & 76,00\% & 94,40\% & -R\$ 1,840 \\
-      - & OpenCV & 1,20 & 3 & 99,00\% & 71,00\% & 93,40\% & -R\$ 1,850 \\
-      - & OpenCV & 1,20 & 4 & 98,75\% & 76,00\% & 94,20\% & -R\$ 2,338 \\
-      - & OpenCV & 1,25 & 3 & 98,75\% & 72,00\% & 93,40\% & -R\$ 2,346 \\
-      - & OpenCV & 1,30 & 3 & 98,50\% & 77,00\% & 94,20\% & -R\$ 2,834 \\
-      - & OpenCV & 1,20 & 5 & 98,25\% & 78,00\% & 94,20\% & -R\$ 3,330 \\
-      - & OpenCV & 1,25 & 4 & 98,25\% & 77,00\% & 94,00\% & -R\$ 3,332 \\
-      - & OpenCV & 1,25 & 5 & 98,00\% & 79,00\% & 94,20\% & -R\$ 3,826 \\
-      - & OpenCV & 1,20 & 6 & 98,00\% & 78,00\% & 94,00\% & -R\$ 3,828 \\
-      - & OpenCV & 1,25 & 6 & 97,50\% & 83,00\% & 94,60\% & -R\$ 4,814 \\
-      - & OpenCV & 1,30 & 4 & 97,25\% & 79,00\% & 93,60\% & -R\$ 5,320 \\
-      - & OpenCV & 1,30 & 5 & 96,50\% & 81,00\% & 93,40\% & -R\$ 6,810 \\
-      - & OpenCV & 1,30 & 6 & 96,00\% & 83,00\% & 93,40\% & -R\$ 7,802 \\
-      \end{tabular}
- \end{table}
+\begin{table}[htbp]
+    \caption{Resultados obtidos com os classificadores.}
+    \label{tab:results_identify}
+    \centering
+    \begin{tabular}{clrrrrrr}
+        Letra & Método & FE   & MV & Sensitividade & Especificidade & Acurácia & Lucro      \\
+        \midrule
+        A     & Keras  & -    & -  & 100,00\%      & 71,00\%        & 94,20\%  & R\$ 0,142  \\
+        B     & OpenCV & 1,10 & 4  & 100,00\%      & 68,00\%        & 93,60\%  & R\$ 0,136  \\
+        C     & OpenCV & 1,30 & 1  & 100,00\%      & 66,00\%        & 93,20\%  & R\$ 0,132  \\
+        D     & OpenCV & 1,10 & 3  & 100,00\%      & 61,00\%        & 92,20\%  & R\$ 0,122  \\
+        E     & OpenCV & 1,25 & 1  & 100,00\%      & 59,00\%        & 91,80\%  & R\$ 0,118  \\
+        -     & OpenCV & 1,05 & 5  & 100,00\%      & 59,00\%        & 91,80\%  & R\$ 0,118  \\
+        -     & OpenCV & 1,05 & 4  & 100,00\%      & 55,00\%        & 91,00\%  & R\$ 0,110  \\
+        -     & OpenCV & 1,10 & 2  & 100,00\%      & 52,00\%        & 90,40\%  & R\$ 0,104  \\
+        -     & OpenCV & 1,15 & 1  & 100,00\%      & 49,00\%        & 89,80\%  & R\$ 0,098  \\
+        -     & OpenCV & 1,05 & 3  & 100,00\%      & 47,00\%        & 89,40\%  & R\$ 0,094  \\
+        -     & OpenCV & 1,10 & 1  & 100,00\%      & 42,00\%        & 88,40\%  & R\$ 0,084  \\
+        -     & OpenCV & 1,05 & 2  & 100,00\%      & 39,00\%        & 87,80\%  & R\$ 0,078  \\
+        -     & OpenCV & 1,30 & 0  & 100,00\%      & 36,00\%        & 87,20\%  & R\$ 0,072  \\
+        -     & OpenCV & 1,25 & 0  & 100,00\%      & 36,00\%        & 87,20\%  & R\$ 0,072  \\
+        -     & OpenCV & 1,20 & 0  & 100,00\%      & 35,00\%        & 87,00\%  & R\$ 0,070  \\
+        -     & OpenCV & 1,05 & 1  & 100,00\%      & 30,00\%        & 86,00\%  & R\$ 0,060  \\
+        -     & OpenCV & 1,15 & 0  & 100,00\%      & 24,00\%        & 84,80\%  & R\$ 0,048  \\
+        -     & OpenCV & 1,10 & 0  & 100,00\%      & 23,00\%        & 84,60\%  & R\$ 0,046  \\
+        -     & OpenCV & 1,05 & 0  & 100,00\%      & 14,00\%        & 82,80\%  & R\$ 0,028  \\
+        -     & OpenCV & 1,10 & 5  & 99,75\%       & 71,00\%        & 94,00\%  & -R\$ 0,356 \\
+        -     & OpenCV & 1,15 & 2  & 99,75\%       & 58,00\%        & 91,40\%  & -R\$ 0,382 \\
+        -     & OpenCV & 1,20 & 1  & 99,75\%       & 54,00\%        & 90,60\%  & -R\$ 0,390 \\
+        -     & OpenCV & 1,10 & 6  & 99,50\%       & 74,00\%        & 94,40\%  & -R\$ 0,848 \\
+        -     & OpenCV & 1,20 & 2  & 99,50\%       & 69,00\%        & 93,40\%  & -R\$ 0,858 \\
+        -     & OpenCV & 1,15 & 3  & 99,50\%       & 63,00\%        & 92,20\%  & -R\$ 0,870 \\
+        -     & OpenCV & 1,05 & 6  & 99,50\%       & 61,00\%        & 91,80\%  & -R\$ 0,874 \\
+        -     & OpenCV & 1,30 & 2  & 99,25\%       & 75,00\%        & 94,40\%  & -R\$ 1,344 \\
+        -     & OpenCV & 1,15 & 5  & 99,25\%       & 73,00\%        & 94,00\%  & -R\$ 1,348 \\
+        -     & OpenCV & 1,15 & 4  & 99,25\%       & 70,00\%        & 93,40\%  & -R\$ 1,354 \\
+        -     & OpenCV & 1,25 & 2  & 99,25\%       & 69,00\%        & 93,20\%  & -R\$ 1,356 \\
+        -     & OpenCV & 1,15 & 6  & 99,00\%       & 76,00\%        & 94,40\%  & -R\$ 1,840 \\
+        -     & OpenCV & 1,20 & 3  & 99,00\%       & 71,00\%        & 93,40\%  & -R\$ 1,850 \\
+        -     & OpenCV & 1,20 & 4  & 98,75\%       & 76,00\%        & 94,20\%  & -R\$ 2,338 \\
+        -     & OpenCV & 1,25 & 3  & 98,75\%       & 72,00\%        & 93,40\%  & -R\$ 2,346 \\
+        -     & OpenCV & 1,30 & 3  & 98,50\%       & 77,00\%        & 94,20\%  & -R\$ 2,834 \\
+        -     & OpenCV & 1,20 & 5  & 98,25\%       & 78,00\%        & 94,20\%  & -R\$ 3,330 \\
+        -     & OpenCV & 1,25 & 4  & 98,25\%       & 77,00\%        & 94,00\%  & -R\$ 3,332 \\
+        -     & OpenCV & 1,25 & 5  & 98,00\%       & 79,00\%        & 94,20\%  & -R\$ 3,826 \\
+        -     & OpenCV & 1,20 & 6  & 98,00\%       & 78,00\%        & 94,00\%  & -R\$ 3,828 \\
+        -     & OpenCV & 1,25 & 6  & 97,50\%       & 83,00\%        & 94,60\%  & -R\$ 4,814 \\
+        -     & OpenCV & 1,30 & 4  & 97,25\%       & 79,00\%        & 93,60\%  & -R\$ 5,320 \\
+        -     & OpenCV & 1,30 & 5  & 96,50\%       & 81,00\%        & 93,40\%  & -R\$ 6,810 \\
+        -     & OpenCV & 1,30 & 6  & 96,00\%       & 83,00\%        & 93,40\%  & -R\$ 7,802 \\
+    \end{tabular}
+\end{table}
 
 Analisando os resultados de sensitividade, especificidade e acurácia de cada um dos classificadores na Tabela \ref{tab:results_identify} e a matriz de confusão do resultado que mais lucrativo na Tabela \ref{tab:matriz_de_confusao_best_result}, é possível obter algumas conclusões interessantes.
 
- \begin{table}[htbp]
-     \caption{Matriz de confusão com os resultados do classificador mais lucrativo.}
-     \label{tab:matriz_de_confusao_best_result}
-     \centering
-     \begin{tabular}{cccc}\hline\hline
-         & \textit{B} & $\overline{B}$ & Soma\\
-     \textit{A} & 80.0\% & 00.0\% & 80\% \\
-     $\overline{A}$ & 05.8\% & 14.2\% & 20\% \\
-     Soma & 85.8\% & 14.2\% & 100\% \\
-     \hline\hline
-     \end{tabular}
- \end{table}
+\begin{table}[htbp]
+    \caption{Matriz de confusão com os resultados do classificador mais lucrativo.}
+    \label{tab:matriz_de_confusao_best_result}
+    \centering
+    \begin{tabular}{cccc}\hline\hline
+                       & \textit{B} & $\overline{B}$ & Soma  \\
+        \textit{A}     & 80.0\%     & 00.0\%         & 80\%  \\
+        $\overline{A}$ & 05.8\%     & 14.2\%         & 20\%  \\
+        Soma           & 85.8\%     & 14.2\%         & 100\% \\
+        \hline\hline
+    \end{tabular}
+\end{table}
 
 Comparando tal resultado com a análise da equação que define o limiar lucrativo da classificação, é possível perceber que cada imagem positiva que é classificada como negativa gera um prejuízo muito elevado, que precisa ser compensado com a classificação correta de uma grande quantidade de imagens negativas. Para o classificador estudado, percebe-se que todos os cenários lucrativos apresentam sensitividade igual a 100\%, ou seja, todas imagens positivas foram classificadas corretamente.
 
