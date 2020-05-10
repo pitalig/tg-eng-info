@@ -19,9 +19,9 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
 
 \begin{figure}[htpb]
     \centering
-    \caption{Representação da imagem integral.}
+    \caption{Representação da imagem integral.\\Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \ref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
     \includegraphics[scale=.3]{figs/imagem-integral.png}
-    \legend{Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \ref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
+    \legend{Fonte: Wikipedia (2020)}
     \label{fig:integral}
 \end{figure}
 
@@ -69,7 +69,7 @@ Neste segundo momento, o AdaBoost apresenta uma boa solução, esta consiste na 
     \centering
     \caption{Diagrama do funcionamento do classificador em cascata.}
     \includegraphics[scale=.2]{figs/cascade-classifier.png}
-    \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
+    \legend{Fonte: Própria (2020)}
     \label{fig:cascade-classifier}
 \end{figure}
 
@@ -93,7 +93,7 @@ Por exemplo, caso o parâmetro de número mínimo de vizinhos seja igual a zero,
     \centering
     \caption{Resultados da detecção com variação de parâmetros.\\Utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
     \includegraphics[scale=.2]{figs/min_neighbors_messi.png}
-    \legend{}
+    \legend{Fonte: Própria (2020)}
     \label{fig:min-neighbors-messi}
 \end{figure}
 
@@ -224,6 +224,7 @@ Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na
     \centering
     \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão. Aqui deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.}
     \includegraphics[scale=.4]{figs/norm_dist.png}
+    \legend{Fonte: Própria (2020)}
     \label{fig:norm_dist}
 \end{figure}
 
@@ -248,6 +249,7 @@ A matriz de confusão também pode ser escrita em termos probabilísticos (Tabel
     \centering
     \caption{Diagrama de Venn para as imagens analisadas.}
     \includegraphics[scale=.4]{figs/venn-diagram.png}
+    \legend{Fonte: Própria (2020)}
     \label{fig:venn_diagram}
 \end{figure}
 
@@ -265,6 +267,7 @@ Por fim, a partir da sensitividade e especificidade é possível exibir o result
     \centering
     \caption{Espaço ROC.}
     \includegraphics[scale=.4]{figs/curva_roc.png}
+    \legend{Fonte: Própria (2020)}
     \label{fig:roc_space}
 \end{figure}
 
@@ -309,6 +312,7 @@ A equação obtida ainda pode ser reescrita em função da \textit{taxa de verda
     \centering
     \caption{Limiar lucrativo exibido no espaço ROC.}
     \includegraphics[scale=1]{figs/curva_roc_lucro.png}
+    \legend{Fonte: Própria (2020)}
     \label{fig:profit_roc}
 \end{figure}
 
