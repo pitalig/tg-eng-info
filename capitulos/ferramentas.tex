@@ -19,7 +19,8 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
 
 \begin{figure}[htpb]
     \centering
-    \caption{Representação da imagem integral.\\Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \ref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
+    \caption{Representação da imagem integral.}
+    \legend{Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \ref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
     \includegraphics[scale=.3]{figs/imagem-integral.png}
     \legend{Fonte: Wikipedia (2020)}
     \label{fig:integral}
@@ -39,7 +40,8 @@ Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo ar
 
 \begin{figure}[htb]
     \centering
-    \caption{Exemplos de características retangulares analisadas.\\ As áreas demarcadas em cinza e branco compõe uma característica.}
+    \caption{Exemplos de características retangulares analisadas.}
+    \legend{As áreas demarcadas em cinza e branco compõe uma característica.}
     \includegraphics[scale=.5]{figs/features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:features}
@@ -91,7 +93,8 @@ Por exemplo, caso o parâmetro de número mínimo de vizinhos seja igual a zero,
 
 \begin{figure}[htb]
     \centering
-    \caption{Resultados da detecção com variação de parâmetros.\\Utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
+    \caption{Resultados da detecção com variação de parâmetros.}
+    \legend{Utilizando o parâmetro de número mínimo de vizinhos igual a 0 (esquerda), 2 (centro) e 4 (direita).}
     \includegraphics[scale=.2]{figs/min_neighbors_messi.png}
     \legend{Fonte: Própria (2020)}
     \label{fig:min-neighbors-messi}
@@ -191,7 +194,7 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
 Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da Tabela \ref{tab:grupos-images}.
 
 \begin{table}[htbp]
-    \caption{Grupos observados}
+    \caption{Grupos observados.}
     \label{tab:grupos-images}
     \centering
     \begin{tabular}{ccc}\hline\hline
@@ -207,7 +210,7 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
 Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contém uma face, \textit{b - falso negativo} (FN, \textit{false negative}) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
 
 \begin{table}[htbp]
-    \caption{Matriz de confusão}
+    \caption{Matriz de confusão.}
     \label{tab:matriz_de_confusao}
     \centering
     \begin{tabular}{ccc}\hline\hline
@@ -222,7 +225,8 @@ Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na
 
 \begin{figure}[htbp]
     \centering
-    \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão. Aqui deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.}
+    \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão.}
+    \legend{Aqui deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.}
     \includegraphics[scale=.4]{figs/norm_dist.png}
     \legend{Fonte: Própria (2020)}
     \label{fig:norm_dist}
@@ -233,7 +237,7 @@ Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \tex
 A matriz de confusão também pode ser escrita em termos probabilísticos (Tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (Figura \ref{fig:venn_diagram}).
 
 \begin{table}[htbp]
-    \caption{Matriz de confusão com probabilidades marginais}
+    \caption{Matriz de confusão com probabilidades marginais.}
     \label{tab:matriz_de_confusao_probab}
     \centering
     \begin{tabular}{cccc}\hline\hline
