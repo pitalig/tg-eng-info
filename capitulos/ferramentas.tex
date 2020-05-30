@@ -7,24 +7,25 @@ Os métodos foram utilizados para análise de um conjunto específico de imagens
 
 Proposto por Paul Viola and Michael Jones e amplamente conhecido como método Viola-Jones, esse é um método eficiente para reconhecimento de faces em imagens, onde uma função é treinada com muitos exemplos positivos (imagens que contém o objeto a ser detectado) e negativos (imagens que não contém o objeto a ser detectado) e então utilizada para detectar as mesmas características em outras imagens \cite{itseez2014theopencv}.
 
-O método Viola-Jones foi publicado em 2001, no paper "Rapid object detection using a boosted cascade of simple features" \cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
+O método Viola-Jones foi publicado em 2001, no paper ``Rapid object detection using a boosted cascade of simple features'' \cite{paper-viola-jones} e é famoso por sua capacidade de detecção de faces com muita velocidade, isso ocorre devido a 3 principais técnicas utilizadas: o cálculo da imagem integral, o algoritmo \textit{AdaBoost} e o classificador em cascata.
 
 \subsection{Imagem Integral}
 
-A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada ponto como a soma de todos os pontos que estão acima ou a esquerda do mesmo, como ilustrado na Figura \ref{fig:integral}.
+A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada ponto como a soma de todos os pontos que estão acima ou a esquerda do mesmo.
+
+A utilização desta técnica permite calcular facilmente a soma dos valores internos de qualquer retângulo formado entre quatro pontos da imagem, utilizando apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem.
 
 \begin{figure}[htb]
     \centering
     \caption{Representação da imagem integral.}
-    \legend{Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \eqref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
     \includegraphics[scale=.3]{figs/imagem-integral.png}
     \legend{Fonte: Wikipedia (2020)}
     \label{fig:integral}
 \end{figure}
 
-A utilização desta técnica permite calcular facilmente a soma dos valores internos de qualquer retângulo formado entre quatro pontos da imagem, utilizando apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem.
+Na Figura \ref{fig:integral} é demonstrado um exemplo onde os valores dos pixels da imagem original estão a esquerda e os valores da imagem integral resultante estão a direita.
 
-O cálculo é feito definindo o retângulo a ser analisado e então aplicando a Equação \eqref{eq:img-integral}. Tal equação é utilizada em \eqref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da Figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
+O cálculo é feito definindo o retângulo a ser analisado e então aplicando a Equação \eqref{eq:img-integral}. Tal equação é utilizada em \eqref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo rosa da Figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11. A correspondência das cores demarcadas na figura \ref{fig:integral} com as variáveis da Equação \eqref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.
 
 \begin{align}\label{eq:img-integral}
     \text{ Soma dos valores do retângulo } & = D - (B + C) + A               \\
@@ -32,12 +33,11 @@ O cálculo é feito definindo o retângulo a ser analisado e então aplicando a 
     15 + 16 + 14 + 28 + 27 + 11            & = 101 - (254 + 186) + 450 = 111
 \end{align}
 
-Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retangulares predefinidas, como os exemplos ilustrado na Figura \ref{fig:features}. O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
+Com a possibilidade de calcular facilmente a soma dos pixels de um retângulo arbitrário de forma rápida, o algoritmo para detecção pode analisar diversos trechos da imagem, chamados aqui de características, fazendo a comparação de duas ou mais áreas retangulares predefinidas, como os exemplos ilustrado na Figura \ref{fig:features}, onde as áreas demarcadas em cinza e branco compõe juntas uma única característica. O valor final de cada característica é definido pela soma do valor dos pixels sob o retângulo cinza menos a soma do valor dos pixels sob o retângulo branco.
 
 \begin{figure}[htb]
     \centering
     \caption{Exemplos de características retangulares analisadas.}
-    \legend{As áreas demarcadas em cinza e branco compõe uma característica.}
     \includegraphics[scale=.5]{figs/features.png}
     \legend{Fonte: \citeauthoronline{paper-viola-jones} (\citeyear{paper-viola-jones})}
     \label{fig:features}
@@ -79,7 +79,7 @@ A utilização desse modelo combinada com o algoritmo \textit{AdaBoost}, possibi
 \subsection{OpenCV}
 %-
 
-A ferramenta \textit{OpenCV} foi utilizada neste trabalho para a implementação do método de Viola-Jones. Ela pode ser encontrada no website Github \footnote{OpenCV: https://github.com/itseez/opencv}, é uma biblioteca de código aberto focada na solução de problemas utilizando visão computacional em tempo real, desenvolvida pela Intel e posteriormente pela Itseez, com suporte a múltiplas plataformas e uso gratuito sobre a licença de código aberto BSD. A ferramenta apresenta suporte a frameworks de aprendizado profundo, como TensorFlow \footnote{TensorFlow: https://www.tensorflow.org}, Pytorch \footnote{PyTorch: https://pytorch.org} e Caffe \footnote{Caffe: http://caffe.berkeleyvision.org} e contempla tanto funções básicas, para aplicações como processamento de imagem, alteração de cor ou resolução, até aplicações avançadas, como detecção facial, identificação de características e biometria \cite{wiki:OpenCV}.
+A ferramenta \textit{OpenCV} foi utilizada neste trabalho para a implementação do método de Viola-Jones. Ela pode ser encontrada no website Github \footnote{OpenCV: https://github.com/itseez/opencv}, é uma biblioteca de código aberto focada na solução de problemas utilizando visão computacional em tempo real, desenvolvida pela Intel e posteriormente pela Itseez, com suporte a múltiplas plataformas e uso gratuito sobre a licença de código aberto Berkeley Software Distribution (BSD). A ferramenta apresenta suporte a arcabouços de aprendizado profundo, como TensorFlow \footnote{TensorFlow: https://www.tensorflow.org}, Pytorch \footnote{PyTorch: https://pytorch.org} e Caffe \footnote{Caffe: http://caffe.berkeleyvision.org} e contempla tanto funções básicas, para aplicações como processamento de imagem, alteração de cor ou resolução, até aplicações avançadas, como detecção facial, identificação de características e biometria \cite{wiki:OpenCV}.
 
 A detecção de faces utilizando OpenCV consiste em duas etapas principais, a primeira consiste no treinamento do modelo, onde são apresentadas diversas imagens já identificadas para que o modelo encontre padrões positivos e negativos. Após o treinamento, a segunda etapa consiste em utilizar o modelo obtido para identificar, em novas imagens, características semelhantes as vistas nas imagens do treinamento. Neste projeto, será utilizado um modelo fornecido em conjunto com a ferramenta OpenCV, já treinado com diversos exemplos de faces frontais.
 
