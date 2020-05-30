@@ -16,7 +16,7 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
 \begin{figure}[htb]
     \centering
     \caption{Representação da imagem integral.}
-    \legend{Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \ref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
+    \legend{Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \eqref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
     \includegraphics[scale=.3]{figs/imagem-integral.png}
     \legend{Fonte: Wikipedia (2020)}
     \label{fig:integral}
@@ -24,7 +24,7 @@ A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem origi
 
 A utilização desta técnica permite calcular facilmente a soma dos valores internos de qualquer retângulo formado entre quatro pontos da imagem, utilizando apenas o valor dos seus cantos, possibilitando assim a análise rápida de diversas partes da imagem.
 
-O cálculo é feito definindo o retângulo a ser analisado e então aplicando a Equação \ref{eq:img-integral}. Tal equação é utilizada em \ref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da Figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
+O cálculo é feito definindo o retângulo a ser analisado e então aplicando a Equação \eqref{eq:img-integral}. Tal equação é utilizada em \eqref{eq:img-integral-exemplo} para calcular soma dos valores do retângulo da Figura \ref{fig:integral} que inclui os pontos 15, 16, 14, 28, 27 e 11.
 
 \begin{align}\label{eq:img-integral}
     \text{ Soma dos valores do retângulo } & = D - (B + C) + A               \\
@@ -261,7 +261,7 @@ A matriz de confusão também pode ser escrita em termos probabilísticos (Tabel
     \label{fig:venn_diagram}
 \end{figure}
 
-Podem também ser calculadas as medidas tradicionais de sensitividade (a probabilidade condicional do algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional do algoritmo não identificar nenhuma face em uma imagem que realmente não contém nenhuma face) conforme as Equações \ref{eq:sensitividade} e \ref{eq:especificidade}.
+Podem também ser calculadas as medidas tradicionais de sensitividade (a probabilidade condicional do algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional do algoritmo não identificar nenhuma face em uma imagem que realmente não contém nenhuma face) conforme as Equações \eqref{eq:sensitividade} e \eqref{eq:especificidade}.
 
 \begin{align} \label{eq:sensitividade}
     \text{sensitividade, } P(B|A) = P(A \cap B) / (P(A \cap B) + P(A \cap \overline{B})) = a/(a + b) \\
@@ -283,29 +283,29 @@ Por fim, a partir da sensitividade e especificidade é possível exibir o result
 
 Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como R o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial. Para as análises feitas neste trabalho, foi utilizado o valor presente líquido de R\$250,00 e o custo de análise de R\$ 1,00 \cite{hussain2007valuationnpv}.
 
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter o \textit{ganho inicial} ($g_0$) na Equação \ref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter o \textit{ganho inicial} ($g_0$) na Equação \eqref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
 
 \begin{align} \label{eq:g_0}
     g_0 = (TP+FN) \times R - (TP+FP+FN+TN) \times H
 \end{align}
 
-Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita R para a empresa, com isso, pode-se obter o \textit{ganho final} ($g_1$) na Equação \ref{eq:g_1}.
+Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita R para a empresa, com isso, pode-se obter o \textit{ganho final} ($g_1$) na Equação \eqref{eq:g_1}.
 \begin{align} \label{eq:g_1}
     g_1 = TP \times R - (TP+FP) \times H
 \end{align}
 
-Para avaliar a receita que o modelo traz para a empresa, pode-se calcular a diferença entre a receita antes e depois do modelo, obtendo a Equação \ref{eq:profit}.
+Para avaliar a receita que o modelo traz para a empresa, pode-se calcular a diferença entre a receita antes e depois do modelo, obtendo a Equação \eqref{eq:profit}.
 \begin{align} \label{eq:profit}
     g_1 - g_0 = (FN + TN) \times H - FN \times R
 \end{align}
 
-Considerando que para o modelo trazer valor para a empresa, é necessário que a receita após sua aplicação seja maior que a receita antes da sua aplicação, obtendo a Equação \ref{eq:profit2}.
+Considerando que para o modelo trazer valor para a empresa, é necessário que a receita após sua aplicação seja maior que a receita antes da sua aplicação, obtendo a Equação \eqref{eq:profit2}.
 \begin{align} \label{eq:profit2}
     g_1 - g_0 > 0 \\
     (FN + TN) \times H - FN \times R > 0
 \end{align}
 
-A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}), que define quantos resultados verdadeiros positivos ocorrem entre todas as amostras positivas disponíveis, e da taxa de falsos positivos (FPR, \textit{false positive rate}), que define quantos resultados falsos positivos ocorrem entre todas as amostras negativas disponíveis durante o teste. Com esses valores é possível traçar a equação sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \ref{eq:FN_TPR} e \ref{eq:TN_FPR}, obtendo por fim a Equação \ref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
+A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}), que define quantos resultados verdadeiros positivos ocorrem entre todas as amostras positivas disponíveis, e da taxa de falsos positivos (FPR, \textit{false positive rate}), que define quantos resultados falsos positivos ocorrem entre todas as amostras negativas disponíveis durante o teste. Com esses valores é possível traçar a equação sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \eqref{eq:FN_TPR} e \eqref{eq:TN_FPR}, obtendo por fim a Equação \eqref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
 
 \begin{align}
     \label{eq:FN_TPR}
