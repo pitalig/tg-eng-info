@@ -13,7 +13,7 @@ O método Viola-Jones foi publicado em 2001, no paper "Rapid object detection us
 
 A primeira etapa do algoritmo Viola-Jones consiste em transformar a imagem original em uma imagem integral, isto é feito calculando o valor de cada ponto como a soma de todos os pontos que estão acima ou a esquerda do mesmo, como ilustrado na Figura \ref{fig:integral}.
 
-\begin{figure}[htpb]
+\begin{figure}[htb]
     \centering
     \caption{Representação da imagem integral.}
     \legend{Imagem original (esquerda) e imagem integral (direita). A correspondência das cores demarcadas na imagem com as variáveis da Equação \ref{eq:img-integral} se da por A - amarelo, B - verde, C - azul e D - rosa.}
@@ -122,7 +122,7 @@ Adentrando a área de detecção facial especificamente, um método popular é o
 
 No método MTCNN, a estrutura em cascata consiste em três redes, no pré-processamento a imagem é redimensionada para uma variedade de tamanhos diferentes (chamada de pirâmide de imagens), depois a primeira rede (Rede de propostas) propõe regiões candidatas a conterem faces, então a segunda rede (Rede de aperfeiçoamento) filtra as regiões específicas que delimitam as posições das faces detectadas, por fim, a terceira rede (Rede de saída) propõe pontos de referência faciais como olhos e boca. Este método se assemelha bastante ao classificador em cascata do método de Viola-Jones, onde são utilizadas ferramentas mais simples para um filtragem inicial e então a complexidade das análises aumenta nas regiões onde possivelmente pode ser encontrada uma face \cite{mtcnn}. Os resultados de cada uma das etapas podem ser visualizados na Figura \ref{fig:mtcnn}.
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Resultados de cada etapa do método MTCNN.}
     \includegraphics[scale=.8]{figs/mtcnn.png}
@@ -165,7 +165,7 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
     \item A face deve estar centralizada e próxima da câmera.
 \end{itemize}
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Exemplos de imagens com face válida.}
     \includegraphics[scale=.25]{figs/valid_faces.jpg}
@@ -175,7 +175,7 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
 
 É preciso considerar também que existem imagens que contém faces mas que não são válidas pois não cumprem os critérios definidos, portanto essas devem ser consideradas negativas. Para maior realidade nos testes feitos, o grupo de imagens negativas foi composto por 30 imagens que apresentavam faces inválidas (exemplos na Figura \ref{fig:invalid-faces}) e outras 70 imagens selecionadas aleatoriamente do conjunto \textit{Hotels-50k} (exemplos na Figura \ref{fig:hotel-examples}).
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Exemplos de imagens com face inválida.}
     \includegraphics[scale=.25]{figs/invalid_faces.jpg}
@@ -183,7 +183,7 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
     \label{fig:invalid-faces}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Exemplos de imagens sem nenhuma face.}
     \includegraphics[scale=.25]{figs/hotels.jpg}
@@ -227,7 +227,7 @@ Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:m
 
 Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face.
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão.}
     \legend{Aqui deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.}
@@ -253,7 +253,7 @@ A matriz de confusão também pode ser escrita em termos probabilísticos (Tabel
     \end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Diagrama de Venn para as imagens analisadas.}
     \includegraphics[scale=.4]{figs/venn-diagram.png}
@@ -271,7 +271,7 @@ Podem também ser calculadas as medidas tradicionais de sensitividade (a probabi
 
 Por fim, a partir da sensitividade e especificidade é possível exibir o resultado do classificador no espaço ROC (\textit{Receiver Operating Characteristic}, traduzido literalmente como Característica operacional do receptor), que consiste em um plano onde o eixo horizontal mede a taxa de falsos positivos (1 - especificidade) e o eixo vertical mede a taxa de verdadeiros positivos (sensitividade), isso permite comparar facilmente diferentes classificadores, pois quanto mais próximo do canto esquerdo superior, melhor a classificação.
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Espaço ROC.}
     \includegraphics[scale=.4]{figs/curva_roc.png}
@@ -316,7 +316,7 @@ A equação obtida ainda pode ser reescrita em função da \textit{taxa de verda
     TPR & = 1 + \left( \frac{N}{P \times \left( \frac{R}{H}-1 \right) } \times (FPR - 1) \right)
 \end{align}
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
     \centering
     \caption{Limiar lucrativo exibido no espaço ROC.}
     \includegraphics[scale=1]{figs/curva_roc_lucro.png}
