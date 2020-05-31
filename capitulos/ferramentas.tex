@@ -203,8 +203,10 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \caption{Grupos observados.}
     \label{tab:grupos-images}
     \centering
+    \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{ccc}\hline\hline
-        \textbf{Grupo} & \textbf{Descrição}                                     & \textbf{Quantidade} \\\hline
+        \textbf{Grupo} & \textbf{Descrição}                                     & \textbf{Quantidade} \\
+        \midrule
         \textit{A}     & Imagens que contêm uma face válida                     & 400                 \\
         $\overline{A}$ & Imagens que não contêm uma face válida                 & 100                 \\
         \textit{B}     & Imagens onde o algoritmo identificou uma ou mais faces & Variável            \\
