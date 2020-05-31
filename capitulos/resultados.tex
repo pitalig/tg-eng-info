@@ -1,6 +1,6 @@
 \chapter{Resultados e Discussão}\label{cap:resultados}
 
-Após entender o funcionamento dos algoritmos e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala (\textit{FE}) para e número mínimo de vizinhos (\textit{MV}), explicados anteriormente, e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a Figura \ref{fig:results_roc}, para que todos sejam facilmente comparados e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado.
+Após entender o funcionamento dos algoritmos e definir a metodologia para análise, foram executadas diversas iterações de classificação sobre o conjunto de imagens, variando os parâmetros de fator de escala (FE) para e número mínimo de vizinhos (MV), explicados na Seção \ref{sec:parametrizacao}, e cada um dos resultados obtidos pode ser exibido como um ponto no espaço ROC obtendo a Figura \ref{fig:results_roc}, para que todos sejam facilmente comparados, e também se torna simples observar se algum dos resultados está posicionado acima o limite lucrativo traçado.
 
 \begin{figure}[htb]
     \centering
@@ -71,10 +71,13 @@ Analisando os resultados de sensibilidade, especificidade e acurácia de cada um
     \caption{Matriz de confusão com os resultados do classificador mais lucrativo.}
     \label{tab:matriz_de_confusao_best_result}
     \centering
-    \begin{tabular}{cccc}\hline\hline
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{c|cc|c}\hline\hline
                        & \textit{B} & $\overline{B}$ & Soma  \\
+        \hline
         \textit{A}     & 80.0\%     & 00.0\%         & 80\%  \\
         $\overline{A}$ & 05.8\%     & 14.2\%         & 20\%  \\
+        \hline
         Soma           & 85.8\%     & 14.2\%         & 100\% \\
         \hline\hline
     \end{tabular}

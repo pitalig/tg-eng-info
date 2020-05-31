@@ -84,7 +84,7 @@ A ferramenta \textit{OpenCV} foi utilizada neste trabalho para a implementação
 A detecção de faces utilizando OpenCV consiste em duas etapas principais: a primeira consiste no treinamento do modelo, onde são apresentadas diversas imagens já identificadas para que o modelo encontre padrões positivos e negativos. Após o treinamento, a segunda etapa consiste em utilizar o modelo obtido para identificar, em novas imagens, características semelhantes as vistas nas imagens do treinamento. Neste projeto, será utilizado um modelo fornecido em conjunto com a ferramenta OpenCV, já treinado com diversos exemplos de faces frontais.
 
 %-
-\subsection{Parametrização do Algoritmo}
+\subsection{Parametrização do Algoritmo}\label{sec:parametrizacao}
 %-
 
 O procedimento de detecção facial utilizando o OpenCV permite ainda o ajuste de parâmetros para a execução do algoritmo de Viola-Jones.
@@ -306,13 +306,13 @@ Para avaliar a receita que o modelo traz para a empresa, pode-se calcular a dife
     g_1 - g_0 = (FN + TN) \times H - FN \times R
 \end{align}
 
-Considerando que para o modelo trazer valor para a empresa, é necessário que a receita após sua aplicação seja maior que a receita antes da sua aplicação, obtendo a Equação \eqref{eq:profit2}.
+Considerando que, para o modelo trazer valor para a empresa, é necessário que a receita após sua aplicação seja maior que a receita antes da sua aplicação, obtendo a Equação \eqref{eq:profit2}.
 \begin{align} \label{eq:profit2}
     g_1 - g_0 > 0 \\
     (FN + TN) \times H - FN \times R > 0
 \end{align}
 
-A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}), que define quantos resultados verdadeiros positivos ocorrem entre todas as amostras positivas disponíveis, e da taxa de falsos positivos (FPR, \textit{false positive rate}), que define quantos resultados falsos positivos ocorrem entre todas as amostras negativas disponíveis durante o teste. Com esses valores é possível traçar a equação sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \eqref{eq:FN_TPR} e \eqref{eq:TN_FPR}, obtendo por fim a Equação \eqref{eq:profit_roc} que pode ser exibida no espaço ROC em \ref{fig:profit_roc}.
+A equação obtida ainda pode ser reescrita em função da \textit{taxa de verdadeiros positivos} (TPR, \textit{true positive rate}), que define quantos resultados verdadeiros positivos ocorrem entre todas as amostras positivas disponíveis, e da taxa de falsos positivos (FPR, \textit{false positive rate}), que define quantos resultados falsos positivos ocorrem entre todas as amostras negativas disponíveis durante o teste. Com esses valores é possível traçar a equação sobre o espaço ROC e visualizar de forma simples quais classificadores satisfazem o critério necessário para obtenção de receita. Para isso são consideradas a quantidade de imagens positivas ($ P = 0.8 $) e negativas ($ N = 0.2 $) definidas anteriormente e as relações \eqref{eq:FN_TPR} e \eqref{eq:TN_FPR}, obtendo por fim a Equação \eqref{eq:profit_roc} que pode ser exibida no espaço ROC na Figura \ref{fig:profit_roc}.
 
 \begin{align}
     \label{eq:FN_TPR}
