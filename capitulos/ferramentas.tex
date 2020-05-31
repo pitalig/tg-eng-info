@@ -116,13 +116,13 @@ Além da etapa de convolução com filtros, outras duas etapas igualmente import
 
 \subsection{TensorFlow e Keras}
 
-Para este trabalho foram utilizadas três ferramentas que facilitam a aplicação da rede neural convolucional. A primeira delas é chamada TensorFlow, uma plataforma de código aberto que disponibiliza ferramentas de aprendizado de máquina. A segunda ferramenta, Keras, disponibiliza uma interface em linguagem python para utilização de plataformas como TensorFlow, facilitando bastante a utilização da mesma para o usuário final.
+Para este trabalho foram utilizadas três ferramentas que facilitam a aplicação da CNN. A primeira delas é chamada TensorFlow, uma plataforma de código aberto que disponibiliza ferramentas de aprendizado de máquina. A segunda ferramenta, Keras, disponibiliza uma interface em linguagem python para utilização de plataformas como TensorFlow, facilitando bastante a utilização da mesma para o usuário final.
 
-Adentrando a área de detecção facial especificamente, um método popular é o de \textit{Rede Neural Convolucional Multi Tarefa em Cascata} (MTCNN, \textit{Multi-Task Cascaded Convolutional Neural Network}), pois consegue atingir resultados bons não apenas para detecção de faces completas, mas também de partes da face, como olhos e boca. \cite{mtcnn}
+Adentrando a área de detecção facial especificamente, um método popular é o de MTCNN, pois consegue atingir resultados bons não apenas para detecção de faces completas, mas também de partes da face, como olhos e boca. \cite{mtcnn}
 
 \subsection{MTCNN}
 
-No método MTCNN, a estrutura em cascata consiste em três redes, no pré-processamento a imagem é redimensionada para uma variedade de tamanhos diferentes (chamada de pirâmide de imagens), depois a primeira rede (Rede de propostas) propõe regiões candidatas a conterem faces, então a segunda rede (Rede de aperfeiçoamento) filtra as regiões específicas que delimitam as posições das faces detectadas; e, por fim, a terceira rede (Rede de saída) propõe pontos de referência faciais como olhos e boca. Este método se assemelha bastante ao classificador em cascata do método de Viola-Jones, onde são utilizadas ferramentas mais simples para um filtragem inicial, e então a complexidade das análises aumenta nas regiões onde possivelmente pode ser encontrada uma face \cite{mtcnn}. Os resultados de cada uma das etapas podem ser visualizados na Figura \ref{fig:mtcnn}.
+No método MTCNN, a estrutura em cascata consiste em três redes, no pré-processamento a imagem é redimensionada para uma variedade de tamanhos diferentes (chamada de pirâmide de imagens), depois a primeira rede (Rede de propostas) propõe regiões candidatas a conterem faces, então a segunda rede (Rede de refinamento) filtra as regiões específicas que delimitam as posições das faces detectadas; e, por fim, a terceira rede (Rede de saída) propõe pontos de referência faciais como olhos e boca. Este método se assemelha bastante ao classificador em cascata do método de Viola-Jones, onde são utilizadas ferramentas mais simples para um filtragem inicial, e então a complexidade das análises aumenta nas regiões onde possivelmente pode ser encontrada uma face \cite{mtcnn}. Os resultados de cada uma das etapas podem ser visualizados na Figura \ref{fig:mtcnn}.
 
 \begin{figure}[htb]
     \centering
@@ -197,25 +197,25 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
 \section{Metodologia de Análise}
 %-
 
-Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste. Para isso foram utilizadas as definições da Tabela \ref{tab:grupos-images}.
+Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste. Para isso foram utilizadas as definições da Tabela \ref{tab:conjuntos-images}.
 
 \begin{table}[htbp]
-    \caption{Grupos observados.}
-    \label{tab:grupos-images}
+    \caption{Conjuntos observados.}
+    \label{tab:conjuntos-images}
     \centering
     \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{ccc}\hline\hline
-        \textbf{Grupo} & \textbf{Descrição}                                     & \textbf{Quantidade} \\
+        \textbf{Conjunto} & \textbf{Descrição}                                     & \textbf{Quantidade} \\
         \midrule
-        \textit{A}     & Imagens que contêm uma face válida                     & 400                 \\
-        $\overline{A}$ & Imagens que não contêm uma face válida                 & 100                 \\
-        \textit{B}     & Imagens onde o algoritmo identificou uma ou mais faces & Variável            \\
-        $\overline{B}$ & Imagens onde o algoritmo não identificou nenhuma face  & Variável            \\
+        \textit{A}        & Imagens que contêm uma face válida                     & 400                 \\
+        $\overline{A}$    & Imagens que não contêm uma face válida                 & 100                 \\
+        \textit{B}        & Imagens onde o algoritmo identificou uma ou mais faces & Variável            \\
+        $\overline{B}$    & Imagens onde o algoritmo não identificou nenhuma face  & Variável            \\
         \hline\hline
     \end{tabular}
 \end{table}
 
-Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) em que o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contém uma face, \textit{b - falso negativo} (FN, \textit{false negative}) em que o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) em que o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) em que o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
+Definidos os conjuntos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os conjuntos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os conjuntos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) em que o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contém uma face, \textit{b - falso negativo} (FN, \textit{false negative}) em que o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) em que o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) em que o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro conjuntos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
 
 \begin{table}[htbp]
     \caption{Matriz de confusão.}
@@ -232,7 +232,7 @@ Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:m
     \end{tabular}
 \end{table}
 
-Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. Nesse exemplo deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.
+Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos conjuntos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. Nesse exemplo deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.
 
 \begin{figure}[htb]
     \centering
