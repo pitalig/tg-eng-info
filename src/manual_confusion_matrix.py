@@ -38,7 +38,7 @@ assert sum([P_B_given_A, P_xB_given_A]) == 1, "Uma nao face pode so ser prevista
 print([P_B_given_xA, P_xB_given_xA, sum([P_B_given_xA, P_xB_given_xA])])
 assert sum([P_B_given_xA, P_xB_given_xA]) == 1, "Uma face pode so ser prevista como face ou nao"
 
-print("sensitividade")
+print("sensibilidade")
 print(P_B_given_A)
 print("especificidade")
 print(P_xB_given_xA)

@@ -67,7 +67,7 @@ result_print = np.array([[tp, fn, (tp+fn)],
                          [fp, tn, (fp+tn)],
                          [(tp+fp), (fn+tn), (tp*fn*fp*tn)]]) *100
 
-print("sensitividade")
+print("sensibilidade")
 print(tp / (tp + fn))
 print("especificidade")
 print(tn / (tn + fp))

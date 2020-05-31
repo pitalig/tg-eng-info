@@ -140,23 +140,23 @@ Para analisar a eficiência da implementação do algoritmo \textit{Viola-Jones}
 
 \subsection{Conjuntos de imagens originais}
 
-O primeiro conjunto de imagens, nomeado \textit{UTKFace}, disponível em \cite{utkface}, consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo. Alguns exemplos das imagens contidas no dataset podem ser vistos na Figura \ref{fig:exemplos-utk}.
+O primeiro conjunto de imagens, nomeado UTKFace \cite{utkface}, consiste em um conjunto de mais de 20 mil imagens, com uma única face em cada, de diversas pessoas entre 0 e 116 anos de idade, catalogadas de acordo com idade, raça e sexo. Alguns exemplos das imagens contidas no dataset podem ser vistos na Figura \ref{fig:exemplos-utk}.
 
 \begin{figure}[htb]
     \centering
-    \caption{Exemplos de imagens do dataset \textit{UTKFace}.}
+    \caption{Exemplos de imagens do dataset UTKFace.}
     \includegraphics[scale=.3]{figs/exemplos-utk.png}
-    \legend{Fonte: \textit{UTKFace dataset} \cite{utkface}}
+    \legend{Fonte: UTKFace dataset \cite{utkface}}
     \label{fig:exemplos-utk}
 \end{figure}
 
-O segundo conjunto de imagens, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, consistia originalmente em mais de 50 mil fotografias de diversos quartos de hotel vazios, este foi utilizado pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, ao invés de uma imagem da face a ser cadastrada.
+O segundo conjunto de imagens, nomeado \textit{Hotels-50k} \cite{hotels50k-article}, consistia originalmente em mais de 50 mil fotografias de diversos quartos de hotel vazios. Este foi utilizado pois imagens com características semelhantes a estas são muitas vezes submetidas erroneamente em cadastros pessoais, em vez de uma imagem da face a ser cadastrada.
 
 \subsection{Conjunto de imagens selecionadas}
 
-Para os testes, foi selecionado manualmente um conjunto com 400 positivas (possuíam uma face válida) e 100 imagens negativas (não possuíam uma face válida). Tal proporção representa a hipótese de que cerca de 20\% de imagens enviadas para cadastros na verdade não possuem uma face.
+Para os testes, foi selecionado manualmente um conjunto com 400 imagens positivas (possuíam uma face válida) e 100 imagens negativas (não possuíam uma face válida). Tal proporção representa a hipótese de que cerca de 20\% de imagens enviadas para cadastros, na verdade, não possuem uma face.
 
-Por considerar que as imagens avaliadas pelo detector facial estudado neste trabalho serão utilizadas para cadastros pessoais e portanto é necessário que demonstrem que houve o consentimento de quem estava sendo fotografado e que seja possível identificar com clareza a pessoa da foto, as 400 imagens positivas (exemplos na Figura \ref{fig:valid-faces}) foram selecionadas de forma que cumprissem os critérios abaixo.
+Por considerar que as imagens avaliadas pelo detector facial estudado neste trabalho serão utilizadas para cadastros pessoais e, portanto, é necessário que demonstrem que houve o consentimento de quem estava sendo fotografado e que seja possível identificar com clareza a pessoa da foto, as 400 imagens positivas (exemplos na Figura \ref{fig:valid-faces}) foram selecionadas manualmente de forma que cumprissem os critérios abaixo.
 
 \begin{itemize}
     \item A imagem deve conter uma única face frontal;
@@ -175,9 +175,9 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
     \label{fig:valid-faces}
 \end{figure}
 
-É preciso considerar também que existem imagens que contém faces mas que não são válidas pois não cumprem os critérios definidos, portanto essas devem ser consideradas negativas. Para maior realidade nos testes feitos, o grupo de imagens negativas foi composto por 30 imagens que apresentavam faces inválidas (exemplos na Figura \ref{fig:invalid-faces}) e outras 70 imagens selecionadas aleatoriamente do conjunto \textit{Hotels-50k} (exemplos na Figura \ref{fig:hotel-examples}).
+É preciso considerar também que existem imagens que contém faces, mas que não são válidas, pois não cumprem os critérios definidos, portanto essas devem ser consideradas negativas. Para maior confiabilidade nos testes feitos, o grupo de imagens negativas foi composto por 30 imagens que apresentavam faces inválidas (exemplos na Figura \ref{fig:invalid-faces}) e outras 70 imagens selecionadas aleatoriamente do conjunto \textit{Hotels-50k} (exemplos na Figura \ref{fig:hotel-examples}).
 
-\begin{figure}[htb]
+\begin{figure}[tbp]
     \centering
     \caption{Exemplos de imagens com face inválida.}
     \includegraphics[scale=.25]{figs/invalid_faces.jpg}
@@ -185,7 +185,7 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
     \label{fig:invalid-faces}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[tbp]
     \centering
     \caption{Exemplos de imagens sem nenhuma face.}
     \includegraphics[scale=.25]{figs/hotels.jpg}
@@ -197,7 +197,7 @@ Por considerar que as imagens avaliadas pelo detector facial estudado neste trab
 \section{Metodologia de Análise}
 %-
 
-Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste, para isso foram utilizadas as definições da Tabela \ref{tab:grupos-images}.
+Para melhor analisar os resultados dos testes, foi necessário especificar com clareza como poderiam ser agrupadas as imagens, dada a sua origem e o resultado observado no teste. Para isso foram utilizadas as definições da Tabela \ref{tab:grupos-images}.
 
 \begin{table}[htbp]
     \caption{Grupos observados.}
@@ -213,43 +213,48 @@ Para melhor analisar os resultados dos testes, foi necessário especificar com c
     \end{tabular}
 \end{table}
 
-Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) onde o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contém uma face, \textit{b - falso negativo} (FN, \textit{false negative}) onde o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) onde o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) onde o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
+Definidos os grupos, pode-se utilizar a matriz de confusão da Tabela \ref{tab:matriz_de_confusao} para facilitar a análise da relação entre os grupos definidos anteriormente. Na Tabela \ref{tab:matriz_de_confusao} são observados os grupos \textit{a - verdadeiro positivo} (TP, \textit{true positive}) em que o algoritmo identifica corretamente uma face em cada uma das imagens que realmente contém uma face, \textit{b - falso negativo} (FN, \textit{false negative}) em que o algoritmo erroneamente não reconheceu nenhuma face, apesar das imagens conterem uma face cada, \textit{c - falso positivo} (FP, \textit{false positive}) em que o algoritmo erroneamente identificou ao menos uma face, mesmo as imagens não contendo nenhuma e \textit{d - verdadeiro negativo} (TN, \textit{true negative}) em que o algoritmo identificou corretamente que não existia nenhuma face nas imagens. É importante destacar que os quatro grupos destacados na matriz de confusão são mutuamente excludentes \cite{Dougherty:2012:PRC:2553126}.
 
 \begin{table}[htbp]
     \caption{Matriz de confusão.}
     \label{tab:matriz_de_confusao}
     \centering
-    \begin{tabular}{ccc}\hline\hline
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{c|cc}
+        \hline\hline
                        & \textit{B}                       & $\overline{B}$                   \\
+        \hline
         \textit{A}     & \textit{a} (verdadeiro positivo) & \textit{b} (falso negativo)      \\
         $\overline{A}$ & \textit{c} (falso positivo)      & \textit{d} (verdadeiro negativo) \\
         \hline\hline
     \end{tabular}
 \end{table}
 
-Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face.
+Para melhor entender os agrupamentos da matriz de confusão, pode-se observar na Figura \ref{fig:norm_dist} as distribuições que representam a quantidade de imagens dos grupos \textit{A} e $\overline{A}$ dada a sua probabilidade de conter uma face. Nesse exemplo deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.
 
 \begin{figure}[htb]
     \centering
     \caption{Exemplo teórico de uma distribuição normal dos grupos de uma matriz de confusão.}
-    \legend{Aqui deve-se supor o uso de apenas uma caracterísca, mostrada de modo ilustrativo.}
     \includegraphics[scale=.4]{figs/norm_dist.png}
     \legend{Fonte: Própria (2020)}
     \label{fig:norm_dist}
 \end{figure}
 
-Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido a sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir uma limite para decisão, que pode ser ajustado conforme a necessidade, mas que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
+Nas distribuições são destacados os grupos \textit{b} (falso negativo) e \textit{c} (falso positivo) e fica evidente que, devido à sobreposição das distribuições \textit{A} e $\overline{A}$, é necessário definir um limite para decisão, que pode ser ajustado conforme a necessidade, mas, que independente do seu ajuste, sempre existirá um grupo categorizado de forma incorreta.
 
-A matriz de confusão também pode ser escrita em termos probabilísticos (Tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais ou pode ser visualizada no diagrama de Venn correspondente (Figura \ref{fig:venn_diagram}).
+A matriz de confusão também pode ser escrita em termos probabilísticos (Tabela \ref{tab:matriz_de_confusao_probab}), incluindo as probabilidades marginais, ou pode ser visualizada no diagrama de Venn correspondente (Figura \ref{fig:venn_diagram}).
 
 \begin{table}[htbp]
     \caption{Matriz de confusão com probabilidades marginais.}
     \label{tab:matriz_de_confusao_probab}
     \centering
-    \begin{tabular}{cccc}\hline\hline
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{c|cc|c}\hline\hline
                        & \textit{B}               & $\overline{B}$                      & Soma              \\
+        \hline
         \textit{A}     & $P(A \cap B)$            & $P(A \cap \overline{B})$            & $P(A)$            \\
         $\overline{A}$ & $P(\overline{A} \cap B)$ & $P(\overline{A} \cap \overline{B})$ & $P(\overline{A})$ \\
+        \hline
         Soma           & $P(B)$                   & $P(\overline{B})$                   & 1                 \\
         \hline\hline
     \end{tabular}
@@ -263,15 +268,15 @@ A matriz de confusão também pode ser escrita em termos probabilísticos (Tabel
     \label{fig:venn_diagram}
 \end{figure}
 
-Podem também ser calculadas as medidas tradicionais de sensitividade (a probabilidade condicional do algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional do algoritmo não identificar nenhuma face em uma imagem que realmente não contém nenhuma face) conforme as Equações \eqref{eq:sensitividade} e \eqref{eq:especificidade}.
+Podem também ser calculadas as medidas tradicionais de sensibilidade (a probabilidade condicional de o algoritmo identificar ao menos uma face dado que a imagem contém uma face) e especificidade (a probabilidade condicional de o algoritmo não identificar qualquer face em uma imagem que realmente não contenha faces) conforme as Equações \eqref{eq:sensibilidade} e \eqref{eq:especificidade}.
 
-\begin{align} \label{eq:sensitividade}
-    \text{sensitividade, } P(B|A) = P(A \cap B) / (P(A \cap B) + P(A \cap \overline{B})) = a/(a + b) \\
+\begin{align} \label{eq:sensibilidade}
+    \text{sensibilidade, } P(B|A) = P(A \cap B) / (P(A \cap B) + P(A \cap \overline{B})) = a/(a + b) \\
     \label{eq:especificidade}
     \text{especificidade, } P(\overline{B} | \overline{A}) = P(\overline{A} \cap \overline{B}) / (P(\overline{A} \cap \overline{B}) + P(\overline{A} \cap B)) = d/(d + c)
 \end{align}
 
-Por fim, a partir da sensitividade e especificidade é possível exibir o resultado do classificador no espaço ROC (\textit{Receiver Operating Characteristic}, traduzido literalmente como Característica operacional do receptor), que consiste em um plano onde o eixo horizontal mede a taxa de falsos positivos (1 - especificidade) e o eixo vertical mede a taxa de verdadeiros positivos (sensitividade), isso permite comparar facilmente diferentes classificadores, pois quanto mais próximo do canto esquerdo superior, melhor a classificação.
+Por fim, a partir da sensibilidade e especificidade, é possível exibir o resultado do classificador no espaço de característica operacional do receptor (ROC, \textit{receiver operating characteristic}), que consiste em um plano em que o eixo horizontal mede a taxa de falsos positivos (1 - especificidade) e o eixo vertical mede a taxa de verdadeiros positivos (sensibilidade). Isso permite comparar facilmente diferentes classificadores, pois, quanto mais próximo ao canto esquerdo superior, melhor a classificação.
 
 \begin{figure}[htb]
     \centering
@@ -283,9 +288,9 @@ Por fim, a partir da sensitividade e especificidade é possível exibir o result
 
 \section{Análise de Custo}
 
-Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de fornecer um cartão para os mesmos. Considerando como R o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial. Para as análises feitas neste trabalho, foi utilizado o valor presente líquido de R\$250,00 e o custo de análise de R\$ 1,00 \cite{hussain2007valuationnpv}.
+Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de lhes fornecer um cartão. Considerando como R o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial. Para as análises feitas neste trabalho, foi utilizado o valor presente líquido de R\$250,00 e o custo de análise de R\$ 1,00 \cite{hussain2007valuationnpv}.
 
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter o \textit{ganho inicial} ($g_0$) na Equação \eqref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos onde uma foto que realmente contém uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter o \textit{ganho inicial} ($g_0$) na Equação \eqref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos cujas respectivas fotos contêm uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
 
 \begin{align} \label{eq:g_0}
     g_0 = (TP+FN) \times R - (TP+FP+FN+TN) \times H

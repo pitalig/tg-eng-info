@@ -17,7 +17,7 @@ Após entender o funcionamento dos algoritmos e definir a metodologia para anál
     \label{tab:results_identify}
     \centering
     \begin{tabular}{clrrrrrr}
-        Letra & Método & FE   & MV & Sensitividade & Especificidade & Acurácia & Lucro$^1$  \\
+        Letra & Método & FE   & MV & sensibilidade & Especificidade & Acurácia & Lucro$^1$  \\
         \midrule
         A     & Keras  & -    & -  & 100,00\%      & 71,00\%        & 94,20\%  & R\$ 0,142  \\
         B     & OpenCV & 1,10 & 4  & 100,00\%      & 68,00\%        & 93,60\%  & R\$ 0,136  \\
@@ -65,7 +65,7 @@ Após entender o funcionamento dos algoritmos e definir a metodologia para anál
     \end{tabular}
 \end{table}
 
-Analisando os resultados de sensitividade, especificidade e acurácia de cada um dos classificadores na Tabela \ref{tab:results_identify} e a matriz de confusão do resultado que mais lucrativo na Tabela \ref{tab:matriz_de_confusao_best_result}, é possível obter algumas conclusões interessantes.
+Analisando os resultados de sensibilidade, especificidade e acurácia de cada um dos classificadores na Tabela \ref{tab:results_identify} e a matriz de confusão do resultado que mais lucrativo na Tabela \ref{tab:matriz_de_confusao_best_result}, é possível obter algumas conclusões interessantes.
 
 \begin{table}[htbp]
     \caption{Matriz de confusão com os resultados do classificador mais lucrativo.}
@@ -80,6 +80,6 @@ Analisando os resultados de sensitividade, especificidade e acurácia de cada um
     \end{tabular}
 \end{table}
 
-Comparando tal resultado com a análise da equação que define o limiar lucrativo da classificação, é possível perceber que cada imagem positiva que é classificada como negativa gera um prejuízo muito elevado, que precisa ser compensado com a classificação correta de uma grande quantidade de imagens negativas. Para o classificador estudado, percebe-se que todos os cenários lucrativos apresentam sensitividade igual a 100\%, ou seja, todas imagens positivas foram classificadas corretamente.
+Comparando tal resultado com a análise da equação que define o limiar lucrativo da classificação, é possível perceber que cada imagem positiva que é classificada como negativa gera um prejuízo muito elevado, que precisa ser compensado com a classificação correta de uma grande quantidade de imagens negativas. Para o classificador estudado, percebe-se que todos os cenários lucrativos apresentam sensibilidade igual a 100\%, ou seja, todas imagens positivas foram classificadas corretamente.
 
 É curioso notar que o lucro não é diretamente proporcional a acurácia do detector, destacando que a configuração de maior acurácia apresentou prejuízo, tal fato também ocorre devido ao prejuízo elevado de classificar uma imagem positiva de forma incorreta.
