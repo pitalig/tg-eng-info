@@ -61,7 +61,7 @@ No caso do algoritmo de detecção facial Viola-Jones, o algoritmo AdaBoost é u
 
 É importante salientar que geralmente uma face não ocupa a maior parte de uma imagem a ser identificada, portanto é necessário encontrar uma forma rápida de descartar os elementos do fundo da mesma e concentrar o poder de processamento nos elementos que têm maior probabilidade de serem reconhecidos como uma face, isso leva a uma formulação para o problema onde ao contrário de encontrar faces, é necessário um algoritmo que descarte as ``não faces''.
 
-Neste segundo momento, o AdaBoost apresenta uma boa solução, esta consiste na utilização do arranjo de classificadores já ponderados anteriormente, aplicados de forma sequencial, iniciando do mais simples para o mais complexo, criando o que é chamado de classificador em cascata, conforme ilustrado na Figura \ref{fig:cascade-classifier}, com limiar tal que imagens que certamente não possuem faces sejam rapidamente descartadas logo nos primeiros classificadores simples, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
+Neste segundo momento, o AdaBoost apresenta uma boa solução, esta consiste na utilização do arranjo de classificadores, aplicados de forma sequencial, iniciando do mais simples para o mais complexo, criando o que é chamado de classificador em cascata, conforme ilustrado na Figura \ref{fig:cascade-classifier}, com limiar tal que imagens que certamente não possuem faces sejam rapidamente descartadas logo nos primeiros classificadores simples, enquanto imagens com possíveis faces são classificadas por toda cascata, trazendo um elevado nível de confiança ao resultado.
 
 \begin{figure}[htb]
     \centering
@@ -71,7 +71,7 @@ Neste segundo momento, o AdaBoost apresenta uma boa solução, esta consiste na 
     \label{fig:cascade-classifier}
 \end{figure}
 
-A utilização desse modelo com cada classificador sendo treinado com o algoritmo \textit{AdaBoost}, possibilita a análise das característica mais eficientes logo no início e consequentemente o descarte muito mais rápido dos casos negativos nos primeiros estágios.
+A utilização desse modelo com cada classificador sendo treinado com o algoritmo \textit{AdaBoost}, possibilita a análise das característica mais simples logo no início e consequentemente o descarte muito mais rápido dos casos negativos nos primeiros estágios.
 
 %-
 \subsection{OpenCV}
@@ -95,7 +95,7 @@ Portanto para melhorar a precisão do detector e também filtrar detecções dup
 
 Por exemplo, caso o parâmetro de número mínimo de vizinhos seja igual a zero, qualquer janela que detectar uma face, em qualquer uma das varreduras, será considerada como uma face no resultado final. Já com o parâmetro igual a 4, é necessário que a mesma região da imagem seja considerada face por 4 janelas de varreduras diferentes para ser considerada como uma única face no resultado final.
 
-O resultado de diferentes execuções com diferentes valores para o parametro de número mínimo de vizinhos pode ser observado na Figura \ref{fig:min-neighbors-messi}. Utilizando o número mínimo de vizinhos igual a 0 (imagem a esquerda), são exibidas no resultado final diversas janelas, sendo várias delas sobre a mesma região da imagem. Aumentando o número mínimo de vizinhos para 2 (imagem ao centro), o número de janelas sobrepostas se reduz, mas algumas regiões da imagem que não são faces ainda aparecem no resultado final. Por fim, utilizando o número mínimo de vizinhos igual a 4 (imagem a direita), apenas uma janela com a face é exibida no resultado final.
+O resultado de diferentes execuções com diferentes valores para o parametro de número mínimo de vizinhos pode ser observado na Figura \ref{fig:min-neighbors-messi}. Utilizando o número mínimo de vizinhos igual a 0 (imagem à esquerda), são exibidas no resultado final diversas janelas, sendo várias delas sobre a mesma região da imagem. Aumentando o número mínimo de vizinhos para 2 (imagem ao centro), o número de janelas sobrepostas se reduz, mas algumas regiões da imagem que não são faces ainda aparecem no resultado final. Por fim, utilizando o número mínimo de vizinhos igual a 4 (imagem à direita), apenas uma janela com a face é exibida no resultado final.
 
 \begin{figure}[htb]
     \centering
@@ -291,15 +291,15 @@ A Figura \ref{fig:roc_space} exibe um exemplo de espaço ROC com uma reta que ma
 
 \section{Análise de Custo}
 
-Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de lhes fornecer um cartão. Considerando como R o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e H como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial. Para as análises feitas neste trabalho, foi utilizado o valor presente líquido de R\$250,00 por cliente e o custo de R\$ 1,00 por imagem analisada \cite{hussain2007valuationnpv}.
+Para entender o valor da utilização de um modelo de reconhecimento facial para filtragem de imagens inválidas, pode-se utilizar o exemplo de uma empresa de cartões de crédito que precisa analisar fotos de clientes antes de lhes fornecer um cartão. Considerando como \textit{R} o valor presente líquido \cite{npv-article}, ou seja, a receita total que este cliente traz para empresa, e \textit{H} como o custo de trabalho humano para a análise de uma imagem, podemos calcular a receita da empresa antes e depois da aplicação de um modelo de detecção facial. Para as análises feitas neste trabalho, foi utilizado o valor presente líquido de R\$250,00 por cliente e o custo de R\$ 1,00 por imagem analisada \cite{hussain2007valuationnpv}.
 
-Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual H, e apenas as fotos que continham uma face trariam a receita R para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter o \textit{ganho inicial} ($g_0$) na Equação \eqref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos cujas respectivas fotos contêm uma face, multiplicado pela receita de cada cliente R, subtraídos do custo de análise por foto H multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
+Antes da aplicação do modelo, todas as fotos enviadas deveriam ser analisadas por um humano, gerando o custo de análise manual \textit{H}, e apenas as fotos que continham uma face trariam a receita \textit{R} para empresa, relacionando isso aos valores encontrados na matriz de confusão do modelo, pode-se obter o \textit{ganho inicial} ($g_0$) na Equação \eqref{eq:g_0}. Nesta equação tem-se o $Evento\:A = (TP + FN)$, que representa os casos cujas respectivas fotos contêm uma face, multiplicado pela receita de cada cliente \textit{R}, subtraídos do custo de análise por foto \textit{H} multiplicado pela quantidade total de fotos recebidas, que equivale a soma de todas as taxas da matriz de confusão.
 
 \begin{align} \label{eq:g_0}
     g_0 = (TP+FN) \times R - (TP+FP+FN+TN) \times H
 \end{align}
 
-Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual H e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita R para a empresa, com isso, pode-se obter o \textit{ganho final} ($g_1$) na Equação \eqref{eq:g_1}.
+Após a aplicação do modelo, apenas as fotos que foram classificadas pelo modelo como faces serão analisadas por humanos, gerando custo de análise manual \textit{H} e apenas as fotos classificadas pelo modelo como face e que realmente contenham uma face se tornarão clientes reais, trazendo receita \textit{R} para a empresa, com isso, pode-se obter o \textit{ganho final} ($g_1$) na Equação \eqref{eq:g_1}.
 \begin{align} \label{eq:g_1}
     g_1 = TP \times R - (TP+FP) \times H
 \end{align}
